@@ -4,18 +4,25 @@
 class Background;
 class Scene;
 class SceneGame;
+class Platform;
 
 class Map : public GameObject
 {
 protected:
 	Scene* scene;
 
+	// 1, 3 배경 2, 4 하늘
 	Background* bg1;
 	Background* bg2;
 	Background* bg3;
 	Background* bg4;
 
-	float bgSpeed = 200.f;
+	// 장애물
+	Platform* pf1;
+
+
+
+	float bgSpeed = 300.f;
 
 public:
 	Map(const std::string& n = "");
@@ -35,5 +42,7 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	void SetScene(SceneGame* scene);
+
+	void BackgroundMove(float dt);
 };
 

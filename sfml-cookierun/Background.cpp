@@ -7,7 +7,7 @@
 Background::Background(const std::string& textureId, const std::string& n)
 	: SpriteGo(textureId, n)
 {
-
+	 
 }
 
 Background::~Background()
