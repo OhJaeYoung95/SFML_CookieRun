@@ -1,7 +1,8 @@
 #pragma once
 #include "SpriteGo.h"
 #include "AnimationController.h"
-class PlayerTest :public SpriteGo
+
+class PlayerTest : public SpriteGo
 {
 protected:
 	AnimationController animation;

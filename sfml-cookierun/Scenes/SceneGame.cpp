@@ -8,6 +8,8 @@
 #include "PlayerTest.h"
 #include "Framework.h"
 #include "UIButton.h"
+#include "Pancake.h"
+#include "Map.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -16,6 +18,7 @@ SceneGame::SceneGame() : Scene(SceneId::Game)
 	//resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/button.png"));
 	//resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/button2.png"));
 
+	// ¿¹Á¦
 	resourceListPath = "scripts/SceneGameResourceList.csv";
 }
 
@@ -25,7 +28,10 @@ void SceneGame::Init()
 
 	auto size = FRAMEWORK.GetWindowSize();
 
-	player = (Player*)AddGo(new Player());
+	pancake = (Pancake*)AddGo(new Pancake());
+	//player = (Player*)AddGo(new Player());
+
+
 	uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
 	uiButton->SetOrigin(Origins::TR);
 	uiButton->sortLayer = 100;
@@ -43,7 +49,9 @@ void SceneGame::Init()
 		SCENE_MGR.ChangeScene(sceneId);
 	};
 
-	//playerTest = (PlayerTest*)AddGo(new PlayerTest());
+	map = (Map*)AddGo(new Map());
+	map->SetScene(this);
+
 	for (auto go : gameObjects)
 	{
 		go->Init();

@@ -9,7 +9,7 @@ enum class AnimationLoopTypes
 struct AnimationFrame
 {
 	std::string textureId;
-	sf::IntRect texCoord;
+	//sf::IntRect texCoord;
 	std::function<void()> action;
 };
 

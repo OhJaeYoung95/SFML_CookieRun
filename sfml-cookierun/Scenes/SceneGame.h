@@ -1,15 +1,22 @@
 #pragma once
 #include "Scene.h"
 
+class Pancake;
 class Player;
 class PlayerTest;
 class UIButton;
+class Map;
 
 class SceneGame : public Scene
 {
 protected:
+
+	Pancake* pancake;
+
 	Player* player;
 	PlayerTest* playerTest;
+
+	Map* map;
 
 	UIButton* uiButton;
 
