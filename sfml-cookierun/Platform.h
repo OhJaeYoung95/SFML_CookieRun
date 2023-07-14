@@ -1,8 +1,12 @@
 #pragma once
 #include "SpriteGo.h"
+
+class Cookie;
+
 class Platform : public SpriteGo
 {
 protected:
+	Cookie* cookie;
 
 public:
 	Platform(const std::string& textureId = "", const std::string& n = "");
@@ -14,4 +18,7 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
+	void SetCookie(Cookie*& cookie);
+	void ColCookie();
 };

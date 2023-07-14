@@ -17,11 +17,35 @@ Pancake::~Pancake()
 void Pancake::Init()
 {
 	Cookie::Init();
-	RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Run/Run.csv");
-	RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Jump/Jump.csv");
-	RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Double_Jump/Double_Jump.csv");
-	RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Landing/Landing.csv");
-	RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Sliding/Sliding.csv");
+
+	// scripts에서 정보를 넣어서 할때는 Enter에서 AddClip을 해줘야한다
+	// Init에서 하고 싶을경우는 아래와 같이 해주어야 한다.
+
+	//RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Run/Run.csv");
+	//RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Jump/Jump.csv");
+	//RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Double_Jump/Double_Jump.csv");
+	//RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Landing/Landing.csv");
+	//RESOURCE_MGR.Load(ResourceTypes::AnimationClip, "animations/Pancake/Sliding/Sliding.csv");
+
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Run/Run.csv"));
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Jump/Jump.csv"));
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Double_Jump/Double_Jump.csv"));
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Landing/Landing.csv"));
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Sliding/Sliding.csv"));
+	//animation.SetTarget(&sprite);
+	//SetOrigin(Origins::BC);
+	//sortLayer = 10;
+}
+
+void Pancake::Release()
+{    
+	Cookie::Release();
+
+}
+
+void Pancake::Reset()
+{
+	Cookie::Reset();
 
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Run/Run.csv"));
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Jump/Jump.csv"));
@@ -31,21 +55,11 @@ void Pancake::Init()
 	animation.SetTarget(&sprite);
 	SetOrigin(Origins::BC);
 	sortLayer = 10;
-}
 
-void Pancake::Release()
-{
-	Cookie::Release();
-
-}
-
-void Pancake::Reset()
-{
-	Cookie::Reset();
 	animation.Play("Run");
 	SetOrigin(origin);
 	SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f -250.f);
-
+	SetOrigin(rect, origin);
 }
 
 void Pancake::Update(float dt)
@@ -105,5 +119,4 @@ void Pancake::Update(float dt)
 void Pancake::Draw(sf::RenderWindow& window)
 {
 	Cookie::Draw(window);
-
 }

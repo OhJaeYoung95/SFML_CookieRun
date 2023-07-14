@@ -16,6 +16,7 @@ public:
 
 	virtual void SetOrigin(Origins origin);
 	virtual void SetOrigin(float x, float y);
+	virtual void SetOrigin(sf::RectangleShape& rect, Origins origin);
 
 	virtual void Init() override;
 	virtual void Release() override;

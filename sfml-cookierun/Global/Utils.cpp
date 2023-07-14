@@ -53,7 +53,7 @@ void Utils::SetOrigin(sf::Transformable& obj, Origins origin, const sf::FloatRec
 	sf::Vector2f originPos(rect.width, rect.height);
 	originPos.x *= ((int)origin % 3) * 0.5f;
 	originPos.y *= ((int)origin / 3) * 0.5f;
-	obj.setOrigin(originPos);
+ 	obj.setOrigin(originPos);
 }
 
 float Utils::Clamp(float v, float min, float max)

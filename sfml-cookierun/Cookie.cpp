@@ -16,6 +16,9 @@ Cookie::~Cookie()
 void Cookie::Init()
 {
 	SpriteGo::Init();
+	rect.setSize(sf::Vector2f(100.f, 120.f));
+	rect.setFillColor(sf::Color::Green);
+	SetOrigin(rect, origin);
 }
 
 void Cookie::Release()
@@ -37,6 +40,12 @@ void Cookie::Reset()
 void Cookie::Update(float dt)
 {
 	SpriteGo::Update(dt);
+	rect.setPosition(GetPosition());
+		
+	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
+		rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
+	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
+		rect.setFillColor(sf::Color::Green);
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount > 0)
 	{
@@ -57,14 +66,14 @@ void Cookie::Update(float dt)
 
 	//std::cout << position.y << std::endl;
 	//std::cout << jumpCount << std::endl;
-	if (position.y > 290.f)
-	{
-		isDouble = false;
-		jumpCount = 2;
-		isGround = true;
-		position.y = 290.f;
-		velocity = 0.f;
-	}
+	//if (position.y > 290.f)
+	//{
+	//	isDouble = false;
+	//	jumpCount = 2;
+	//	isGround = true;
+	//	position.y = 290.f;
+	//	velocity = 0.f;
+	//}
 
 	SetPosition(position);
 }
@@ -72,12 +81,43 @@ void Cookie::Update(float dt)
 void Cookie::Draw(sf::RenderWindow& window)
 {
 	SpriteGo::Draw(window);
-
+	window.draw(rect);
 }
 
 void Cookie::Die()
 {
 	isAlive = false;
+}
+
+float Cookie::GetVelocity()
+{
+	return velocity;
+}
+
+bool Cookie::GetIsGround()
+{
+	return isGround;
+}
+
+
+void Cookie::SetIsGround(bool isGround)
+{
+	this->isGround = isGround;
+}
+
+void Cookie::SetGravity()
+{
+	velocity = 0.f;
+}
+
+void Cookie::SetJumpCount()
+{
+	jumpCount = 2;
+}
+
+void Cookie::SetIsDouble(bool isDobule)
+{
+	this->isDouble = false;
 }
 
 //void Cookie::PickUpItem()

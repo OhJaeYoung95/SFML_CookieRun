@@ -49,8 +49,11 @@ void SceneGame::Init()
 		SCENE_MGR.ChangeScene(sceneId);
 	};
 
+	Cookie* cookie = dynamic_cast<Cookie*>(pancake);
+
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
+	map->SetCookie(cookie);
 
 	for (auto go : gameObjects)
 	{

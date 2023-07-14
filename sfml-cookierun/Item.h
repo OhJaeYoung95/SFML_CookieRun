@@ -2,11 +2,16 @@
 #include "SpriteGo.h"
 
 class Cookie;
+class Scene;
+class SceneGame;
+class Map;
 
 class Item : public SpriteGo
 {
 protected:
 	Cookie* cookie;
+	Scene* scene;
+	Map* map;
 
 public:
 	Item(const std::string& textureId, const std::string& n);
@@ -19,6 +24,10 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
+	void SetCookie(Cookie*& cookie);
+
 	bool IsColPlayer();
+	void SetScene(SceneGame* scene);
+	void SetMap(Map* map);
 };
 

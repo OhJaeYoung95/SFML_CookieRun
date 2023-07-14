@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE
+ItemHealPack,10,1
+,,
+TEXTURE ID,,
+graphics/Item/ItemHealPack1.png,,
+graphics/Item/ItemHealPack2.png,,
+graphics/Item/ItemHealPack3.png,,
+graphics/Item/ItemHealPack4.png,,

@@ -23,6 +23,8 @@ protected:
 
 
 public:
+	sf::RectangleShape rect;
+
 	Cookie(const std::string& textureId, const std::string& n);
 	virtual ~Cookie() override;
 
@@ -34,5 +36,13 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	void Die();
+
+	float GetVelocity();
+	bool GetIsGround();
+
+	void SetIsGround(bool isGround);
+	void SetGravity();
+	void SetJumpCount();
+	void SetIsDouble(bool isDobule);
 	//void PickUpItem();
 };

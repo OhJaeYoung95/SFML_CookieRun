@@ -40,6 +40,15 @@ void SpriteGo::SetOrigin(float x, float y)
 	sprite.setOrigin(x, y);
 }
 
+void SpriteGo::SetOrigin(sf::RectangleShape& rect, Origins origin)
+{
+	GameObject::SetOrigin(origin);
+	if (this->origin != Origins::CUSTOM)
+	{
+		Utils::SetOrigin(rect, origin);
+	}
+}
+
 void SpriteGo::Init()
 {
 
