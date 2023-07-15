@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "ObjectPool.h"
 
 class Background;
 class Scene;
@@ -7,6 +8,7 @@ class SceneGame;
 class Platform;
 class Cookie;
 class ItemSpeedUp;
+class SpriteEffect;
 
 class Map : public GameObject
 {
@@ -39,6 +41,7 @@ protected:
 	float speedUpDuration = 3.0f;
 	bool isSpeedUp = false;
 
+	ObjectPool<SpriteEffect> effectPool;
 public:
 	Map(const std::string& n = "");
 	virtual ~Map() override;

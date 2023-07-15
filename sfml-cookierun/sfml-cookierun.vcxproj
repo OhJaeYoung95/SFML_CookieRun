@@ -160,6 +160,7 @@
     <ClCompile Include="Cookie.cpp" />
     <ClCompile Include="DataTables\DataTable.cpp" />
     <ClCompile Include="DataTables\StringTable.cpp" />
+    <ClCompile Include="EffectSpeedUp.cpp" />
     <ClCompile Include="Framework\DataTableMgr.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Cookie.h" />
     <ClInclude Include="DataTables\DataTable.h" />
     <ClInclude Include="DataTables\StringTable.h" />
+    <ClInclude Include="EffectSpeedUp.h" />
     <ClInclude Include="Framework\DataTableMgr.h" />
     <ClInclude Include="Framework\ObjectPool.h" />
     <ClInclude Include="GameObjects\GameObject.h" />

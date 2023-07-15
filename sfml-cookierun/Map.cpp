@@ -7,6 +7,7 @@
 #include "Background.h"
 #include "Platform.h"
 #include "ItemSpeedUp.h"
+#include "Cookie.h"
 
 Map::Map(const std::string& n)
 	: GameObject(n)
@@ -129,6 +130,7 @@ void Map::Update(float dt)
 		AddSpeedUp();
 		isSpeedUp = true;
 		speedUpTimer = 0.f;
+		cookie->GetPosition();
 	}
 	if (isSpeedUp)
 	{

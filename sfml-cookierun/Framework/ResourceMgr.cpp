@@ -158,6 +158,17 @@ void ResourceMgr::Load(ResourceTypes t, const std::string path, bool isDefault)
 		}
 	}
 	break;
+	case ResourceTypes::AnimationSheetClip:
+	{
+		auto it = mapAnimationClip.find(path);
+		if (mapAnimationClip.end() == it)
+		{
+			auto clip = new AnimationClip();
+			clip->LoadFromFileSheet(path);
+			mapAnimationClip.insert({ path, {clip, isDefault} });
+		}
+	}
+	break;
 	}
 
 

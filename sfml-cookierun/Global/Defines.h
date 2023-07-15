@@ -30,6 +30,7 @@ enum class ResourceTypes
 	Font,
 	SoundBuffer,
 	AnimationClip,
+	AnimationSheetClip,
 };
 
 enum class SceneId

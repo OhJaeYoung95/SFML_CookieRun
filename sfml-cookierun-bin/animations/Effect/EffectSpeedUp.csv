@@ -1,0 +1,5 @@
+ID,FPS,LOOPTYPE,,
+EffectSpeedUp,10,1,,
+,,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT
+graphics/Effect/Effects.png,540,1135,170,120

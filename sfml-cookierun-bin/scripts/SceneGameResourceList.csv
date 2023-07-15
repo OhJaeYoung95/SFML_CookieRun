@@ -1,4 +1,4 @@
-"RESOURCE_TYPES (0: 텍스쳐, 1: 폰트, 2: 사운드 클립, 3: 애니메이션 클립)",RESOURCE_PATH
+"RESOURCE_TYPES (0: 텍스쳐, 1: 폰트, 2: 사운드 클립, 3: 애니메이션 클립, 4: 애니메이션 스프라이트 클립)",RESOURCE_PATH
 0,graphics/Pancake/Run/Run1.png
 0,graphics/Pancake/Run/Run2.png
 0,graphics/Pancake/Run/Run3.png
@@ -71,3 +71,4 @@
 3,animations/Item/ItemBonus/ItemBonus.csv
 3,animations/Item/ItemBigHealPack/ItemBigHealPack.csv
 3,animations/Item/ItemBig/ItemBig.csv
+4,animations/Effect/EffectSpeedUp.csv
