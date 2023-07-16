@@ -14,8 +14,8 @@ void EffectSpeedUp::Init()
 void EffectSpeedUp::Reset()
 {
 	SpriteEffect::Reset();
-	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Effect/EffectSpeedUp.csv"));
-	animation.SetTarget(&sprite);
+	//animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Effect/EffectSpeedUp.csv"));
+	//animation.SetTarget(&sprite);
 }
 
 void EffectSpeedUp::Update(float dt)

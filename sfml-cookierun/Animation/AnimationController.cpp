@@ -78,8 +78,10 @@ void AnimationController::Play(const std::string& clipId, bool clearQueue)
 	totalFrame = (int)currentClip->frames.size();
 	clipDuration = 1.f / currentClip->fps;
 	accumTime = 0.f;
-
-	SetFrame(currentClip->frames[currentFrame]);
+	if(!currentClip->frames.empty())
+		SetFrame(currentClip->frames[currentFrame]);
+	if(!currentClip->framesSheet.empty())
+		SetFrame(currentClip->framesSheet[currentFrame]);
 }
 
 void AnimationController::PlayQueue(const std::string& clipId)
@@ -98,6 +100,13 @@ void AnimationController::SetFrame(const AnimationFrame& frame)
 	target->setTexture(*tex);
 	//std::cout << frame.textureId << std::endl;
 	//target->setTextureRect(frame.texCoord);
+}
+void AnimationController::SetFrame(const AnimationSheetFrame& frame)
+{
+	sf::Texture* tex = RESOURCE_MGR.GetTexture(frame.textureId);
+	target->setTexture(*tex);
+	//std::cout << frame.textureId << std::endl;
+	target->setTextureRect(frame.texCoord);
 }
 
 std::string AnimationController::GetCurrentClipId() const

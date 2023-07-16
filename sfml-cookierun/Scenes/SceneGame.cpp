@@ -90,6 +90,7 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);	
+
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)

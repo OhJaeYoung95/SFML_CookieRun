@@ -4,7 +4,8 @@
 class EffectSpeedUp : public SpriteEffect
 {
 protected:
-	AnimationController animation;
+	//AnimationController animation;
+
 private:
 	EffectSpeedUp(const std::string& textureId = "", const std::string& n = "");
 	virtual ~EffectSpeedUp() override { };

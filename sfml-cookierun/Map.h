@@ -9,6 +9,7 @@ class Platform;
 class Cookie;
 class ItemSpeedUp;
 class SpriteEffect;
+class Coin;
 
 class Map : public GameObject
 {
@@ -30,7 +31,11 @@ protected:
 	Platform* pf1;
 	Platform* pf2;
 
+	// 아이템
 	ItemSpeedUp* itemSpeedUp1;
+
+	// 코인
+	Coin* coin1;
 
 	float bgSpeed = 300.f;
 	float pfSpeed = 500.f;
@@ -41,7 +46,11 @@ protected:
 	float speedUpDuration = 3.0f;
 	bool isSpeedUp = false;
 
-	ObjectPool<SpriteEffect> effectPool;
+	float speedUpEffectTimer = 0.0f;
+	float speedUpEffectDuration = 0.05f;
+
+
+	ObjectPool<SpriteEffect> speedUpEffectPool;
 public:
 	Map(const std::string& n = "");
 	virtual ~Map() override;

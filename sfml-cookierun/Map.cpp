@@ -4,10 +4,14 @@
 #include "Scene.h"
 #include "SceneGame.h"
 #include "Framework.h"
+#include "ResourceMgr.h"
 #include "Background.h"
 #include "Platform.h"
 #include "ItemSpeedUp.h"
 #include "Cookie.h"
+#include "SpriteEffect.h"
+#include "Coin.h"
+
 
 Map::Map(const std::string& n)
 	: GameObject(n)
@@ -88,6 +92,17 @@ void Map::Init()
 	pf2->SetCookie(cookie);
 	pf2->sortLayer = 1;
 
+
+	// 이펙트 풀
+	speedUpEffectPool.OnCreate = [this](SpriteEffect* speedUp)
+	{
+		speedUp->SetAnim("animations/Effect/EffectSpeedUp.csv");
+		speedUp->SetDuration(3.f);
+		speedUp->SetPool(&speedUpEffectPool);
+		speedUp->SetOrigin(Origins::MC);
+		speedUp->SetType(EffectTypes::SpeedUp);
+		speedUp->sortLayer = 2;
+	};
 }
 void Map::Release()
 {
@@ -121,6 +136,15 @@ void Map::Reset()
 	itemSpeedUp1->SetScene(scene);
 	itemSpeedUp1->SetMap(this);
 
+	// 코인 세팅
+	coin1 = (Coin*)scene->AddGo(new Coin());
+	coin1->SetPosition(200.f, 0.f);
+	coin1->SetCookie(cookie);
+	coin1->sortLayer = 5;
+	coin1->SetScene(scene);
+	coin1->SetMap(this);
+	coin1->SetType(CoinTypes::Coin);
+
 }
 
 void Map::Update(float dt)
@@ -135,6 +159,15 @@ void Map::Update(float dt)
 	if (isSpeedUp)
 	{
 		speedUpTimer += dt;
+		speedUpEffectTimer += dt;
+		if (speedUpEffectTimer > speedUpEffectDuration)
+		{
+			SpriteEffect* speedEffect = speedUpEffectPool.Get();
+			speedEffect->SetPosition(cookie->GetPosition());
+			speedEffect->SetOrigin(Origins::BC);
+			scene->AddGo(speedEffect);
+			speedUpEffectTimer = 0.f;
+		}
 	}
 	if (speedUpTimer > speedUpDuration && isSpeedUp)
 	{
@@ -205,6 +238,10 @@ void Map::PlatformMove(float dt)
 	float movePos5 = itemSpeedUp1->GetPosition().x;
 	movePos5 += -pfSpeed * dt;
 	itemSpeedUp1->SetPosition(movePos5, itemSpeedUp1->GetPosition().y);
+	
+	float movePos6 = coin1->GetPosition().x;
+	movePos6 += -pfSpeed * dt;
+	coin1->SetPosition(movePos6, coin1->GetPosition().y);
 
 	if (pf1->GetPosition().x < -1500.f)
 		pf1->SetPosition(1700.f, pf1->GetPosition().y);
@@ -219,6 +256,9 @@ void Map::PlatformMove(float dt)
 	
 	if (itemSpeedUp1->GetPosition().x < -1500.f)
 		itemSpeedUp1->SetPosition(1700.f, itemSpeedUp1->GetPosition().y);
+
+	if (coin1->GetPosition().x < -1500.f)
+		coin1->SetPosition(1700.f, coin1->GetPosition().y);
 
 }
 

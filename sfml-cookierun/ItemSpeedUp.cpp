@@ -40,12 +40,7 @@ void ItemSpeedUp::Reset()
 void ItemSpeedUp::Update(float dt)
 {
 	Item::Update(dt);
-	if (IsColPlayer())
-	{
-		// 쿠키 효과 이속증가 => 맵 이동속도 증가
-		// 아이템 사라짐
-		scene->RemoveGo(this);
-	}
+
 	animation.Update(dt);
 }
 

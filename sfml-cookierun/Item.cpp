@@ -38,7 +38,10 @@ void Item::Update(float dt)
 void Item::Draw(sf::RenderWindow& window)
 {
 	SpriteGo::Draw(window);
-
+	if (IsColPlayer())
+	{
+		scene->RemoveGo(this);
+	}
 }
 
 void Item::SetCookie(Cookie*& cookie)
