@@ -11,6 +11,8 @@
 #include "Pancake.h"
 #include "Map.h"
 #include "UIHp.h"
+#include "TextGo.h"
+#include "SpriteGo.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -26,8 +28,8 @@ SceneGame::SceneGame() : Scene(SceneId::Game)
 void SceneGame::Init()
 {
 	Release();
-
 	auto size = FRAMEWORK.GetWindowSize();
+
 
 	pancake = (Pancake*)AddGo(new Pancake());
 	pancake->SetType(CookieTypes::Pancake);
@@ -60,11 +62,47 @@ void SceneGame::Init()
 	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
 	hpUI->SetCookie(cookie);
 
+	// Text
+
+	// Reset에서 SetOrigin()을 해줘야한다.
+	coinText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	coinText->SetPosition({ size.x * 0.5f + 60.f, 20.f });
+	coinText->text.setCharacterSize(50);
+	coinText->text.setFillColor(sf::Color::White);
+	coinText->text.setOutlineThickness(4);
+	coinText->text.setOutlineColor(sf::Color::Black);
+	coinText->SetOrigin(Origins::TL);
+	coinText->sortLayer = 102;
+
+	scoreText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	scoreText->SetPosition({ size.x * 0.92f, 20.f });
+	scoreText->text.setCharacterSize(50);
+	scoreText->text.setFillColor(sf::Color::White);
+	scoreText->text.setOutlineThickness(4);
+	scoreText->text.setOutlineColor(sf::Color::Black);
+	scoreText->SetOrigin(Origins::TL);
+	scoreText->sortLayer = 102;
+
+	// UI
+	scoreJellyUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Score/ScoreJellyUI.png"));
+	scoreCoinUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Coin/ScoreCoinUI.png"));
+
+	scoreJellyUI->SetOrigin(Origins::TC);
+	//scoreJellyUI->SetPosition(size.x * 0.85f, 25.f);
+	scoreJellyUI->SetPosition(scoreText->text.getGlobalBounds().left - 40.f, 25.f);
+	scoreJellyUI->sprite.setScale(1.5f, 1.5f);
+	scoreJellyUI->sortLayer = 102;
+
+	scoreCoinUI->SetPosition(size.x * 0.5f, 25.f);
+	scoreCoinUI->sprite.setScale(1.5f, 1.5f);
+	scoreCoinUI->SetOrigin(Origins::TC);
+	scoreCoinUI->sortLayer = 102;
 
 	for (auto go : gameObjects)
 	{
 		go->Init();
 	}
+
 }
 
 void SceneGame::Release()
@@ -85,6 +123,9 @@ void SceneGame::Enter()
 	uiView.setSize(size);
 	uiView.setCenter(size * 0.5f);
 
+	coin = 99;
+
+
 	Scene::Enter();
 }
 
@@ -97,6 +138,15 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);	
 
+	std::stringstream coinS;
+	coinS << coin;
+	coinText->text.setString(coinS.str());
+
+	std::stringstream scoreS;
+	scoreS << score;
+	scoreText->text.setString(scoreS.str());
+
+	scoreJellyUI->SetPosition(scoreText->text.getGlobalBounds().left - 40.f, 25.f);
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)

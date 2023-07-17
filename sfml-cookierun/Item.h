@@ -10,7 +10,7 @@ class Item : public SpriteGo
 {
 protected:
 	Cookie* cookie;
-	Scene* scene;
+	SceneGame* scene;
 	Map* map;
 
 	bool isUsed = false;

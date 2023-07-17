@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Coin.h"
 #include "ResourceMgr.h"
+#include "Scene.h"
+#include "SceneGame.h"
 
 Coin::Coin(const std::string& textureId, const std::string& n)
 	: Item(textureId, n)
@@ -49,6 +51,30 @@ void Coin::Reset()
 void Coin::Update(float dt)
 {
 	Item::Update(dt);
+	if (IsColPlayer())
+	{
+		switch (type)
+		{
+		case CoinTypes::Coin:
+ 			scene->AddCoin(1);
+			scene->AddScore(10);
+			break;
+
+		case CoinTypes::BigCoin:
+			scene->AddCoin(50);
+			break;
+
+		case CoinTypes::GoldCoin:
+			scene->AddCoin(10);
+			break;
+
+		case CoinTypes::BigGoldCoin:
+			scene->AddCoin(100);
+			break;
+
+		}
+
+	}
 	animation.Update(dt);
 }
 

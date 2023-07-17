@@ -191,6 +191,7 @@
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="GameObjects\SpriteGo.cpp" />
     <ClCompile Include="Global\Variables.cpp" />
+    <ClCompile Include="TextGo.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIHp.cpp" />
   </ItemGroup>
@@ -230,6 +231,7 @@
     <ClInclude Include="GameObjects\SpriteGo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Global\Variables.h" />
+    <ClInclude Include="TextGo.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIHp.h" />
   </ItemGroup>

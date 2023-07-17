@@ -123,6 +123,12 @@ void Cookie::SetHp(int value)
 		hp = maxHp;
 		return;
 	}
+
+	if (sum < 0)
+	{
+		hp = 0;
+		return;
+	}
 	 hp += value; 
 }
 

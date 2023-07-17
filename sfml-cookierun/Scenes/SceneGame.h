@@ -7,13 +7,23 @@ class PlayerTest;
 class UIButton;
 class Map;
 class UIHp;
+class TextGo;
+class SpriteGo;
 
 class SceneGame : public Scene
 {
 protected:
 
+	int coin = 99;
+	int score = 90;
 
+	// UI
 	UIHp* hpUI;
+	TextGo* coinText;
+	TextGo* scoreText;
+
+	SpriteGo* scoreJellyUI;
+	SpriteGo* scoreCoinUI;
 
 	Pancake* pancake;
 
@@ -36,5 +46,8 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
+	void AddCoin(int value) { coin += value;}
+	void AddScore(int value) { score += value; }
 };
 

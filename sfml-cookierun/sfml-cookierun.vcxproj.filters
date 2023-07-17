@@ -114,6 +114,9 @@
     <ClCompile Include="ItemBig.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="TextGo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -225,6 +228,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ItemBig.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TextGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

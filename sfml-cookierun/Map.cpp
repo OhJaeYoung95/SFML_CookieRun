@@ -207,40 +207,6 @@ void Map::Update(float dt)
 		cookie->GetPosition();
 	}
 
-
-	//if (itemBig1->IsColPlayer() && !isBig)
-	//{
-	//	isBig = true;
-	//	isBigTimerOn = true;
-	//}
-	//if (!itemBig1->IsColPlayer() && isBig)
-	//{
-	//	std::cout << " ¸ÔÀ½ " << std::endl;
-	//	cookie->SetScale({ 2.0f, 2.5f });
-	//	cookie->rect.setScale({ 2.0f, 2.5f });
-	//	isBig = false;
-	//}
-
-	//if (itemBigHealPack1->IsColPlayer() && !isBigHp)
-	//{
-	//	isBigHp = true;
-
-	//}
-	//if (!itemBigHealPack1->IsColPlayer() && isBigHp)
-	//{
-	//	std::cout << " ¸ÔÀ½ " << std::endl;
-	//	cookie->SetHp(20);
-	//	isBigHp = false;
-	//}
-
-	//if (itemSpeedUp1->IsColPlayer() && !isSpeedUp)
-	//{
-	//	AddSpeedUp();
-	//	isSpeedUp = true;
-	//	speedUpTimer = 0.f;
-	//	cookie->GetPosition();
-	//}
-
 	if (isSpeedUp)
 	{
 		speedUpTimer += dt;
@@ -259,6 +225,8 @@ void Map::Update(float dt)
 		isSpeedUp = false;
 		ResetSpeed();
 	}
+
+	// ÄÚÀÎ
 
 	BackgroundMove(dt);
 	PlatformMove(dt);
