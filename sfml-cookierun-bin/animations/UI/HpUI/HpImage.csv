@@ -1,0 +1,10 @@
+ID,FPS,LOOPTYPE
+HpImage,10,1
+,,
+TEXTURE ID,,
+graphics/UI/HpBar/HpImage1.png,,
+graphics/UI/HpBar/HpImage2.png,,
+graphics/UI/HpBar/HpImage3.png,,
+graphics/UI/HpBar/HpImage4.png,,
+graphics/UI/HpBar/HpImage5.png,,
+graphics/UI/HpBar/HpImage6.png,,

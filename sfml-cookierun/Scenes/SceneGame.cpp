@@ -10,6 +10,7 @@
 #include "UIButton.h"
 #include "Pancake.h"
 #include "Map.h"
+#include "UIHp.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -29,8 +30,9 @@ void SceneGame::Init()
 	auto size = FRAMEWORK.GetWindowSize();
 
 	pancake = (Pancake*)AddGo(new Pancake());
-	//player = (Player*)AddGo(new Player());
+	pancake->SetType(CookieTypes::Pancake);
 
+	//player = (Player*)AddGo(new Player());
 
 	uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
 	uiButton->SetOrigin(Origins::TR);
@@ -54,6 +56,10 @@ void SceneGame::Init()
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
 	map->SetCookie(cookie);
+
+	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
+	hpUI->SetCookie(cookie);
+
 
 	for (auto go : gameObjects)
 	{

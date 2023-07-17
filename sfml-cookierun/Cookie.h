@@ -1,8 +1,21 @@
 #pragma once
 #include "SpriteGo.h"
+
+enum class CookieTypes
+{
+	None = -1,
+	Pancake,
+	Pirate,
+	Moonlighter,
+};
+
 class Cookie : public SpriteGo
 {
 protected:
+	CookieTypes type = CookieTypes::None;
+	int maxHp;
+	int hp;
+
 	bool isAlive = true;
 	float velocity = 0.f;
 	int jumpCount = 2;
@@ -39,6 +52,14 @@ public:
 
 	float GetVelocity();
 	bool GetIsGround();
+
+	float GetMaxHp() { return maxHp; }
+	float GetHp() { return hp; }
+
+	void SetType(CookieTypes type) { this->type = type; }
+
+	void SetHp(int value);
+	void SetScale(sf::Vector2f value);
 
 	void SetIsGround(bool isGround);
 	void SetGravity();

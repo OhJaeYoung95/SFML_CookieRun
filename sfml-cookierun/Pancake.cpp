@@ -5,7 +5,7 @@
 #include "Framework.h"
 
 Pancake::Pancake(const std::string& textureId, const std::string& n)
-	: Cookie(textureId, n), hp(100)
+	: Cookie(textureId, n)
 {
 }
 
@@ -17,6 +17,7 @@ Pancake::~Pancake()
 void Pancake::Init()
 {
 	Cookie::Init();
+	//SetType(CookieTypes::Pancake);
 
 	// scripts에서 정보를 넣어서 할때는 Enter에서 AddClip을 해줘야한다
 	// Init에서 하고 싶을경우는 아래와 같이 해주어야 한다.

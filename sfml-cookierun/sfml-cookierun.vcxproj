@@ -173,6 +173,8 @@
     <ClCompile Include="GameObjects\VertexArrayGo.cpp" />
     <ClCompile Include="Global\Utils.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemBig.cpp" />
+    <ClCompile Include="ItemBigHealPack.cpp" />
     <ClCompile Include="ItemSpeedUp.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -190,6 +192,7 @@
     <ClCompile Include="GameObjects\SpriteGo.cpp" />
     <ClCompile Include="Global\Variables.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIHp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rd\rapidcsv.h" />
@@ -213,6 +216,8 @@
     <ClInclude Include="Global\Utils.h" />
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemBig.h" />
+    <ClInclude Include="ItemBigHealPack.h" />
     <ClInclude Include="ItemSpeedUp.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Pancake.h" />
@@ -226,6 +231,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Global\Variables.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIHp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

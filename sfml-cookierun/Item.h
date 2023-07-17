@@ -13,6 +13,8 @@ protected:
 	Scene* scene;
 	Map* map;
 
+	bool isUsed = false;
+
 public:
 	Item(const std::string& textureId, const std::string& n);
 	virtual ~Item() override;
@@ -25,9 +27,11 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	void SetCookie(Cookie*& cookie);
-
 	bool IsColPlayer();
 	void SetScene(SceneGame* scene);
 	void SetMap(Map* map);
+
+	bool GetIsUsed() { return isUsed; }
+	void SetIsUsed(bool isUsed) { this->isUsed = isUsed; }
 };
 

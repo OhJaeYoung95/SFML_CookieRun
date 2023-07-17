@@ -1,16 +1,15 @@
 #pragma once
-#include "Cookie.h"
+#include "Item.h"
 #include "AnimationController.h"
 
-class Pancake : public Cookie
+class ItemBig : public Item
 {
 protected:
 	AnimationController animation;
 
 public:
-
-	Pancake(const std::string& textureId = "", const std::string& n = "");
-	virtual ~Pancake() override;
+	ItemBig(const std::string& textureId = "", const std::string& n = "");
+	virtual ~ItemBig() override;
 
 	virtual void Init() override;
 	virtual void Release() override;
@@ -18,5 +17,6 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
 };
 

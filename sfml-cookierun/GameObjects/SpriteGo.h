@@ -6,6 +6,8 @@ protected:
 
 public:
 	sf::Sprite sprite;
+	sf::Sprite animSprite1;
+	sf::Sprite animSprite2;
 	std::string textureId;
 
 	SpriteGo(const std::string& textureId = "", const std::string& n = "");

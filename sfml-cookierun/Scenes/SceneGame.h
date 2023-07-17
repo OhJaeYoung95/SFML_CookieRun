@@ -6,10 +6,14 @@ class Player;
 class PlayerTest;
 class UIButton;
 class Map;
+class UIHp;
 
 class SceneGame : public Scene
 {
 protected:
+
+
+	UIHp* hpUI;
 
 	Pancake* pancake;
 

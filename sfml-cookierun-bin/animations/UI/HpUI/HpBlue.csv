@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE
+HpBlue,10,1
+,,
+TEXTURE ID,,
+graphics/UI/HpBar/HpBlue1.png,,
+graphics/UI/HpBar/HpBlue2.png,,

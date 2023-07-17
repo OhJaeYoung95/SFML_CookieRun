@@ -19,6 +19,19 @@ void Cookie::Init()
 	rect.setSize(sf::Vector2f(100.f, 120.f));
 	rect.setFillColor(sf::Color::Green);
 	SetOrigin(rect, origin);
+
+	switch (type)
+	{
+	case CookieTypes::Pancake:
+		maxHp = 100;
+		break;
+	case CookieTypes::Pirate:
+		maxHp = 130;
+		break;
+	case CookieTypes::Moonlighter:
+		maxHp = 150;
+		break;
+	}
 }
 
 void Cookie::Release()
@@ -35,6 +48,8 @@ void Cookie::Reset()
 	isSliding = false;
 	isLanding = false;
 	jumpCount = 2;
+
+	hp = maxHp;
 }
 
 void Cookie::Update(float dt)
@@ -99,6 +114,22 @@ bool Cookie::GetIsGround()
 	return isGround;
 }
 
+
+void Cookie::SetHp(int value)
+{
+	int sum = hp + value;
+	if (sum > maxHp)
+	{
+		hp = maxHp;
+		return;
+	}
+	 hp += value; 
+}
+
+void Cookie::SetScale(sf::Vector2f value)
+{
+	sprite.setScale(value);
+}
 
 void Cookie::SetIsGround(bool isGround)
 {

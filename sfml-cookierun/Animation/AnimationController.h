@@ -34,4 +34,5 @@ public:
 	void SetFrame(const AnimationFrame& frame);
 	void SetFrame(const AnimationSheetFrame& frame);
 	std::string GetCurrentClipId() const;
+	AnimationClip* GetCurrentClip() const;
 };

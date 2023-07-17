@@ -33,15 +33,18 @@ void Item::Reset()
 void Item::Update(float dt)
 {
 	SpriteGo::Update(dt);
+	if (IsColPlayer()/* && !isUsed*/)
+	{
+		//isUsed = true;
+		this->SetActive(false);
+		scene->RemoveGo(this);
+	}
 }
 
 void Item::Draw(sf::RenderWindow& window)
 {
 	SpriteGo::Draw(window);
-	if (IsColPlayer())
-	{
-		scene->RemoveGo(this);
-	}
+
 }
 
 void Item::SetCookie(Cookie*& cookie)

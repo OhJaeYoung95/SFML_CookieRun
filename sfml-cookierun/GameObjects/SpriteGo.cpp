@@ -16,6 +16,8 @@ void SpriteGo::SetPosition(const sf::Vector2f& p)
 {
 	position = p;
 	sprite.setPosition(p);
+	animSprite1.setPosition(p);
+	animSprite2.setPosition(p);
 }
 
 void SpriteGo::SetPosition(float x, float y)
@@ -23,6 +25,8 @@ void SpriteGo::SetPosition(float x, float y)
 	position.x = x;
 	position.y = y;
 	sprite.setPosition(position);
+	animSprite1.setPosition(position);
+	animSprite2.setPosition(position);
 }
 
 void SpriteGo::SetOrigin(Origins origin)
@@ -38,6 +42,8 @@ void SpriteGo::SetOrigin(float x, float y)
 {
 	GameObject::SetOrigin(x, y);
 	sprite.setOrigin(x, y);
+	animSprite1.setOrigin(x, y);
+	animSprite2.setOrigin(x, y);
 }
 
 void SpriteGo::SetOrigin(sf::RectangleShape& rect, Origins origin)
@@ -75,6 +81,8 @@ void SpriteGo::Update(float dt)
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+	window.draw(animSprite1);
+	window.draw(animSprite2);
 }
 
 void SpriteGo::SetFlipX(bool flip)

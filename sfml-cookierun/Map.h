@@ -7,7 +7,11 @@ class Scene;
 class SceneGame;
 class Platform;
 class Cookie;
+
 class ItemSpeedUp;
+class ItemBigHealPack;
+class ItemBig;
+
 class SpriteEffect;
 class Coin;
 
@@ -33,6 +37,8 @@ protected:
 
 	// 아이템
 	ItemSpeedUp* itemSpeedUp1;
+	ItemBigHealPack* itemBigHealPack1;
+	ItemBig* itemBig1;
 
 	// 코인
 	Coin* coin1;
@@ -41,6 +47,10 @@ protected:
 	float pfSpeed = 500.f;
 
 
+	// 아이템 충돌중복 방지 상태 시간
+	float timer = 0.0f;
+	float duration = 0.1f;
+
 	// 스피드 아이템 상태를 위한 변수
 	float speedUpTimer = 0.0f;
 	float speedUpDuration = 3.0f;
@@ -48,6 +58,15 @@ protected:
 
 	float speedUpEffectTimer = 0.0f;
 	float speedUpEffectDuration = 0.05f;
+
+	// 체력 증가 상태 변수
+	bool isBigHp = false;
+	
+	// 캐릭터 몸체 증가 상태 변수
+	bool isBig = false;
+	bool isBigTimerOn = false;
+	float bigTimer = 0.0f;
+	float bigDuration = 2.0f;
 
 
 	ObjectPool<SpriteEffect> speedUpEffectPool;

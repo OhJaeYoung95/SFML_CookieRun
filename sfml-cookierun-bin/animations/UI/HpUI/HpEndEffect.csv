@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE
+HpEndEffect,8,1
+,,
+TEXTURE ID,,
+graphics/UI/HpBar/HpEndEffect1.png,,
+graphics/UI/HpBar/HpEndEffect2.png,,

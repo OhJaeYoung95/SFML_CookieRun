@@ -8,6 +8,9 @@
 #include "Background.h"
 #include "Platform.h"
 #include "ItemSpeedUp.h"
+#include "ItemBigHealPack.h"
+#include "ItemBig.h"
+
 #include "Cookie.h"
 #include "SpriteEffect.h"
 #include "Coin.h"
@@ -92,7 +95,6 @@ void Map::Init()
 	pf2->SetCookie(cookie);
 	pf2->sortLayer = 1;
 
-
 	// ÀÌÆåÆ® Ç®
 	speedUpEffectPool.OnCreate = [this](SpriteEffect* speedUp)
 	{
@@ -115,6 +117,8 @@ void Map::Reset()
 	pfSpeed = 500.f;
 	isSpeedUp = false;
 	speedUpTimer = 0.f;
+	isBigHp = false;
+	isBig = false;
 
 	// ¹è°æ
 	bg1->SetPosition(0.f, 0.f);
@@ -135,6 +139,24 @@ void Map::Reset()
 	itemSpeedUp1->sortLayer = 5;
 	itemSpeedUp1->SetScene(scene);
 	itemSpeedUp1->SetMap(this);
+	itemSpeedUp1->SetIsUsed(false);
+
+	itemBigHealPack1 = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack());
+	itemBigHealPack1->SetPosition(500.f, 0.f);
+	itemBigHealPack1->SetCookie(cookie);
+	itemBigHealPack1->sortLayer = 5;
+	itemBigHealPack1->SetScene(scene);
+	itemBigHealPack1->SetMap(this);
+	itemBigHealPack1->SetIsUsed(false);
+
+	itemBig1 = (ItemBig*)scene->AddGo(new ItemBig());
+	itemBig1->SetPosition(800.f, 0.f);
+	itemBig1->SetCookie(cookie);
+	itemBig1->sortLayer = 5;
+	itemBig1->SetScene(scene);
+	itemBig1->SetMap(this);
+	itemBig1->SetIsUsed(false);
+
 
 	// ÄÚÀÎ ¼¼ÆÃ
 	coin1 = (Coin*)scene->AddGo(new Coin());
@@ -145,17 +167,80 @@ void Map::Reset()
 	coin1->SetMap(this);
 	coin1->SetType(CoinTypes::Coin);
 
+
 }
 
 void Map::Update(float dt)
 {
-	if (itemSpeedUp1->IsColPlayer() && !isSpeedUp)
+	if (isBigTimerOn)
 	{
+		bigTimer += dt;
+	}
+	if (bigTimer > bigDuration)
+	{
+		cookie->SetScale({ 1.0f, 1.0f });
+		cookie->rect.setScale({ 1.0f, 1.0f });
+		isBigTimerOn = false;
+		bigTimer = 0.f;
+	}
+
+	if (itemBig1->IsColPlayer() && !itemBig1->GetIsUsed())
+	{
+		itemBig1->SetIsUsed(true);
+		cookie->SetScale({ 2.0f, 2.5f });
+		cookie->rect.setScale({ 2.0f, 2.5f });
+		isBigTimerOn = true;
+	}
+
+	if (itemBigHealPack1->IsColPlayer() && !itemBigHealPack1->GetIsUsed())
+	{
+		itemBigHealPack1->SetIsUsed(true);
+		cookie->SetHp(20);
+	}
+
+	if (itemSpeedUp1->IsColPlayer() && !isSpeedUp && !itemSpeedUp1->GetIsUsed())
+	{
+		itemSpeedUp1->SetIsUsed(true);
 		AddSpeedUp();
 		isSpeedUp = true;
 		speedUpTimer = 0.f;
 		cookie->GetPosition();
 	}
+
+
+	//if (itemBig1->IsColPlayer() && !isBig)
+	//{
+	//	isBig = true;
+	//	isBigTimerOn = true;
+	//}
+	//if (!itemBig1->IsColPlayer() && isBig)
+	//{
+	//	std::cout << " ¸ÔÀ½ " << std::endl;
+	//	cookie->SetScale({ 2.0f, 2.5f });
+	//	cookie->rect.setScale({ 2.0f, 2.5f });
+	//	isBig = false;
+	//}
+
+	//if (itemBigHealPack1->IsColPlayer() && !isBigHp)
+	//{
+	//	isBigHp = true;
+
+	//}
+	//if (!itemBigHealPack1->IsColPlayer() && isBigHp)
+	//{
+	//	std::cout << " ¸ÔÀ½ " << std::endl;
+	//	cookie->SetHp(20);
+	//	isBigHp = false;
+	//}
+
+	//if (itemSpeedUp1->IsColPlayer() && !isSpeedUp)
+	//{
+	//	AddSpeedUp();
+	//	isSpeedUp = true;
+	//	speedUpTimer = 0.f;
+	//	cookie->GetPosition();
+	//}
+
 	if (isSpeedUp)
 	{
 		speedUpTimer += dt;
@@ -243,6 +328,14 @@ void Map::PlatformMove(float dt)
 	movePos6 += -pfSpeed * dt;
 	coin1->SetPosition(movePos6, coin1->GetPosition().y);
 
+	float movePos7 = itemBigHealPack1->GetPosition().x;
+	movePos7 += -pfSpeed * dt;
+	itemBigHealPack1->SetPosition(movePos7, itemBigHealPack1->GetPosition().y);
+
+	float movePos8 = itemBig1->GetPosition().x;
+	movePos8 += -pfSpeed * dt;
+	itemBig1->SetPosition(movePos8, itemBig1->GetPosition().y);
+
 	if (pf1->GetPosition().x < -1500.f)
 		pf1->SetPosition(1700.f, pf1->GetPosition().y);
 	if (pf2->GetPosition().x < -1500.f)
@@ -259,6 +352,12 @@ void Map::PlatformMove(float dt)
 
 	if (coin1->GetPosition().x < -1500.f)
 		coin1->SetPosition(1700.f, coin1->GetPosition().y);
+
+	if (itemBigHealPack1->GetPosition().x < -1500.f)
+		itemBigHealPack1->SetPosition(1700.f, itemBigHealPack1->GetPosition().y);
+
+	if (itemBig1->GetPosition().x < -1500.f)
+		itemBig1->SetPosition(1700.f, itemBig1->GetPosition().y);
 
 }
 
