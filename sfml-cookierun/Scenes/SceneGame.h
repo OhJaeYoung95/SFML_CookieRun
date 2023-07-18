@@ -25,6 +25,8 @@ protected:
 	SpriteGo* scoreJellyUI;
 	SpriteGo* scoreCoinUI;
 
+	SpriteGo* hitEffect;
+
 	Pancake* pancake;
 
 	Player* player;

@@ -15,6 +15,8 @@
 #include "SpriteEffect.h"
 #include "Coin.h"
 
+#include "Obstacle.h"
+
 
 Map::Map(const std::string& n)
 	: GameObject(n)
@@ -71,13 +73,13 @@ void Map::Init()
 
 	// 바닥
 	ground1 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
-	ground1->sprite.setScale(10.0f, 1.0f);
+	ground1->sprite.setScale(15.0f, 1.0f);
 	ground1->SetPosition(-300.f, 340.f);
 	ground1->SetCookie(cookie);
 	ground1->sortLayer = 1;
 
 	ground2 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
-	ground2->sprite.setScale(10.0f, 1.0f);
+	ground2->sprite.setScale(15.0f, 1.0f);
 	ground2->SetPosition(1300.f, 340.f);
 	ground2->SetCookie(cookie);
 	ground2->sortLayer = 1;
@@ -94,6 +96,17 @@ void Map::Init()
 	pf2->SetPosition(-300.f, 0.f);
 	pf2->SetCookie(cookie);
 	pf2->sortLayer = 1;
+
+	// 장애물 세팅
+	ob1 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Down));
+	ob1->sprite.setScale(1.0f, 1.8f);
+	ob1->SetCookie(cookie);
+
+
+	ob2 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Up));
+	ob2->sprite.setScale(0.8f, 0.8f);
+	ob2->SetCookie(cookie);
+
 
 	// 이펙트 풀
 	speedUpEffectPool.OnCreate = [this](SpriteEffect* speedUp)
@@ -131,6 +144,9 @@ void Map::Reset()
 
 	pf1->SetPosition(400.f, -150.f);
 	pf2->SetPosition(-300.f, 0.f);
+
+	ob1->SetPosition(2000.f, 165.f);
+	ob2->SetPosition(1000.f, 0.f);
 
 	// 아이템 세팅
 	itemSpeedUp1 = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp());
@@ -176,6 +192,7 @@ void Map::Update(float dt)
 	{
 		bigTimer += dt;
 	}
+
 	if (bigTimer > bigDuration)
 	{
 		cookie->SetScale({ 1.0f, 1.0f });
@@ -304,6 +321,16 @@ void Map::PlatformMove(float dt)
 	movePos8 += -pfSpeed * dt;
 	itemBig1->SetPosition(movePos8, itemBig1->GetPosition().y);
 
+	float movePos9 = ob1->GetPosition().x;
+	movePos9 += -pfSpeed * dt;
+	ob1->SetPosition(movePos9, ob1->GetPosition().y);
+
+	float movePos10 = ob2->GetPosition().x;
+	movePos10 += -pfSpeed * dt;
+	ob2->SetPosition(movePos10, ob2->GetPosition().y);
+
+	
+
 	if (pf1->GetPosition().x < -1500.f)
 		pf1->SetPosition(1700.f, pf1->GetPosition().y);
 	if (pf2->GetPosition().x < -1500.f)
@@ -326,6 +353,12 @@ void Map::PlatformMove(float dt)
 
 	if (itemBig1->GetPosition().x < -1500.f)
 		itemBig1->SetPosition(1700.f, itemBig1->GetPosition().y);
+
+	if (ob1->GetPosition().x < -1500.f)
+		ob1->SetPosition(1700.f, ob1->GetPosition().y);
+
+	if (ob2->GetPosition().x < -1500.f)
+		ob2->SetPosition(1700.f, ob2->GetPosition().y);
 
 }
 

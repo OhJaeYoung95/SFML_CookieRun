@@ -53,6 +53,7 @@ void Pancake::Reset()
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Double_Jump/Double_Jump.csv"));
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Landing/Landing.csv"));
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Sliding/Sliding.csv"));
+	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Hit/Hit.csv"));
 	animation.SetTarget(&sprite);
 	SetOrigin(Origins::BC);
 	sortLayer = 10;
@@ -66,6 +67,23 @@ void Pancake::Reset()
 void Pancake::Update(float dt)
 {
 	Cookie::Update(dt);
+
+	if (isHit && !isHitAnim)
+	{
+		isHitAnim = true;
+		animation.Play("Hit");
+		animation.PlayQueue("Run");
+	}
+
+	//if (isHitAnim)
+	//{
+	//	isHitAnimTimer += dt;
+	//}
+	//if (isHitAnimTimer > isHitAnimDuration)
+	//{
+	//	isHitAnim = false;
+	//}
+
 
 	if ((isGround && animation.GetCurrentClipId() == "Jump")
 		|| (isGround && animation.GetCurrentClipId() == "Double_Jump"))
@@ -94,6 +112,7 @@ void Pancake::Update(float dt)
 	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down))
 	{
 		isSliding = false;
+		animation.PlayQueue("Run");
 	}
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount == 1)
@@ -109,7 +128,7 @@ void Pancake::Update(float dt)
 	}
 
 	if (isGround && animation.GetCurrentClipId() != "Run" 
-		&& !isLanding && !isSliding)
+		&& !isLanding && !isSliding && !isHitAnim)
 	{
 		animation.Play("Run");
 	}

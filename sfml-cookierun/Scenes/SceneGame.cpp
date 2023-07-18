@@ -80,7 +80,7 @@ void SceneGame::Init()
 	scoreText->text.setFillColor(sf::Color::White);
 	scoreText->text.setOutlineThickness(4);
 	scoreText->text.setOutlineColor(sf::Color::Black);
-	scoreText->SetOrigin(Origins::TL);
+	scoreText->SetOrigin(Origins::TR);
 	scoreText->sortLayer = 102;
 
 	// UI
@@ -97,6 +97,15 @@ void SceneGame::Init()
 	scoreCoinUI->sprite.setScale(1.5f, 1.5f);
 	scoreCoinUI->SetOrigin(Origins::TC);
 	scoreCoinUI->sortLayer = 102;
+
+	// Effect
+	hitEffect = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/HitEffect2.png"));
+	hitEffect->SetPosition(0, size.y);
+	hitEffect->sprite.setScale(1.f, 1.f);
+	hitEffect->sprite.setColor(sf::Color::Color(255.f, 255.f, 255.f, 200.f));
+	hitEffect->SetOrigin(Origins::BL);
+	hitEffect->sortLayer = 102;
+	hitEffect->SetActive(false);
 
 	for (auto go : gameObjects)
 	{
@@ -124,7 +133,7 @@ void SceneGame::Enter()
 	uiView.setCenter(size * 0.5f);
 
 	coin = 99;
-
+	score = 90;
 
 	Scene::Enter();
 }
@@ -138,14 +147,32 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);	
 
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
+	{
+		hitEffect->SetActive(true);
+	}
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
+	{
+		hitEffect->SetActive(false);
+	}
+
+	if (pancake->GetIsHit())
+	{
+		hitEffect->SetActive(true);
+	}
+	if (!pancake->GetIsHit())
+	{
+		hitEffect->SetActive(false);
+	}
+
 	std::stringstream coinS;
 	coinS << coin;
 	coinText->text.setString(coinS.str());
-
+	
 	std::stringstream scoreS;
 	scoreS << score;
 	scoreText->text.setString(scoreS.str());
-
+	scoreText->SetOrigin(Origins::TR);
 	scoreJellyUI->SetPosition(scoreText->text.getGlobalBounds().left - 40.f, 25.f);
 }
 

@@ -56,8 +56,8 @@ void Coin::Update(float dt)
 		switch (type)
 		{
 		case CoinTypes::Coin:
- 			scene->AddCoin(1);
-			scene->AddScore(10);
+ 			scene->AddCoin(1000);
+			scene->AddScore(10000);
 			break;
 
 		case CoinTypes::BigCoin:

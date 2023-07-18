@@ -34,6 +34,16 @@ protected:
 
 	float landingTimer = 0.1f;
 
+	float hitTimer = 0.f;
+	float hitDuration = 1.f;
+
+	bool isHit = false;
+
+	bool isHitAnim = false;
+
+	float isHitAnimTimer = 0.f;
+	float isHitAnimDuration = 0.1f;
+
 
 public:
 	sf::RectangleShape rect;
@@ -55,6 +65,7 @@ public:
 
 	float GetMaxHp() { return maxHp; }
 	float GetHp() { return hp; }
+	bool GetIsHit() { return isHit; }
 
 	void SetType(CookieTypes type) { this->type = type; }
 
@@ -65,5 +76,6 @@ public:
 	void SetGravity();
 	void SetJumpCount();
 	void SetIsDouble(bool isDobule);
+	void SetIsHit(bool isHit) { this->isHit = isHit; }
 	//void PickUpItem();
 };

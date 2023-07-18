@@ -13,6 +13,7 @@ const std::string& StringTable::Get(const std::string& id, Languages lang) const
 	return find->second;
 }
 
+
 bool StringTable::Load()
 {
 	std::vector<std::string> filenames;
@@ -43,4 +44,22 @@ void StringTable::Release()
 		table.clear();
 	}
 	//tables.clear();
+}
+
+std::wstring multibyte_to_uni(const std::string& str) {
+	int nLen = str.size();
+	wchar_t warr[256];
+	MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), -1, warr, nLen);
+
+	return warr;
+	//char carr[256];
+	//memset(carr, '\0', sizeof(carr));
+	//WideCharToMultiByte(CP_UTF8, 0, warr, -1, carr, 256, NULL, NULL);
+	//return carr;
+}
+
+const std::wstring StringTable::GetUni(const std::string& id, Languages lang)
+{
+	std::string multibyteString = Get(id, lang);
+	return multibyte_to_uni(multibyteString);
 }

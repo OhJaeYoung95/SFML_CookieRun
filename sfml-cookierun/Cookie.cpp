@@ -50,13 +50,49 @@ void Cookie::Reset()
 	jumpCount = 2;
 
 	hp = maxHp;
+	hitTimer = 0.f;
 }
 
 void Cookie::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	rect.setPosition(GetPosition());
-		
+
+	if (isHit)
+	{
+		hitTimer += dt;
+	}
+
+	if (hitTimer > hitDuration)
+	{
+		hitTimer = 0.f;
+		isHit = false;
+		isHitAnim = false;
+	}
+
+
+	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && isGround)
+	{
+		rect.setSize(sf::Vector2f(100.f, 90.f));
+		SetOrigin(rect, origin);
+	}
+	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down))
+	{
+		rect.setSize(sf::Vector2f(100.f, 120.f));
+		SetOrigin(rect, origin);
+	}
+	if (isHit)
+	{
+		rect.setSize(sf::Vector2f(100.f, 120.f));
+		SetOrigin(rect, origin);
+	}
+
+	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && !isGround)
+	{
+		rect.setSize(sf::Vector2f(100.f, 120.f));
+		SetOrigin(rect, origin);
+	}
+
 	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
 		rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
 	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))

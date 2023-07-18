@@ -103,3 +103,8 @@
 1,fonts/CookieRun Regular.otf
 0,graphics/UI/Coin/ScoreCoinUI.png
 0,graphics/UI/Score/ScoreJellyUI.png
+0,graphics/UI/InGame/HitEffect1.png
+0,graphics/UI/InGame/HitEffect2.png
+3,animations/Stage1/Obstacle/Pillar.csv
+0,graphics/Pancake/Hit/Hit.png
+3,animations/Pancake/Hit/Hit.csv

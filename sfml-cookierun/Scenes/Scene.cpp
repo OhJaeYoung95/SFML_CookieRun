@@ -3,9 +3,11 @@
 #include "GameObject.h"
 #include "ResourceMgr.h"
 #include "Framework.h"
+#include "TextGo.h"
 
 Scene::Scene(SceneId id) : sceneId(id), window(FRAMEWORK.GetWindow())
 {
+
 }
 
 Scene::~Scene()
@@ -99,6 +101,8 @@ void Scene::Enter()
 	{
 		go->Reset();
 	}
+
+	blinkTimer = 0.f;
 }
 
 void Scene::Exit()
@@ -110,6 +114,8 @@ void Scene::Exit()
 	removeGameObjects.clear();
 
 	RESOURCE_MGR.UnLoadAll();
+
+	blinkTimer = 0.f;
 }
 
 void Scene::Update(float dt)
@@ -127,6 +133,9 @@ void Scene::Update(float dt)
 		gameObjects.remove(go);
 	}
 	removeGameObjects.clear();
+
+	blinkTimer += dt;
+
 }
 
 void Scene::Draw(sf::RenderWindow& window)
@@ -158,4 +167,19 @@ void Scene::Draw(sf::RenderWindow& window)
 			go->Draw(window);
 		}
 	}
+}
+
+void Scene::Blink(TextGo* go)
+{
+	if (blinkTimer > blinkDuration && blinkTimer < blinkDuration * 2.0f)
+	{
+		go->SetActive(true);
+	}
+	if (blinkTimer < blinkDuration && blinkTimer > 0)
+	{
+		go->SetActive(false);
+	}
+
+	if (blinkTimer > blinkDuration * 2.0f)
+		blinkTimer = 0.f;
 }

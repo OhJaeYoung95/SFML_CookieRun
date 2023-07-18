@@ -15,6 +15,8 @@ class ItemBig;
 class SpriteEffect;
 class Coin;
 
+class Obstacle;
+
 class Map : public GameObject
 {
 protected:
@@ -31,9 +33,13 @@ protected:
 	Platform* ground1;
 	Platform* ground2;
 
-	// 장애물
+	// 발판
 	Platform* pf1;
 	Platform* pf2;
+
+	// 장애물
+	Obstacle* ob1;
+	Obstacle* ob2;
 
 	// 아이템
 	ItemSpeedUp* itemSpeedUp1;

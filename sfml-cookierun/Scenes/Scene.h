@@ -1,6 +1,7 @@
 #pragma once
 
 class GameObject;
+class TextGo;
 
 class Scene
 {
@@ -20,6 +21,9 @@ protected:
 	sf::View uiView;
 
 	sf::RenderWindow& window;
+
+	float blinkTimer = 0.f;
+	float blinkDuration = 0.5f;
 
 public:
 
@@ -48,5 +52,7 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);
+
+	void Blink(TextGo* go);
 };
 
