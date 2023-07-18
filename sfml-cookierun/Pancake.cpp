@@ -76,19 +76,12 @@ void Pancake::Update(float dt)
 	{
 		isDieAnim = true;
 		animation.Play("Die");
-	}	
+	}
 	
-	//if (!isAlive && !isDieAnim)
-	//{
-	//	isDieAnim = true;
-	//	animation.Play("Die");
-	//}
-
-	//if (dieTimer > dieDuration)
-	//{
-	//	dieTimer = 0.f;
-	//	isDieAnim = false;
-	//}
+	if (animation.GetCurrentClipId() == "Run" && isDieAnim)
+	{
+		animation.Play("Die");
+	}
 
 
 	if (isHit && !isHitAnim)

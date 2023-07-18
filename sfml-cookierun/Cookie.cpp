@@ -61,6 +61,10 @@ void Cookie::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	rect.setPosition(GetPosition());
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
+		rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
+		rect.setFillColor(sf::Color::Green);
 
 	//if (!isAlive && !isDieAnim)
 	//	return;
@@ -108,10 +112,6 @@ void Cookie::Update(float dt)
 			SetOrigin(rect, origin);
 		}
 
-		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
-			rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
-		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
-			rect.setFillColor(sf::Color::Green);
 
 		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount > 0)
 		{
