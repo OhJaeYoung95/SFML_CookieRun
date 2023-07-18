@@ -9,16 +9,26 @@ enum class CookieTypes
 	Moonlighter,
 };
 
+class SceneGame;
+class Map;
+
 class Cookie : public SpriteGo
 {
 protected:
 	CookieTypes type = CookieTypes::None;
+
+	SceneGame* scene;
+	Map* map;
 	int maxHp;
 	int hp;
 
 	bool isAlive = true;
 	float velocity = 0.f;
 	int jumpCount = 2;
+
+	bool isDieAnim = false;
+	float dieTimer = 0.f;
+	float dieDuration = 1.0f;
 
 	bool isGround = true;
 	bool isLanding = false;
@@ -77,5 +87,8 @@ public:
 	void SetJumpCount();
 	void SetIsDouble(bool isDobule);
 	void SetIsHit(bool isHit) { this->isHit = isHit; }
+
+	void SetScene(SceneGame* scene) { this->scene = scene; }
+	void SetMap(Map* map) { this->map = map; }
 	//void PickUpItem();
 };

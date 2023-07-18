@@ -100,5 +100,5 @@ public:
 	void PlatformMove(float dt);
 	void AddSpeedUp();
 	void ResetSpeed();
+	void MoveStop();
 };
-

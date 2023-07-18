@@ -17,16 +17,16 @@ Obstacle::~Obstacle()
 void Obstacle::Init()
 {
     SpriteGo::Init();
-    switch (type)
-    {
-    case ObstacleType::Up:
-        SetOrigin(Origins::TC);
-        break;
+    //switch (type)
+    //{
+    //case ObstacleType::Up:
+    //    SetOrigin(Origins::TC);
+    //    break;
 
-    case ObstacleType::Down:
-        SetOrigin(Origins::BC);
-        break;
-    }
+    //case ObstacleType::Down:
+    //    SetOrigin(Origins::BC);
+    //    break;
+    //}
 
 }
 
@@ -42,16 +42,16 @@ void Obstacle::Reset()
     animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Stage1/Obstacle/Pillar.csv"));
     animation.SetTarget(&sprite);
 
-    switch (type)
-    {
-    case ObstacleType::Up:
-        SetOrigin(Origins::TC);
-        break;
+    //switch (type)
+    //{
+    //case ObstacleType::Up:
+    //    SetOrigin(Origins::TC);
+    //    break;
 
-    case ObstacleType::Down:
-        SetOrigin(Origins::BC);
-        break;
-    }
+    //case ObstacleType::Down:
+    //    SetOrigin(Origins::BC);
+    //    break;
+    //}
     sortLayer = 0;
     animation.Play("Pillar");
 }
@@ -63,6 +63,7 @@ void Obstacle::Update(float dt)
     if (IsColPlayer() && !cookie->GetIsHit())
     {
         cookie->SetIsHit(true);
+        cookie->SetHp(-10);
     }
 
     animation.Update(dt);

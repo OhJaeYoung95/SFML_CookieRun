@@ -33,7 +33,6 @@ void SceneGame::Init()
 
 	pancake = (Pancake*)AddGo(new Pancake());
 	pancake->SetType(CookieTypes::Pancake);
-
 	//player = (Player*)AddGo(new Player());
 
 	uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
@@ -58,6 +57,7 @@ void SceneGame::Init()
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
 	map->SetCookie(cookie);
+
 
 	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
 	hpUI->SetCookie(cookie);
@@ -84,6 +84,37 @@ void SceneGame::Init()
 	scoreText->sortLayer = 102;
 
 	// UI
+	jumpUpUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/JumpUp.png"));
+	jumpUpUI->SetPosition(size.x * 0.02f, size.y * 0.92f);
+	jumpUpUI->sprite.setScale(1.2f, 1.2f);
+	jumpUpUI->SetOrigin(Origins::BL);
+	jumpUpUI->sortLayer = 102;
+	jumpUpUI->sortOrder = 1;
+
+	jumpDownUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/JumpDown.png"));
+	jumpDownUI->SetPosition(size.x * 0.02f, size.y * 0.92f);
+	jumpDownUI->sprite.setScale(1.2f, 1.2f);
+	jumpDownUI->SetOrigin(Origins::BL);
+	jumpDownUI->sortLayer = 102;
+	jumpDownUI->sortOrder = 2;
+	JumpUIDown(false);
+
+	slideUpUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/SlideUp.png"));
+	slideUpUI->SetPosition(size.x * 0.98f, size.y * 0.92f);
+	slideUpUI->sprite.setScale(1.2f, 1.2f);
+	slideUpUI->SetOrigin(Origins::BR);
+	slideUpUI->sortLayer = 102;
+	slideUpUI->sortOrder = 1;
+	
+	slideDownUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/SlideDown.png"));
+	slideDownUI->SetPosition(size.x * 0.98f, size.y * 0.92f);
+	slideDownUI->sprite.setScale(1.2f, 1.2f);
+	slideDownUI->SetOrigin(Origins::BR);
+	slideDownUI->sortLayer = 102;
+	slideDownUI->sortOrder = 2;
+	SlideUIDown(false);
+
+
 	scoreJellyUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Score/ScoreJellyUI.png"));
 	scoreCoinUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Coin/ScoreCoinUI.png"));
 
@@ -125,6 +156,8 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
+	pancake->SetScene(this);
+	pancake->SetMap(map);
 	auto size = FRAMEWORK.GetWindowSize();
 	worldView.setSize(size);
 	worldView.setCenter(0, 0);
@@ -146,6 +179,14 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);	
+
+	if(jumpDownUI->GetActive())
+		jumpUIDownTimer += dt;
+	if (jumpUIDownTimer > jumpUIDownDuration)
+	{
+		JumpUIDown(false);
+		jumpUIDownTimer = 0.f;
+	}
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
 	{
@@ -179,4 +220,14 @@ void SceneGame::Update(float dt)
 void SceneGame::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
+}
+
+void SceneGame::JumpUIDown(bool isActive)
+{
+	jumpDownUI->SetActive(isActive);
+}
+
+void SceneGame::SlideUIDown(bool isActive)
+{
+	slideDownUI->SetActive(isActive);
 }

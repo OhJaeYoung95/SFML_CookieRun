@@ -4,6 +4,7 @@
 
 enum class ObstacleType
 {
+	None = -1,
 	Up,
 	Down,
 };
@@ -16,7 +17,7 @@ class Map;
 class Obstacle : public SpriteGo
 {
 protected:
-	ObstacleType type;
+	ObstacleType type = ObstacleType::None;
 
 	Cookie* cookie;
 	SceneGame* scene;

@@ -108,3 +108,14 @@
 3,animations/Stage1/Obstacle/Pillar.csv
 0,graphics/Pancake/Hit/Hit.png
 3,animations/Pancake/Hit/Hit.csv
+0,graphics/UI/InGame/JumpDown.png
+0,graphics/UI/InGame/JumpUp.png
+0,graphics/UI/InGame/SlideDown.png
+0,graphics/UI/InGame/SlideUp.png
+0,graphics/UI/InGame/Pause.png
+0,graphics/Pancake/Die/Die1.png
+0,graphics/Pancake/Die/Die2.png
+0,graphics/Pancake/Die/Die3.png
+0,graphics/Pancake/Die/Die4.png
+0,graphics/Pancake/Die/Die5.png
+3,animations/Pancake/Die/Die.csv

@@ -66,8 +66,10 @@ void UIHp::Update(float dt)
 	if (timer > duration)
 	{
 		timer = 0.f;
+ 		//cookie->SetHp(-2);
  		cookie->SetHp(-10);
 	}
+
 	AnimationClip* clip = animation2.GetCurrentClip();
 	clip->frames[0].action = [this]() {
 		animSprite2.setScale(1.1f, 1.4f);

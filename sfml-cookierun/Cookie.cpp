@@ -3,6 +3,8 @@
 #include "InputMgr.h"
 #include "ResourceMgr.h"
 #include "Framework.h"
+#include "SceneGame.h"
+#include "Map.h"
 
 Cookie::Cookie(const std::string& textureId, const std::string& n)
 	: SpriteGo(textureId, n)
@@ -47,6 +49,8 @@ void Cookie::Reset()
 	isDouble = false;
 	isSliding = false;
 	isLanding = false;
+
+	isDieAnim = false;
 	jumpCount = 2;
 
 	hp = maxHp;
@@ -58,75 +62,96 @@ void Cookie::Update(float dt)
 	SpriteGo::Update(dt);
 	rect.setPosition(GetPosition());
 
-	if (isHit)
+	//if (!isAlive && !isDieAnim)
+	//	return;
+	if (isAlive)
 	{
-		hitTimer += dt;
-	}
-
-	if (hitTimer > hitDuration)
-	{
-		hitTimer = 0.f;
-		isHit = false;
-		isHitAnim = false;
-	}
-
-
-	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && isGround)
-	{
-		rect.setSize(sf::Vector2f(100.f, 90.f));
-		SetOrigin(rect, origin);
-	}
-	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down))
-	{
-		rect.setSize(sf::Vector2f(100.f, 120.f));
-		SetOrigin(rect, origin);
-	}
-	if (isHit)
-	{
-		rect.setSize(sf::Vector2f(100.f, 120.f));
-		SetOrigin(rect, origin);
-	}
-
-	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && !isGround)
-	{
-		rect.setSize(sf::Vector2f(100.f, 120.f));
-		SetOrigin(rect, origin);
-	}
-
-	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
-		rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
-	if(INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
-		rect.setFillColor(sf::Color::Green);
-
-	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount > 0)
-	{
-		if(jumpCount == 2)
-			velocity += jumpForce;
-
-		if (jumpCount == 1)
+		if (hp <= 0)
 		{
-			velocity = 0;
-			velocity += doubleJumpForce;
+			Die();
 		}
 
-		isGround = false;
-		jumpCount--;
+		if (isHit)
+		{
+			hitTimer += dt;
+		}
+
+		if (hitTimer > hitDuration)
+		{
+			hitTimer = 0.f;
+			isHit = false;
+			isHitAnim = false;
+		}
+
+
+		if (INPUT_MGR.GetKey(sf::Keyboard::Down) && isGround)
+		{
+			rect.setSize(sf::Vector2f(100.f, 90.f));
+			SetOrigin(rect, origin);
+			scene->SlideUIDown(true);
+		}
+		if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down))
+		{
+			rect.setSize(sf::Vector2f(100.f, 120.f));
+			SetOrigin(rect, origin);
+			scene->SlideUIDown(false);
+		}
+		if (isHit)
+		{
+			rect.setSize(sf::Vector2f(100.f, 120.f));
+			SetOrigin(rect, origin);
+		}
+
+		if (INPUT_MGR.GetKey(sf::Keyboard::Down) && !isGround)
+		{
+			rect.setSize(sf::Vector2f(100.f, 120.f));
+			SetOrigin(rect, origin);
+		}
+
+		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
+			rect.setFillColor(sf::Color::Color(255, 255, 255, 0));
+		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
+			rect.setFillColor(sf::Color::Green);
+
+		if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount > 0)
+		{
+			scene->JumpUIDown(true);
+			scene->SlideUIDown(false);
+
+			if (jumpCount == 2)
+				velocity += jumpForce;
+
+			if (jumpCount == 1)
+			{
+				velocity = 0;
+				velocity += doubleJumpForce;
+			}
+
+			isGround = false;
+			jumpCount--;
+		}
+
+		if (INPUT_MGR.GetKeyUp(sf::Keyboard::Space))
+		{
+			scene->JumpUIDown(false);
+		}
+		velocity += gravity * (jumpSpeed - 0.7f) * dt;
+		position.y += velocity * jumpSpeed * dt;
+
+		//std::cout << position.y << std::endl;
+		//std::cout << jumpCount << std::endl;
+		//if (position.y > 290.f)
+		//{
+		//	isDouble = false;
+		//	jumpCount = 2;
+		//	isGround = true;
+		//	position.y = 290.f;
+		//	velocity = 0.f;
+		//}
+
+		SetPosition(position);
+
 	}
-	velocity += gravity * (jumpSpeed -0.7f )* dt;
-	position.y += velocity * jumpSpeed * dt;
-
-	//std::cout << position.y << std::endl;
-	//std::cout << jumpCount << std::endl;
-	//if (position.y > 290.f)
-	//{
-	//	isDouble = false;
-	//	jumpCount = 2;
-	//	isGround = true;
-	//	position.y = 290.f;
-	//	velocity = 0.f;
-	//}
-
-	SetPosition(position);
 }
 
 void Cookie::Draw(sf::RenderWindow& window)
@@ -138,6 +163,7 @@ void Cookie::Draw(sf::RenderWindow& window)
 void Cookie::Die()
 {
 	isAlive = false;
+	map->MoveStop();
 }
 
 float Cookie::GetVelocity()

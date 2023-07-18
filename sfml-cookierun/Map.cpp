@@ -108,7 +108,35 @@ void Map::Init()
 	ob2->SetCookie(cookie);
 
 
-	// 이펙트 풀
+	// 아이템		// sortLayer 5
+
+	itemSpeedUp1 = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp());
+	itemSpeedUp1->SetCookie(cookie);
+	itemSpeedUp1->sortLayer = 5;
+	itemSpeedUp1->SetScene(scene);
+	itemSpeedUp1->SetMap(this);
+
+	itemBigHealPack1 = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack());
+	itemBigHealPack1->SetCookie(cookie);
+	itemBigHealPack1->sortLayer = 5;
+	itemBigHealPack1->SetScene(scene);
+	itemBigHealPack1->SetMap(this);
+	
+	itemBig1 = (ItemBig*)scene->AddGo(new ItemBig());
+	itemBig1->SetCookie(cookie);
+	itemBig1->sortLayer = 5;
+	itemBig1->SetScene(scene);
+	itemBig1->SetMap(this);
+	
+	coin1 = (Coin*)scene->AddGo(new Coin());
+	coin1->SetCookie(cookie);
+	coin1->sortLayer = 5;
+	coin1->SetScene(scene);
+	coin1->SetMap(this);
+	coin1->SetType(CoinTypes::Coin);
+
+
+	// 이펙트 풀 sortLayer 2
 	speedUpEffectPool.OnCreate = [this](SpriteEffect* speedUp)
 	{
 		speedUp->SetAnim("animations/Effect/EffectSpeedUp.csv");
@@ -146,42 +174,24 @@ void Map::Reset()
 	pf2->SetPosition(-300.f, 0.f);
 
 	ob1->SetPosition(2000.f, 165.f);
+	//ob1->SetOrigin(Origins::BC);
+
 	ob2->SetPosition(1000.f, 0.f);
+	//ob2->SetOrigin(Origins::TC);
 
 	// 아이템 세팅
-	itemSpeedUp1 = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp());
 	itemSpeedUp1->SetPosition(0.f, 0.f);
-	itemSpeedUp1->SetCookie(cookie);
-	itemSpeedUp1->sortLayer = 5;
-	itemSpeedUp1->SetScene(scene);
-	itemSpeedUp1->SetMap(this);
-	itemSpeedUp1->SetIsUsed(false);
+	//itemSpeedUp1->SetIsUsed(false);
 
-	itemBigHealPack1 = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack());
 	itemBigHealPack1->SetPosition(500.f, 0.f);
-	itemBigHealPack1->SetCookie(cookie);
-	itemBigHealPack1->sortLayer = 5;
-	itemBigHealPack1->SetScene(scene);
-	itemBigHealPack1->SetMap(this);
-	itemBigHealPack1->SetIsUsed(false);
+	//itemBigHealPack1->SetIsUsed(false);
 
-	itemBig1 = (ItemBig*)scene->AddGo(new ItemBig());
 	itemBig1->SetPosition(800.f, 0.f);
-	itemBig1->SetCookie(cookie);
-	itemBig1->sortLayer = 5;
-	itemBig1->SetScene(scene);
-	itemBig1->SetMap(this);
-	itemBig1->SetIsUsed(false);
+	//itemBig1->SetIsUsed(false);
 
 
 	// 코인 세팅
-	coin1 = (Coin*)scene->AddGo(new Coin());
 	coin1->SetPosition(200.f, 0.f);
-	coin1->SetCookie(cookie);
-	coin1->sortLayer = 5;
-	coin1->SetScene(scene);
-	coin1->SetMap(this);
-	coin1->SetType(CoinTypes::Coin);
 
 
 }
@@ -372,4 +382,10 @@ void Map::ResetSpeed()
 {
 	bgSpeed = 300.f;
 	pfSpeed = 500.f;
+}
+
+void Map::MoveStop()
+{
+	bgSpeed = 0.f;
+	pfSpeed = 0.f;
 }

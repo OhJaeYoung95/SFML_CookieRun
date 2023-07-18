@@ -25,6 +25,11 @@ protected:
 	SpriteGo* scoreJellyUI;
 	SpriteGo* scoreCoinUI;
 
+	SpriteGo* jumpUpUI;
+	SpriteGo* jumpDownUI;
+	SpriteGo* slideUpUI;
+	SpriteGo* slideDownUI;
+
 	SpriteGo* hitEffect;
 
 	Pancake* pancake;
@@ -35,6 +40,9 @@ protected:
 	Map* map;
 
 	UIButton* uiButton;
+
+	float jumpUIDownTimer = 0.f;
+	float jumpUIDownDuration = 0.2f;
 
 public:
 	SceneGame();
@@ -51,5 +59,8 @@ public:
 
 	void AddCoin(int value) { coin += value;}
 	void AddScore(int value) { score += value; }
+
+	void JumpUIDown(bool isActive);
+	void SlideUIDown(bool isActive);
 };
 

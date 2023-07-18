@@ -54,6 +54,7 @@ void Pancake::Reset()
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Landing/Landing.csv"));
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Sliding/Sliding.csv"));
 	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Hit/Hit.csv"));
+	animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Pancake/Die/Die.csv"));
 	animation.SetTarget(&sprite);
 	SetOrigin(Origins::BC);
 	sortLayer = 10;
@@ -68,22 +69,34 @@ void Pancake::Update(float dt)
 {
 	Cookie::Update(dt);
 
+	if (!isAlive)
+		dieTimer += dt;
+
+	if (!isAlive && !isDieAnim)
+	{
+		isDieAnim = true;
+		animation.Play("Die");
+	}	
+	
+	//if (!isAlive && !isDieAnim)
+	//{
+	//	isDieAnim = true;
+	//	animation.Play("Die");
+	//}
+
+	//if (dieTimer > dieDuration)
+	//{
+	//	dieTimer = 0.f;
+	//	isDieAnim = false;
+	//}
+
+
 	if (isHit && !isHitAnim)
 	{
 		isHitAnim = true;
 		animation.Play("Hit");
 		animation.PlayQueue("Run");
 	}
-
-	//if (isHitAnim)
-	//{
-	//	isHitAnimTimer += dt;
-	//}
-	//if (isHitAnimTimer > isHitAnimDuration)
-	//{
-	//	isHitAnim = false;
-	//}
-
 
 	if ((isGround && animation.GetCurrentClipId() == "Jump")
 		|| (isGround && animation.GetCurrentClipId() == "Double_Jump"))
@@ -103,32 +116,32 @@ void Pancake::Update(float dt)
 		isLanding = false;
 	}
 
-	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && !isSliding && isGround)
+	if (INPUT_MGR.GetKey(sf::Keyboard::Down) && !isSliding && isGround && !isDieAnim)
 	{
 		animation.Play("Sliding");
 		isSliding = true;
 	}
 
-	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down))
+	if (INPUT_MGR.GetKeyUp(sf::Keyboard::Down) && !isDieAnim)
 	{
 		isSliding = false;
 		animation.PlayQueue("Run");
 	}
 
-	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount == 1)
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount == 1 && !isDieAnim)
 	{
 		animation.Play("Jump");
 		isSliding = false;
 	}
 
-	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount == 0 && !isDouble)
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Space) && jumpCount == 0 && !isDouble && !isDieAnim)
 	{
 		isDouble = true;
 		animation.Play("Double_Jump");
 	}
 
 	if (isGround && animation.GetCurrentClipId() != "Run" 
-		&& !isLanding && !isSliding && !isHitAnim)
+		&& !isLanding && !isSliding && !isHitAnim && !isDieAnim)
 	{
 		animation.Play("Run");
 	}
