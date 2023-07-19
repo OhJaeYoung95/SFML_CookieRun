@@ -177,6 +177,7 @@
     <ClCompile Include="ItemBigHealPack.cpp" />
     <ClCompile Include="ItemSpeedUp.cpp" />
     <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="LobbyCookie.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -226,6 +227,7 @@
     <ClInclude Include="ItemBigHealPack.h" />
     <ClInclude Include="ItemSpeedUp.h" />
     <ClInclude Include="Lobby.h" />
+    <ClInclude Include="LobbyCookie.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Pancake.h" />

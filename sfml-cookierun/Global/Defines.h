@@ -37,6 +37,7 @@ enum class SceneId
 {
 	None = -1,
 	Title,
+	Lobby,
 	Game,
 	Count,
 };

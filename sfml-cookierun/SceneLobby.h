@@ -1,9 +1,12 @@
 #pragma once
 #include "Scene.h"
+#include "LobbyCookie.h"
 
 class Lobby;
 class Cookie;
 class SceneGame;
+class UIButton;
+class TextGo;
 
 class SceneLobby : public Scene
 {
@@ -14,7 +17,12 @@ protected:
 	SceneGame* scene;
 
 	Lobby* lobby;
-	Cookie* cookie;
+
+	LobbyCookie* cookie;
+	LobbyCookieType currentType = LobbyCookieType::None;
+
+	UIButton* playButton;
+	TextGo* playText;
 
 public:
 	SceneLobby();

@@ -16,6 +16,7 @@ protected:
 	LobbyType type = LobbyType::None;
 
 	AnimationController animation;
+	AnimationController animationEffect1;
 
 public:
 	Lobby(const std::string& textureId = "", const std::string& n = "");

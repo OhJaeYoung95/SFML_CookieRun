@@ -35,6 +35,8 @@ void SpriteGo::SetOrigin(Origins origin)
 	if (this->origin != Origins::CUSTOM)
 	{
 		Utils::SetOrigin(sprite, origin);
+		Utils::SetOrigin(animSprite1, origin);
+		Utils::SetOrigin(animSprite2, origin);
 	}
 }
 
