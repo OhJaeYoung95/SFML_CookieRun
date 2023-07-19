@@ -11,11 +11,14 @@ protected:
 
 	SceneId sceneId;
 
+	bool isPlaying = true;
+
 	//std::vector<std::tuple<ResourceTypes, std::string>> resources;
 
 
 	std::list<GameObject*> gameObjects; 
 	std::list<GameObject*> removeGameObjects;
+	std::list<GameObject*> notPauseObjects;
 
 	sf::View worldView;
 	sf::View uiView;
@@ -35,7 +38,9 @@ public:
 	GameObject* FindGo(const std::string& name);
 	void FindGos(std::list<GameObject*>& list, const std::string& name);
 	bool Exist(GameObject* go);
+	bool ExistNP(GameObject* go);
 	GameObject* AddGo(GameObject* go);
+	GameObject* AddNPGo(GameObject* go);
 	void RemoveGo(GameObject* go);
 	void SortGos();
 
@@ -54,5 +59,7 @@ public:
 	virtual void Draw(sf::RenderWindow& window);
 
 	void Blink(TextGo* go);
+
+	void SetIsPlaying(bool isPlaying) { this->isPlaying = isPlaying; }
 };
 

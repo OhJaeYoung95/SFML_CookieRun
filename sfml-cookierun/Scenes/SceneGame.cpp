@@ -13,6 +13,7 @@
 #include "UIHp.h"
 #include "TextGo.h"
 #include "SpriteGo.h"
+#include "Pause.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -29,7 +30,6 @@ void SceneGame::Init()
 {
 	Release();
 	auto size = FRAMEWORK.GetWindowSize();
-
 
 	pancake = (Pancake*)AddGo(new Pancake());
 	pancake->SetType(CookieTypes::Pancake);
@@ -49,7 +49,7 @@ void SceneGame::Init()
 		ptr->sprite.setTexture(*tex);
 	};
 	uiButton->OnClick = [this]() {
-		SCENE_MGR.ChangeScene(sceneId);
+		SCENE_MGR.ChangeScene(SceneId::Game);
 	};
 
 	Cookie* cookie = dynamic_cast<Cookie*>(pancake);
@@ -57,7 +57,6 @@ void SceneGame::Init()
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
 	map->SetCookie(cookie);
-
 
 	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
 	hpUI->SetCookie(cookie);
@@ -114,6 +113,13 @@ void SceneGame::Init()
 	slideDownUI->sortOrder = 2;
 	SlideUIDown(false);
 
+	pauseUIButton = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/InGame/Pause.png"));
+	pauseUIButton->SetPosition(size.x * 0.97f, 50.f);
+	pauseUIButton->sprite.setScale(1.2f, 1.2f);
+	pauseUIButton->SetOrigin(Origins::MC);
+	pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+	pauseUIButton->sortLayer = 102;
+
 
 	scoreJellyUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Score/ScoreJellyUI.png"));
 	scoreCoinUI = (SpriteGo*)AddGo(new SpriteGo("graphics/UI/Coin/ScoreCoinUI.png"));
@@ -138,11 +144,16 @@ void SceneGame::Init()
 	hitEffect->sortLayer = 102;
 	hitEffect->SetActive(false);
 
+	pauseUI = (Pause*)AddGo(new Pause());
+	pauseUI->SetPosition(size.x * 0.5f, size.y * 0.5f);
+	pauseUI->SetScene(this);
+	pauseUI->sortLayer = 102;
+
+
 	for (auto go : gameObjects)
 	{
 		go->Init();
 	}
-
 }
 
 void SceneGame::Release()
@@ -150,14 +161,17 @@ void SceneGame::Release()
 	for (auto go : gameObjects)
 	{
 		//go->Release();
-		delete go;
+		delete go;  
 	}
 }
 
 void SceneGame::Enter()
 {
+	isPlaying = true;
 	pancake->SetScene(this);
 	pancake->SetMap(map);
+	pancake->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+
 	auto size = FRAMEWORK.GetWindowSize();
 	worldView.setSize(size);
 	worldView.setCenter(0, 0);
@@ -168,6 +182,8 @@ void SceneGame::Enter()
 	coin = 99;
 	score = 90;
 
+	pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+	pauseUI->SetActive(false);
 	Scene::Enter();
 }
 
@@ -178,7 +194,21 @@ void SceneGame::Exit()
 
 void SceneGame::Update(float dt)
 {
+	if (INPUT_MGR.GetKey(sf::Keyboard::P))
+	{
+		pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
+	}
+	if (INPUT_MGR.GetKeyUp(sf::Keyboard::P))
+	{
+		pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+		pauseUI->AllSetActive(true);
+		pauseUI->SetActive(true);
+		isPlaying = false;
+	}
+
 	Scene::Update(dt);	
+
+
 
 	if(jumpDownUI->GetActive())
 		jumpUIDownTimer += dt;
@@ -187,6 +217,7 @@ void SceneGame::Update(float dt)
 		JumpUIDown(false);
 		jumpUIDownTimer = 0.f;
 	}
+
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
 	{
@@ -215,6 +246,12 @@ void SceneGame::Update(float dt)
 	scoreText->text.setString(scoreS.str());
 	scoreText->SetOrigin(Origins::TR);
 	scoreJellyUI->SetPosition(scoreText->text.getGlobalBounds().left - 40.f, 25.f);
+
+	if (isChange)
+	{
+		isChange = false;
+		SCENE_MGR.ChangeScene(SceneId::Title);
+	}
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)

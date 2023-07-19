@@ -1,0 +1,40 @@
+"RESOURCE_TYPES (0: 텍스쳐, 1: 폰트, 2: 사운드 클립, 3: 애니메이션 클립, 4: 애니메이션 스프라이트 클립)",RESOURCE_PATH
+1,fonts/CookieRun Black.otf
+1,fonts/CookieRun Bold.otf
+1,fonts/CookieRun Regular.otf
+0,graphics/Lobby/Lobby1/Lobby1.png
+0,graphics/Lobby/Lobby1/Lobby2.png
+0,graphics/Lobby/Lobby1/Lobby3.png
+0,graphics/Lobby/Lobby1/Lobby4.png
+0,graphics/Lobby/Lobby1/Lobby5.png
+0,graphics/Lobby/Lobby1/Lobby6.png
+0,graphics/Lobby/Lobby1/Lobby7.png
+0,graphics/Lobby/Lobby1/Lobby8.png
+0,graphics/Lobby/Lobby1/Effect1.png
+0,graphics/Lobby/Lobby1/Effect2.png
+0,graphics/Lobby/Lobby1/Effect3.png
+0,graphics/Lobby/Lobby1/Effect4.png
+0,graphics/Lobby/Lobby1/Effect5.png
+0,graphics/Lobby/Lobby1/Effect6.png
+0,graphics/Lobby/Lobby1/Effect7.png
+0,graphics/Lobby/Lobby2/Lobby1.png
+0,graphics/Lobby/Lobby2/Lobby2.png
+0,graphics/Lobby/Lobby2/Lobby3.png
+0,graphics/Lobby/Lobby2/Lobby4.png
+0,graphics/Lobby/Lobby2/Lobby5.png
+0,graphics/Lobby/Lobby2/Lobby6.png
+0,graphics/Lobby/Lobby2/Lobby7.png
+0,graphics/Lobby/Lobby2/Lobby8.png
+0,graphics/Lobby/Lobby2/Lobby9.png
+0,graphics/Lobby/Lobby3/Lobby1.png
+0,graphics/Lobby/Lobby3/Lobby2.png
+0,graphics/Lobby/Lobby3/Lobby3.png
+0,graphics/Lobby/Lobby3/Lobby4.png
+0,graphics/Lobby/Lobby3/Lobby5.png
+0,graphics/Lobby/Lobby3/Lobby6.png
+0,graphics/Lobby/Lobby3/Lobby7.png
+0,graphics/Lobby/PlayButton.png
+3,animations/Lobby/Lobby1/Lobby1.csv
+3,animations/Lobby/Lobby1/LobbyEffect1.csv
+3,animations/Lobby/Lobby2/Lobby2.csv
+3,animations/Lobby/Lobby3/Lobby3.csv

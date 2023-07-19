@@ -48,11 +48,18 @@ void UIButton::Update(float dt)
 		if (OnExit != nullptr)
 			OnExit();
 	}
-
+	// 클릭
 	if (isHover && INPUT_MGR.GetMouseButtonUp(sf::Mouse::Left))
 	{
 		if (OnClick != nullptr)
 			OnClick();
+	}
+
+	// 클릭 중
+	if (isHover && INPUT_MGR.GetMouseButton(sf::Mouse::Left))
+	{
+		if (OnClicking != nullptr)
+			OnClicking();
 	}
 }
 

@@ -9,11 +9,11 @@ class Map;
 class UIHp;
 class TextGo;
 class SpriteGo;
+class Pause;
 
 class SceneGame : public Scene
 {
 protected:
-
 	int coin = 99;
 	int score = 90;
 
@@ -29,7 +29,8 @@ protected:
 	SpriteGo* jumpDownUI;
 	SpriteGo* slideUpUI;
 	SpriteGo* slideDownUI;
-
+	SpriteGo* pauseUIButton;	// 퍼즈를 걸기 위한 UI
+	
 	SpriteGo* hitEffect;
 
 	Pancake* pancake;
@@ -40,9 +41,11 @@ protected:
 	Map* map;
 
 	UIButton* uiButton;
+	Pause* pauseUI;		// 실제 퍼즈 UI
 
 	float jumpUIDownTimer = 0.f;
 	float jumpUIDownDuration = 0.2f;
+	bool isChange = false;
 
 public:
 	SceneGame();
@@ -62,5 +65,6 @@ public:
 
 	void JumpUIDown(bool isActive);
 	void SlideUIDown(bool isActive);
+	void IsChangeTitle(bool isBool) { isChange = isBool; }
 };
 

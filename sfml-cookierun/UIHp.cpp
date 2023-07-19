@@ -41,6 +41,9 @@ void UIHp::Reset()
 	SetOrigin(Origins::TL);
 	sortLayer = 102;
 	
+	// HP 줄어드는거 생각하기
+	//animSprite1.setTextureRect();
+
 	animSprite1.setPosition({ 75.f, 75.f });
 	animation1.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/UI/HpUI/HpImage.csv"));
 	animation1.SetTarget(&animSprite1);

@@ -49,11 +49,25 @@ bool Scene::Exist(GameObject* go)
 	return std::find(gameObjects.begin(), gameObjects.end(), go) != gameObjects.end();
 }
 
+bool Scene::ExistNP(GameObject* go)
+{
+	return std::find(notPauseObjects.begin(), notPauseObjects.end(), go) != notPauseObjects.end();
+}
+
 GameObject* Scene::AddGo(GameObject* go)
 {
 	if (!Exist(go))
 	{
 		gameObjects.push_back(go);
+	}
+	return go;
+}
+
+GameObject* Scene::AddNPGo(GameObject* go)
+{
+	if (!ExistNP(go))
+	{
+		notPauseObjects.push_back(go);
 	}
 	return go;
 }
@@ -120,11 +134,25 @@ void Scene::Exit()
 
 void Scene::Update(float dt)
 {
-	for (auto go : gameObjects)
+	if (isPlaying)
 	{
-		if (go->GetActive())
+		for (auto go : gameObjects)
 		{
-			go->Update(dt);
+			if (go->GetActive())
+			{
+				go->Update(dt);
+			}
+		}
+	}
+
+	if (!isPlaying)
+	{
+		for (auto go : notPauseObjects)
+		{
+			if (go->GetActive())
+			{
+				go->Update(dt);
+			}
 		}
 	}
 

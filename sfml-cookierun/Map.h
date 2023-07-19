@@ -76,6 +76,7 @@ protected:
 
 
 	ObjectPool<SpriteEffect> speedUpEffectPool;
+
 public:
 	Map(const std::string& n = "");
 	virtual ~Map() override;

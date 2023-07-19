@@ -176,6 +176,7 @@
     <ClCompile Include="ItemBig.cpp" />
     <ClCompile Include="ItemBigHealPack.cpp" />
     <ClCompile Include="ItemSpeedUp.cpp" />
+    <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -185,8 +186,10 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Pancake.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayerTest.cpp" />
+    <ClCompile Include="SceneLobby.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneGame.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
@@ -222,11 +225,14 @@
     <ClInclude Include="ItemBig.h" />
     <ClInclude Include="ItemBigHealPack.h" />
     <ClInclude Include="ItemSpeedUp.h" />
+    <ClInclude Include="Lobby.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Pancake.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayerTest.h" />
+    <ClInclude Include="SceneLobby.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneGame.h" />
     <ClInclude Include="Framework\SceneMgr.h" />

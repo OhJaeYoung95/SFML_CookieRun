@@ -44,7 +44,6 @@ void Item::Update(float dt)
 void Item::Draw(sf::RenderWindow& window)
 {
 	SpriteGo::Draw(window);
-
 }
 
 void Item::SetCookie(Cookie*& cookie)

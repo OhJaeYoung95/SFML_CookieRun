@@ -30,7 +30,7 @@ protected:
 	float dieTimer = 0.f;
 	float dieDuration = 1.0f;
 
-	bool isGround = true;
+	bool isGround = false;
 	bool isLanding = false;
 	bool isSliding = false;
 	bool isDouble = false;
@@ -48,7 +48,6 @@ protected:
 	float hitDuration = 1.f;
 
 	bool isHit = false;
-
 	bool isHitAnim = false;
 
 	float isHitAnimTimer = 0.f;
