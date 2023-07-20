@@ -2,6 +2,14 @@
 
 #define _USE_MATH_DEFINES
 
+enum class CookieTypes
+{
+	None = -1,
+	Pancake,
+	Pirate,
+	Moonlighter,
+};
+
 enum class Languages
 {
 	KOR,

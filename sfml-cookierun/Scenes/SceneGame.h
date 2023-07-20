@@ -2,6 +2,8 @@
 #include "Scene.h"
 
 class Pancake;
+class Pirate;
+class Moonlighter;
 class Player;
 class PlayerTest;
 class UIButton;
@@ -33,14 +35,18 @@ protected:
 	
 	SpriteGo* hitEffect;
 
+	CookieTypes currentCookieType = Variables::CurrentCookieType;
+
 	Pancake* pancake;
+	Pirate* pirate;
+	Moonlighter* moonlighter;
 
 	Player* player;
 	PlayerTest* playerTest;
 
 	Map* map;
 
-	UIButton* uiButton;
+	//UIButton* uiButton;
 	Pause* pauseUI;		// 실제 퍼즈 UI
 
 	float jumpUIDownTimer = 0.f;

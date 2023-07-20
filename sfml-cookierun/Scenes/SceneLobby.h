@@ -19,7 +19,6 @@ protected:
 	Lobby* lobby;
 
 	LobbyCookie* cookie;
-	LobbyCookieType currentType = LobbyCookieType::None;
 
 	UIButton* playButton;
 	TextGo* playText;
@@ -36,6 +35,5 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
-
 };
 

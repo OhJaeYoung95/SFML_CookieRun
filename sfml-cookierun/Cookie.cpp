@@ -17,6 +17,9 @@ Cookie::~Cookie()
 
 void Cookie::Init()
 {
+	// 전역으로 타입 설정
+	type = Variables::CurrentCookieType;
+
 	SpriteGo::Init();
 	rect.setSize(sf::Vector2f(100.f, 120.f));
 	rect.setFillColor(sf::Color::Green);

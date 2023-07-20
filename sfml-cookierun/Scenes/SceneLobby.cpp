@@ -27,7 +27,7 @@ void SceneLobby::Init()
 	// 랜덤값에 따른 (enum형으로) 애니메이션 행동 패턴 변화
 	cookie = (LobbyCookie*)AddGo(new LobbyCookie());
 	cookie->SetOrigin(Origins::MC);
-	cookie->SetPosition(windowSize * 0.5f);
+	cookie->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.6f);
 
 	lobby = (Lobby*)AddGo(new Lobby());
 	lobby->SetType(LobbyType::Temple);

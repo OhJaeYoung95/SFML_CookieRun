@@ -2,17 +2,10 @@
 #include "SpriteGo.h"
 #include "AnimationController.h"
 
-enum class LobbyCookieType
-{
-	None = -1,
-	Pancake,
-	Pirate,
-	Moonlighter,
-};
-
 class LobbyCookie : public SpriteGo
 {
 protected:
+	CookieTypes type = Variables::CurrentCookieType;
 	AnimationController animation;
 
 public:

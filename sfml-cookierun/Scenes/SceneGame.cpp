@@ -9,6 +9,8 @@
 #include "Framework.h"
 #include "UIButton.h"
 #include "Pancake.h"
+#include "Pirate.h"
+#include "Moonlighter.h"
 #include "Map.h"
 #include "UIHp.h"
 #include "TextGo.h"
@@ -31,35 +33,70 @@ void SceneGame::Init()
 	Release();
 	auto size = FRAMEWORK.GetWindowSize();
 
-	pancake = (Pancake*)AddGo(new Pancake());
-	pancake->SetType(CookieTypes::Pancake);
+	switch (currentCookieType)
+	{
+	case CookieTypes::Pancake:
+	{
+		pancake = (Pancake*)AddGo(new Pancake());
+		pancake->SetType(CookieTypes::Pancake);
+		Cookie* cookie = dynamic_cast<Cookie*>(pancake);
+		map = (Map*)AddGo(new Map());
+		map->SetScene(this);
+		map->SetCookie(cookie);
+		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
+		hpUI->SetCookie(cookie);
+
+	}
+		break;
+	case CookieTypes::Pirate:
+	{
+		pirate = (Pirate*)AddGo(new Pirate());
+		pirate->SetType(CookieTypes::Pirate);
+		Cookie* cookie = dynamic_cast<Cookie*>(pirate);
+		map = (Map*)AddGo(new Map());
+		map->SetScene(this);
+		map->SetCookie(cookie);
+		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
+		hpUI->SetCookie(cookie);
+	}
+
+		break;
+	case CookieTypes::Moonlighter:
+	{
+		moonlighter = (Moonlighter*)AddGo(new Moonlighter());
+		moonlighter->SetType(CookieTypes::Moonlighter);
+		Cookie* cookie = dynamic_cast<Cookie*>(moonlighter);
+		map = (Map*)AddGo(new Map());
+		map->SetScene(this);
+		map->SetCookie(cookie);
+		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
+		hpUI->SetCookie(cookie);
+	}
+
+		break;
+	}
 	//player = (Player*)AddGo(new Player());
 
-	uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
-	uiButton->SetOrigin(Origins::TR);
-	uiButton->sortLayer = 100;
-	uiButton->SetPosition(size.x, 0.f);
-	auto ptr = uiButton;
-	uiButton->OnEnter = [ptr]() {
-		sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button2.png");
-		ptr->sprite.setTexture(*tex);
-	};
-	uiButton->OnExit = [ptr]() {
-		sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button.png");
-		ptr->sprite.setTexture(*tex);
-	};
-	uiButton->OnClick = [this]() {
-		SCENE_MGR.ChangeScene(SceneId::Game);
-	};
+	// UIButton 사용 예제
+	//uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
+	//uiButton->SetOrigin(Origins::TR);
+	//uiButton->sortLayer = 100;
+	//uiButton->SetPosition(size.x, 0.f);
+	//auto ptr = uiButton;
+	//uiButton->OnEnter = [ptr]() {
+	//	sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button2.png");
+	//	ptr->sprite.setTexture(*tex);
+	//};
+	//uiButton->OnExit = [ptr]() {
+	//	sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button.png");
+	//	ptr->sprite.setTexture(*tex);
+	//};
+	//uiButton->OnClick = [this]() {
+	//	SCENE_MGR.ChangeScene(SceneId::Game);
+	//};
 
-	Cookie* cookie = dynamic_cast<Cookie*>(pancake);
 
-	map = (Map*)AddGo(new Map());
-	map->SetScene(this);
-	map->SetCookie(cookie);
 
-	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
-	hpUI->SetCookie(cookie);
 
 	// Text
 
@@ -167,10 +204,28 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
+	Scene::Enter();
 	isPlaying = true;
-	pancake->SetScene(this);
-	pancake->SetMap(map);
-	pancake->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+	switch (currentCookieType)
+	{
+	case CookieTypes::Pancake:
+		pancake->SetScene(this);
+		pancake->SetMap(map);
+		pancake->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		break;
+
+	case CookieTypes::Pirate:
+		pirate->SetScene(this);
+		pirate->SetMap(map);
+		pirate->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		break;
+
+	case CookieTypes::Moonlighter:
+		moonlighter->SetScene(this);
+		moonlighter->SetMap(map);
+		moonlighter->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		break;
+	}
 
 	auto size = FRAMEWORK.GetWindowSize();
 	worldView.setSize(size);
@@ -184,7 +239,6 @@ void SceneGame::Enter()
 
 	pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 	pauseUI->SetActive(false);
-	Scene::Enter();
 }
 
 void SceneGame::Exit()
@@ -208,7 +262,7 @@ void SceneGame::Update(float dt)
 
 	Scene::Update(dt);	
 
-
+	//std::cout << pancake->GetPosition().y << std::endl;
 
 	if(jumpDownUI->GetActive())
 		jumpUIDownTimer += dt;
@@ -228,13 +282,41 @@ void SceneGame::Update(float dt)
 		hitEffect->SetActive(false);
 	}
 
-	if (pancake->GetIsHit())
+	switch (currentCookieType)
 	{
-		hitEffect->SetActive(true);
-	}
-	if (!pancake->GetIsHit())
-	{
-		hitEffect->SetActive(false);
+	case CookieTypes::Pancake:
+		if (pancake->GetIsHit())
+		{
+			hitEffect->SetActive(true);
+		}
+		if (!pancake->GetIsHit())
+		{
+			hitEffect->SetActive(false);
+		}
+
+		break;
+	case CookieTypes::Pirate:
+		if (pirate->GetIsHit())
+		{
+			hitEffect->SetActive(true);
+		}
+		if (!pirate->GetIsHit())
+		{
+			hitEffect->SetActive(false);
+		}
+
+		break;
+	case CookieTypes::Moonlighter:
+		if (moonlighter->GetIsHit())
+		{
+			hitEffect->SetActive(true);
+		}
+		if (!moonlighter->GetIsHit())
+		{
+			hitEffect->SetActive(false);
+		}
+
+		break;
 	}
 
 	std::stringstream coinS;

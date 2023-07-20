@@ -1,13 +1,6 @@
 #pragma once
 #include "SpriteGo.h"
 
-enum class CookieTypes
-{
-	None = -1,
-	Pancake,
-	Pirate,
-	Moonlighter,
-};
 
 class SceneGame;
 class Map;

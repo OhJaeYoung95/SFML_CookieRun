@@ -21,6 +21,10 @@ void SceneMgr::Init()
 		scene->Init();
 	}
 
+	// е╦ют
+	//SceneLobby* sceneLobby = dynamic_cast<SceneLobby*>(scenes[(int)SceneId::Lobby]);
+	//sceneLobby->LobbyHi();
+
 	currentSceneId = startSceneId;
 	currentScene = scenes[(int)currentSceneId];
 	currentScene->Enter();

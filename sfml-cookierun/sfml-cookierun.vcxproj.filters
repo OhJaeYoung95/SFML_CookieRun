@@ -126,13 +126,19 @@
     <ClCompile Include="Pause.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SceneLobby.cpp">
+    <ClCompile Include="Scenes\SceneLobby.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="LobbyCookie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Pirate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Moonlighter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -260,13 +266,19 @@
     <ClInclude Include="Pause.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SceneLobby.h">
+    <ClInclude Include="Scenes\SceneLobby.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Lobby.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="LobbyCookie.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Pirate.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Moonlighter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
