@@ -14,7 +14,7 @@ LobbyCookie::~LobbyCookie()
 void LobbyCookie::Init()
 {
 	SpriteGo::Init();
-	//type = Variables::CurrentCookieType;
+	type = Variables::CurrentCookieType;
 }
 
 void LobbyCookie::Release()
@@ -26,6 +26,8 @@ void LobbyCookie::Release()
 void LobbyCookie::Reset()
 {
 	SpriteGo::Reset();
+	type = Variables::CurrentCookieType;
+	animation.ResetClip();
 
 	switch(type)
 	{

@@ -8,7 +8,6 @@ class TextGo;
 class Pause : public SpriteGo
 {
 protected:
-
 	sf::RectangleShape bg;
 
 	UIButton* continueButton;

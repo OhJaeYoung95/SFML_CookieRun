@@ -33,6 +33,15 @@ void SceneGame::Init()
 	Release();
 	auto size = FRAMEWORK.GetWindowSize();
 
+	// 생성 부분 생각해야함..
+	// RemoveGo를 Exit에서 해줘야하나.. 고민
+	// 
+	// 다른 방안
+	// map 과 hpUI의 SetCookie 를 밑에 Enter부분에서 해결
+	// 이 방법을 할시 Enter할때의 현재 쿠키 타입을 생성하고(?)
+	// Init()당시의 현재 쿠키 타입의 쿠키를 생성한 것을 Remove해줘야할지 고민
+	// 
+
 	switch (currentCookieType)
 	{
 	case CookieTypes::Pancake:
@@ -206,6 +215,12 @@ void SceneGame::Enter()
 {
 	Scene::Enter();
 	isPlaying = true;
+	currentCookieType = Variables::CurrentCookieType;
+
+
+	// 캐릭터 바꾸고 SetScene에서 죽음
+	// Init()부분에서 캐릭터 생성할떄 문제가 있는거 같다.
+
 	switch (currentCookieType)
 	{
 	case CookieTypes::Pancake:

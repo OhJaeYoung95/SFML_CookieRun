@@ -7,13 +7,12 @@ class Cookie;
 class SceneGame;
 class UIButton;
 class TextGo;
+class SpriteGo;
+class StorageBox;
 
 class SceneLobby : public Scene
 {
 protected:
-	// SceneMgr Init / Enter부분 살펴보기
-	// SceneGame의 정보를 받아오는 순간에
-	// SceneGame이 살아있나 체크
 	SceneGame* scene;
 
 	Lobby* lobby;
@@ -22,6 +21,16 @@ protected:
 
 	UIButton* playButton;
 	TextGo* playText;
+
+	UIButton* cookieStorageBox;
+	TextGo* storageText;
+	SpriteGo* storageImage;
+
+	UIButton* cookieSkinBox;
+	TextGo* skinText;
+	SpriteGo* skinImage;
+
+	StorageBox* storageUI;
 
 public:
 	SceneLobby();

@@ -10,6 +10,12 @@ void AnimationController::AddClip(const AnimationClip& newClip)
 	}
 }
 
+void AnimationController::ResetClip()
+{
+	if(!clips.empty())
+		clips.clear();
+}
+
 void AnimationController::Update(float dt)
 {
 	if (!isPlaying)

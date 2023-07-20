@@ -10,6 +10,8 @@
 #include "TextGo.h"
 #include "StringTable.h"
 #include "DataTableMgr.h"
+#include "StorageBox.h"
+#include "InputMgr.h"
 
 SceneLobby::SceneLobby() : Scene(SceneId::Lobby)
 {
@@ -33,7 +35,7 @@ void SceneLobby::Init()
 	lobby->SetType(LobbyType::Temple);
 	lobby->SetPosition(windowSize * 0.5f);
 
-	// 그만하기
+	// PLAY!버튼
 	playButton = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
 	playButton->SetPosition(windowSize.x - 80.f , windowSize.y - 20.f);
 	playButton->sprite.setScale(3.7f, 5.0f);
@@ -78,6 +80,102 @@ void SceneLobby::Init()
 		playText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
 	};
 
+	// 내쿠키들 버튼
+	cookieStorageBox = (UIButton*)AddGo(new UIButton("graphics/Lobby/Button.png"));
+	cookieStorageBox->SetPosition( 100.f, windowSize.y - 35.f);
+	cookieStorageBox->sprite.setScale(4.0f, 3.5f);
+	cookieStorageBox->SetOrigin(Origins::BL);
+	cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+	cookieStorageBox->sortLayer = 101;
+
+
+	storageText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	storageText->SetPosition(280.f, windowSize.y - 115.f);
+	storageText->text.setString(stringTable->GetUni("STORAGE", Languages::KOR));
+	storageText->text.setCharacterSize(45);
+	storageText->text.setFillColor(sf::Color::White);
+	storageText->text.setOutlineThickness(4);
+	storageText->text.setOutlineColor(sf::Color::Black);
+	storageText->SetOrigin(Origins::MC);
+	storageText->sortLayer = 102;
+
+
+	auto ptr2 = cookieStorageBox;
+	cookieStorageBox->OnEnter = [ptr1]() {
+
+	};
+	cookieStorageBox->OnExit = [this]() {
+		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+	};
+	cookieStorageBox->OnClick = [this]() {
+		//scene->IsChangeTitle(true);
+		//AllSetActive(false);
+		//this->SetActive(false);
+		// 활성화
+
+		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+		storageUI->AllSetActive(true);
+		storageUI->SetActive(true);
+	};
+	cookieStorageBox->OnClicking = [this]() {
+		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+	};
+
+	// 스킨 버튼
+	cookieSkinBox = (UIButton*)AddGo(new UIButton("graphics/Lobby/Button.png"));
+	cookieSkinBox->SetPosition(430.f , windowSize.y - 35.f);
+	cookieSkinBox->sprite.setScale(2.8f, 3.5f);
+	cookieSkinBox->SetOrigin(Origins::BL);
+	cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+	cookieSkinBox->sortLayer = 101;
+
+	skinText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	skinText->SetPosition(570.f, windowSize.y - 115.f);
+	skinText->text.setString(stringTable->GetUni("SKIN", Languages::KOR));
+	skinText->text.setCharacterSize(45);
+	skinText->text.setFillColor(sf::Color::White);
+	skinText->text.setOutlineThickness(4);
+	skinText->text.setOutlineColor(sf::Color::Black);
+	skinText->SetOrigin(Origins::MC);
+	skinText->sortLayer = 102;
+
+
+	auto ptr3 = cookieSkinBox;
+	cookieSkinBox->OnEnter = [ptr1]() {
+
+	};
+	cookieSkinBox->OnExit = [this]() {
+		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+	};
+	cookieSkinBox->OnClick = [this]() {
+		//scene->IsChangeTitle(true);
+		//AllSetActive(false);
+		//this->SetActive(false);
+		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+		SCENE_MGR.ChangeScene(SceneId::Game);
+	};
+	cookieSkinBox->OnClicking = [this]() {
+		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+	};
+
+	storageUI = (StorageBox*)AddGo(new StorageBox());
+	storageUI->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.5f);
+	storageUI->SetScene(this);
+	storageUI->sortLayer = 102;
+
+
 	for (auto go : gameObjects)
 	{
 		go->Init();
@@ -95,6 +193,7 @@ void SceneLobby::Release()
 
 void SceneLobby::Enter()
 {
+	Scene::Enter();
 	auto size = FRAMEWORK.GetWindowSize();
 	worldView.setSize(size);
 	worldView.setCenter(0, 0);
@@ -102,8 +201,8 @@ void SceneLobby::Enter()
 	uiView.setSize(size);
 	uiView.setCenter(size * 0.5f);
 
-
-	Scene::Enter();
+	// Scene::Enter(); 맨 밑이였음
+	storageUI->SetActive(false);
 }
 
 void SceneLobby::Exit()
@@ -115,6 +214,12 @@ void SceneLobby::Exit()
 void SceneLobby::Update(float dt)
 {
 	Scene::Update(dt);
+
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Enter) && storageUI->GetActive())
+	{
+		storageUI->AllSetActive(false);
+		storageUI->SetActive(false);
+	}
 }
 
 void SceneLobby::Draw(sf::RenderWindow& window)
