@@ -102,4 +102,6 @@ public:
 	void AddSpeedUp();
 	void ResetSpeed();
 	void MoveStop();
+
+	void AllObjectSetCookie();
 };

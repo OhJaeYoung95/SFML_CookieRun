@@ -166,6 +166,8 @@ void Cookie::Draw(sf::RenderWindow& window)
 void Cookie::Die()
 {
 	isAlive = false;
+	Variables::coin += scene->GetCoin();
+	Variables::diamond += scene->GetDia();
 	map->MoveStop();
 }
 

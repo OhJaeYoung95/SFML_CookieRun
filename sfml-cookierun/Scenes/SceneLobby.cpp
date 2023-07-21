@@ -8,6 +8,7 @@
 #include "SceneMgr.h"
 #include "LobbyCookie.h"
 #include "TextGo.h"
+#include "SpriteGo.h"
 #include "StringTable.h"
 #include "DataTableMgr.h"
 #include "StorageBox.h"
@@ -35,9 +36,60 @@ void SceneLobby::Init()
 	lobby->SetType(LobbyType::Temple);
 	lobby->SetPosition(windowSize * 0.5f);
 
+
+	float offsetCoinUI = 25.f;
+
+	// 코인 정보
+	currentCoin = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/CoinIcon.png"));
+	currentCoin->SetPosition(windowSize.x * 0.68f + offsetCoinUI, 40.f);
+	currentCoin->sprite.setScale(1.3f, 1.28f);
+	currentCoin->SetOrigin(Origins::MC);
+	currentCoin->sortLayer = 103;
+
+	coinBg = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/PlayButton.png"));
+	coinBg->SetPosition(windowSize.x * 0.68f + offsetCoinUI, 40.f);
+	coinBg->sprite.setScale(1.6f, 1.3f);
+	coinBg->sprite.setColor(sf::Color::Color(0, 0, 0, 180));
+	coinBg->SetOrigin(Origins::ML);
+	coinBg->sortLayer = 102;
+
+	coinText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	coinText->SetPosition({ windowSize.x * 0.78f - 6.f, 35.f });
+	coinText->text.setCharacterSize(26);
+	coinText->text.setFillColor(sf::Color::White);
+	coinText->text.setOutlineThickness(3);
+	coinText->text.setOutlineColor(sf::Color::Black);
+	coinText->SetOrigin(Origins::MR);
+	coinText->sortLayer = 102;
+
+	// 다이아 정보
+	currentDia = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/DiamondIcon.png"));
+	currentDia->SetPosition(windowSize.x * 0.58f, 40.f);
+	currentDia->sprite.setScale(1.3f, 1.3f);
+	currentDia->SetOrigin(Origins::MC);
+	currentDia->sortLayer = 103;
+
+	diaBg = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/PlayButton.png"));
+	diaBg->SetPosition(windowSize.x * 0.575f, 40.f);
+	diaBg->sprite.setScale(1.6f, 1.3f);
+	diaBg->sprite.setColor(sf::Color::Color(0, 0, 0, 180));
+	diaBg->SetOrigin(Origins::ML);
+	diaBg->sortLayer = 102;
+
+	diaText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	diaText->SetPosition({ windowSize.x * 0.65f + 17.f, 35.f });
+	diaText->text.setCharacterSize(26);
+	diaText->text.setFillColor(sf::Color::White);
+	diaText->text.setOutlineThickness(3);
+	diaText->text.setOutlineColor(sf::Color::Black);
+	diaText->SetOrigin(Origins::MR);
+	diaText->sortLayer = 102;
+
+
+
 	// PLAY!버튼
 	playButton = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
-	playButton->SetPosition(windowSize.x - 80.f , windowSize.y - 20.f);
+	playButton->SetPosition(windowSize.x - 80.f, windowSize.y - 20.f);
 	playButton->sprite.setScale(3.7f, 5.0f);
 	playButton->SetOrigin(Origins::BR);
 	playButton->sprite.setColor(sf::Color::Color(255, 170, 0, 255));
@@ -72,7 +124,8 @@ void SceneLobby::Init()
 		playButton->sprite.setColor(sf::Color::Color(255, 170, 0, 255));
 		playText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
 		playText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
-		SCENE_MGR.ChangeScene(SceneId::Game);
+
+		isEnterPlay = true;
 	};
 	playButton->OnClicking = [this]() {
 		playButton->sprite.setColor(sf::Color::Color(255, 170, 0, 180));
@@ -82,15 +135,19 @@ void SceneLobby::Init()
 
 	// 내쿠키들 버튼
 	cookieStorageBox = (UIButton*)AddGo(new UIButton("graphics/Lobby/Button.png"));
-	cookieStorageBox->SetPosition( 100.f, windowSize.y - 35.f);
-	cookieStorageBox->sprite.setScale(4.0f, 3.5f);
+	cookieStorageBox->SetPosition(100.f, windowSize.y - 35.f);
+	cookieStorageBox->sprite.setScale(4.7f, 3.5f);
 	cookieStorageBox->SetOrigin(Origins::BL);
 	cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
 	cookieStorageBox->sortLayer = 101;
 
+	storageImage = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/CookieStorageBox/StorageIcon.png"));
+	storageImage->SetPosition(180.f, windowSize.y - 115.f);
+	storageImage->SetOrigin(Origins::MC);
+	storageImage->sortLayer = 102;
 
 	storageText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
-	storageText->SetPosition(280.f, windowSize.y - 115.f);
+	storageText->SetPosition(335.f, windowSize.y - 115.f);
 	storageText->text.setString(stringTable->GetUni("STORAGE", Languages::KOR));
 	storageText->text.setCharacterSize(45);
 	storageText->text.setFillColor(sf::Color::White);
@@ -101,11 +158,12 @@ void SceneLobby::Init()
 
 
 	auto ptr2 = cookieStorageBox;
-	cookieStorageBox->OnEnter = [ptr1]() {
+	cookieStorageBox->OnEnter = [ptr2]() {
 
 	};
 	cookieStorageBox->OnExit = [this]() {
 		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
 		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
 	};
@@ -116,6 +174,7 @@ void SceneLobby::Init()
 		// 활성화
 
 		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
 		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
 		storageUI->AllSetActive(true);
@@ -123,20 +182,27 @@ void SceneLobby::Init()
 	};
 	cookieStorageBox->OnClicking = [this]() {
 		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+		storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
 		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
 	};
 
 	// 스킨 버튼
 	cookieSkinBox = (UIButton*)AddGo(new UIButton("graphics/Lobby/Button.png"));
-	cookieSkinBox->SetPosition(430.f , windowSize.y - 35.f);
+	cookieSkinBox->SetPosition(470.f, windowSize.y - 35.f);
 	cookieSkinBox->sprite.setScale(2.8f, 3.5f);
 	cookieSkinBox->SetOrigin(Origins::BL);
 	cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
 	cookieSkinBox->sortLayer = 101;
 
+	skinImage = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/CookieSkinBox/SkinIcon2.png"));
+	skinImage->SetPosition(520.f, windowSize.y - 115.f);
+	skinImage->sprite.setScale(1.3f, 1.3f);
+	skinImage->SetOrigin(Origins::MC);
+	skinImage->sortLayer = 102;
+
 	skinText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
-	skinText->SetPosition(570.f, windowSize.y - 115.f);
+	skinText->SetPosition(610.f, windowSize.y - 115.f);
 	skinText->text.setString(stringTable->GetUni("SKIN", Languages::KOR));
 	skinText->text.setCharacterSize(45);
 	skinText->text.setFillColor(sf::Color::White);
@@ -147,11 +213,12 @@ void SceneLobby::Init()
 
 
 	auto ptr3 = cookieSkinBox;
-	cookieSkinBox->OnEnter = [ptr1]() {
+	cookieSkinBox->OnEnter = [ptr3]() {
 
 	};
 	cookieSkinBox->OnExit = [this]() {
 		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
 		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
 	};
@@ -160,12 +227,16 @@ void SceneLobby::Init()
 		//AllSetActive(false);
 		//this->SetActive(false);
 		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+		skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
 		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
-		SCENE_MGR.ChangeScene(SceneId::Game);
+
+		// 씬 변환 변수
+		isEnterPlay = true;
 	};
 	cookieSkinBox->OnClicking = [this]() {
 		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+		skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
 		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
 	};
@@ -203,12 +274,13 @@ void SceneLobby::Enter()
 
 	// Scene::Enter(); 맨 밑이였음
 	storageUI->SetActive(false);
+	isEnterPlay = false;
 }
 
 void SceneLobby::Exit()
 {
+	//isEnterPlay = false;
 	Scene::Exit();
-
 }
 
 void SceneLobby::Update(float dt)
@@ -220,6 +292,19 @@ void SceneLobby::Update(float dt)
 		storageUI->AllSetActive(false);
 		storageUI->SetActive(false);
 	}
+
+	std::stringstream coinS;
+	coinS << Variables::coin;
+	coinText->text.setString(coinS.str());
+	coinText->SetOrigin(Origins::MR);
+
+	std::stringstream diaS;
+	diaS << Variables::diamond;
+	diaText->text.setString(diaS.str());
+	diaText->SetOrigin(Origins::MR);
+
+	if(isEnterPlay)
+		SCENE_MGR.ChangeScene(SceneId::Game);
 }
 
 void SceneLobby::Draw(sf::RenderWindow& window)

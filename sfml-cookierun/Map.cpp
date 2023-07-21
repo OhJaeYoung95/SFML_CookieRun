@@ -75,61 +75,51 @@ void Map::Init()
 	ground1 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
 	ground1->sprite.setScale(15.0f, 1.0f);
 	ground1->SetPosition(-300.f, 340.f);
-	ground1->SetCookie(cookie);
 	ground1->sortLayer = 1;
 
 	ground2 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
 	ground2->sprite.setScale(15.0f, 1.0f);
 	ground2->SetPosition(1300.f, 340.f);
-	ground2->SetCookie(cookie);
 	ground2->sortLayer = 1;
 
 	// 발판 세팅
 	pf1 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Platform.png"));
 	pf1->sprite.setScale(5.0f, 1.0f);
 	pf1->SetPosition(400.f, -150.f);
-	pf1->SetCookie(cookie);
 	pf1->sortLayer = 1;
 
 	pf2 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Platform.png"));
 	pf2->sprite.setScale(5.0f, 1.0f);
 	pf2->SetPosition(-300.f, 0.f);
-	pf2->SetCookie(cookie);
 	pf2->sortLayer = 1;
 
 	// 장애물 세팅
 	ob1 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Down));
 	ob1->sprite.setScale(1.0f, 1.8f);
-	ob1->SetCookie(cookie);
 
 
 	ob2 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Up));
 	ob2->sprite.setScale(0.8f, 0.8f);
-	ob2->SetCookie(cookie);
 
 
 	// 아이템		// sortLayer 5
 
 	itemSpeedUp1 = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp());
-	itemSpeedUp1->SetCookie(cookie);
 	itemSpeedUp1->sortLayer = 5;
 	itemSpeedUp1->SetScene(scene);
 	itemSpeedUp1->SetMap(this);
 
 	itemBigHealPack1 = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack());
-	itemBigHealPack1->SetCookie(cookie);
 	itemBigHealPack1->sortLayer = 5;
 	itemBigHealPack1->SetScene(scene);
 	itemBigHealPack1->SetMap(this);
 	
 	itemBig1 = (ItemBig*)scene->AddGo(new ItemBig());
-	itemBig1->SetCookie(cookie);
 	itemBig1->sortLayer = 5;
 	itemBig1->SetScene(scene);
 	itemBig1->SetMap(this);
 	
 	coin1 = (Coin*)scene->AddGo(new Coin());
-	coin1->SetCookie(cookie);
 	coin1->sortLayer = 5;
 	coin1->SetScene(scene);
 	coin1->SetMap(this);
@@ -154,6 +144,7 @@ void Map::Release()
 
 void Map::Reset()
 {
+	AllObjectSetCookie();
 	bgSpeed = 300.f;
 	pfSpeed = 500.f;
 	isSpeedUp = false;
@@ -388,4 +379,19 @@ void Map::MoveStop()
 {
 	bgSpeed = 0.f;
 	pfSpeed = 0.f;
+}
+
+void Map::AllObjectSetCookie()
+{
+	ground1->SetCookie(cookie);
+	ground2->SetCookie(cookie);
+	pf1->SetCookie(cookie);
+	pf2->SetCookie(cookie);
+	ob1->SetCookie(cookie);
+	ob2->SetCookie(cookie);
+	itemSpeedUp1->SetCookie(cookie);
+	itemBigHealPack1->SetCookie(cookie);
+	itemBig1->SetCookie(cookie);
+	coin1->SetCookie(cookie);
+
 }

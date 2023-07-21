@@ -9,6 +9,8 @@ class StorageBox : public SpriteGo
 protected:
 	sf::RectangleShape bg;
 
+	SpriteGo* storageBoxBG;
+
 	UIButton* pancakeButton;
 	UIButton* pirateButton;
 	UIButton* moonlighterButton;

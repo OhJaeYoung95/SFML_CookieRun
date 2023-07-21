@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LobbyCookie.h"
 #include "ResourceMgr.h"
+#include "Framework.h"
 
 LobbyCookie::LobbyCookie(const std::string& textureId, const std::string& n)
 	: SpriteGo(textureId, n)
@@ -28,11 +29,10 @@ void LobbyCookie::Reset()
 	SpriteGo::Reset();
 	type = Variables::CurrentCookieType;
 	animation.ResetClip();
-
+	
 	switch(type)
 	{
 	case CookieTypes::Pancake:
-
 		animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Lobby/Pancake/Happy.csv"));
 		animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Lobby/Pancake/Sad.csv"));
 		animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Lobby/Pancake/Turn.csv"));
@@ -97,7 +97,7 @@ void LobbyCookie::Reset()
 		break;
 	}
 
-	SetOrigin(Origins::MC);
+	//SetOrigin(Origins::MC);
 	sortLayer = 110;
 }
 
@@ -105,7 +105,26 @@ void LobbyCookie::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	animation.Update(dt);
-	SetOrigin(Origins::MC);
+
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+
+
+	if (animation.GetCurrentClipId() == "Happy")
+	{
+		sprite.setPosition(windowSize.x * 0.52f, windowSize.y * 0.77f);
+		sprite.setScale(0.7f, 0.7f);
+	}
+	else if (animation.GetCurrentClipId() == "Sad")
+	{
+		sprite.setPosition(windowSize.x * 0.52f, windowSize.y * 0.77f);
+		sprite.setScale(0.7f, 0.7f);
+	}
+	else
+	{
+		sprite.setPosition(windowSize.x * 0.5f, windowSize.y * 0.7f);
+		sprite.setScale(1.f, 1.f);
+		SetOrigin(Origins::BC);
+	}
 }
 
 void LobbyCookie::Draw(sf::RenderWindow& window)

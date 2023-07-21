@@ -17,6 +17,18 @@ protected:
 
 	Lobby* lobby;
 
+	// 코인 정보
+	SpriteGo* currentCoin;
+	SpriteGo* coinBg;
+	TextGo* coinText;
+	int coin = 10000;
+
+	// 다이아 정보
+	SpriteGo* currentDia;
+	SpriteGo* diaBg;
+	TextGo* diaText;
+	int diamond = 1000;
+
 	LobbyCookie* cookie;
 
 	UIButton* playButton;
@@ -32,6 +44,9 @@ protected:
 
 	StorageBox* storageUI;
 
+	bool isEnterPlay = false;
+
+
 public:
 	SceneLobby();
 	virtual ~SceneLobby() override = default;
@@ -44,5 +59,8 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
+	void SetCoin(int coin) { this->coin += coin; }
+	void SetDia(int dia) { diamond += dia; }
 };
 

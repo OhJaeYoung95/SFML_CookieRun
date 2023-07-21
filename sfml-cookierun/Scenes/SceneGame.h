@@ -12,12 +12,16 @@ class UIHp;
 class TextGo;
 class SpriteGo;
 class Pause;
+class SceneLobby;
 
 class SceneGame : public Scene
 {
 protected:
-	int coin = 99;
-	int score = 90;
+	int coin = 0;
+	int score = 0;
+	int diamond = 0;
+
+	SceneLobby* scene;
 
 	// UI
 	UIHp* hpUI;
@@ -66,11 +70,18 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
+
+	int GetCoin() const { return coin; }
+	int GetDia() const { return diamond; }
+
 	void AddCoin(int value) { coin += value;}
 	void AddScore(int value) { score += value; }
+	void AddDia(int value) { diamond += value; }
 
 	void JumpUIDown(bool isActive);
 	void SlideUIDown(bool isActive);
 	void IsChangeTitle(bool isBool) { isChange = isBool; }
+
+	void SetScene(SceneLobby* scene) { this->scene = scene;}
 };
 

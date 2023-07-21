@@ -16,6 +16,7 @@
 #include "TextGo.h"
 #include "SpriteGo.h"
 #include "Pause.h"
+#include "SceneLobby.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -33,57 +34,25 @@ void SceneGame::Init()
 	Release();
 	auto size = FRAMEWORK.GetWindowSize();
 
-	// 생성 부분 생각해야함..
-	// RemoveGo를 Exit에서 해줘야하나.. 고민
-	// 
-	// 다른 방안
-	// map 과 hpUI의 SetCookie 를 밑에 Enter부분에서 해결
-	// 이 방법을 할시 Enter할때의 현재 쿠키 타입을 생성하고(?)
-	// Init()당시의 현재 쿠키 타입의 쿠키를 생성한 것을 Remove해줘야할지 고민
-	// 
+	// 쿠키 생성
+	pancake = (Pancake*)AddGo(new Pancake());
+	pancake->SetType(CookieTypes::Pancake);
+	pancake->SetScene(this);
 
-	switch (currentCookieType)
-	{
-	case CookieTypes::Pancake:
-	{
-		pancake = (Pancake*)AddGo(new Pancake());
-		pancake->SetType(CookieTypes::Pancake);
-		Cookie* cookie = dynamic_cast<Cookie*>(pancake);
-		map = (Map*)AddGo(new Map());
-		map->SetScene(this);
-		map->SetCookie(cookie);
-		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
-		hpUI->SetCookie(cookie);
+	pirate = (Pirate*)AddGo(new Pirate());
+	pirate->SetType(CookieTypes::Pirate);
+	pirate->SetScene(this);
 
-	}
-		break;
-	case CookieTypes::Pirate:
-	{
-		pirate = (Pirate*)AddGo(new Pirate());
-		pirate->SetType(CookieTypes::Pirate);
-		Cookie* cookie = dynamic_cast<Cookie*>(pirate);
-		map = (Map*)AddGo(new Map());
-		map->SetScene(this);
-		map->SetCookie(cookie);
-		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
-		hpUI->SetCookie(cookie);
-	}
+	moonlighter = (Moonlighter*)AddGo(new Moonlighter());
+	moonlighter->SetType(CookieTypes::Moonlighter);
+	moonlighter->SetScene(this);
 
-		break;
-	case CookieTypes::Moonlighter:
-	{
-		moonlighter = (Moonlighter*)AddGo(new Moonlighter());
-		moonlighter->SetType(CookieTypes::Moonlighter);
-		Cookie* cookie = dynamic_cast<Cookie*>(moonlighter);
-		map = (Map*)AddGo(new Map());
-		map->SetScene(this);
-		map->SetCookie(cookie);
-		hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
-		hpUI->SetCookie(cookie);
-	}
 
-		break;
-	}
+	map = (Map*)AddGo(new Map());
+	map->SetScene(this);
+	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
+
+
 	//player = (Player*)AddGo(new Player());
 
 	// UIButton 사용 예제
@@ -213,7 +182,6 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
-	Scene::Enter();
 	isPlaying = true;
 	currentCookieType = Variables::CurrentCookieType;
 
@@ -224,23 +192,37 @@ void SceneGame::Enter()
 	switch (currentCookieType)
 	{
 	case CookieTypes::Pancake:
-		pancake->SetScene(this);
+	{
 		pancake->SetMap(map);
 		pancake->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		Cookie* cookie = dynamic_cast<Cookie*>(pancake);
+		map->SetCookie(cookie);
+		hpUI->SetCookie(cookie);
+	}
 		break;
 
 	case CookieTypes::Pirate:
-		pirate->SetScene(this);
+	{
 		pirate->SetMap(map);
 		pirate->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		Cookie* cookie = dynamic_cast<Cookie*>(pirate);
+		map->SetCookie(cookie);
+		hpUI->SetCookie(cookie);
+	}
 		break;
 
 	case CookieTypes::Moonlighter:
-		moonlighter->SetScene(this);
+	{
 		moonlighter->SetMap(map);
 		moonlighter->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
+		Cookie* cookie = dynamic_cast<Cookie*>(moonlighter);
+		map->SetCookie(cookie);
+		hpUI->SetCookie(cookie);
+	}
+
 		break;
 	}
+
 
 	auto size = FRAMEWORK.GetWindowSize();
 	worldView.setSize(size);
@@ -249,11 +231,13 @@ void SceneGame::Enter()
 	uiView.setSize(size);
 	uiView.setCenter(size * 0.5f);
 
-	coin = 99;
-	score = 90;
+	coin = 0;
+	score = 0;
+	diamond = 0;
 
 	pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 	pauseUI->SetActive(false);
+	Scene::Enter();
 }
 
 void SceneGame::Exit()

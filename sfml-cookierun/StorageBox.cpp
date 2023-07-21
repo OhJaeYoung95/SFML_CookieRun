@@ -28,6 +28,12 @@ void StorageBox::Init()
 	bg.setSize({ 1920, 1080 });
 	bg.setOrigin(0, 0);
 
+	storageBoxBG = (SpriteGo*)scene->AddGo(new SpriteGo("graphics/Lobby/CookieStorageBox/StorageBoxBG.png"));
+	storageBoxBG->SetPosition(size * 0.5f);
+	storageBoxBG->SetOrigin(Origins::MC);
+	storageBoxBG->sortLayer = 101;
+
+
 	// 버튼과 Text 간격 설정 변수
 	float buttonW = 1.0f;
 	float buttonH = 1.0f;
@@ -39,7 +45,7 @@ void StorageBox::Init()
 	pancakeButton->sprite.setScale(buttonW, buttonH);
 	pancakeButton->SetOrigin(Origins::MC);
 	pancakeButton->sortLayer = 102;
-	pancakeButton->SetPosition(size.x * 0.3f, size.y * 0.5f );
+	pancakeButton->SetPosition(size.x * 0.3f, size.y * 0.38f);
 	auto ptr1 = pancakeButton;
 
 	//sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button.png");
@@ -64,12 +70,12 @@ void StorageBox::Init()
 		pancakeButton->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
 	};
 
-	// 그만하기
+	// 해적
 	pirateButton = (UIButton*)scene->AddGo(new UIButton("graphics/Lobby/CookieStorageBox/PirateIcon.png"));
 	pirateButton->sprite.setScale(buttonW, buttonH);
 	pirateButton->SetOrigin(Origins::MC);
 	pirateButton->sortLayer = 102;
-	pirateButton->SetPosition(size.x * 0.5f, size.y * 0.5f );
+	pirateButton->SetPosition(size.x * 0.5f, size.y * 0.38f);
 
 	auto ptr2 = pirateButton;
 	pirateButton->OnEnter = [ptr2]() {
@@ -89,12 +95,12 @@ void StorageBox::Init()
 		pirateButton->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
 	};
 
-	// 다시하기
+	// 달빛술사
 	moonlighterButton = (UIButton*)scene->AddGo(new UIButton("graphics/Lobby/CookieStorageBox/MoonlighterIcon.png"));
 	moonlighterButton->sprite.setScale(buttonW, buttonH);
 	moonlighterButton->SetOrigin(Origins::MC);
 	moonlighterButton->sortLayer = 102;
-	moonlighterButton->SetPosition(size.x * 0.7f, size.y * 0.5f );
+	moonlighterButton->SetPosition(size.x * 0.7f, size.y * 0.38f);
 	auto ptr3 = moonlighterButton;
 	moonlighterButton->OnEnter = [ptr3]() {
 	};
@@ -125,7 +131,7 @@ void StorageBox::Init()
 	//pauseText->sortLayer = 102;
 
 
-	// 버튼 텍스트
+	// 버튼 잠금 텍스트
 	pancakeLockText = (TextGo*)scene->AddGo(new TextGo("fonts/CookieRun Black.otf"));
 	pancakeLockText->text.setScale(1.1f, 1.0f);
 	pancakeLockText->SetPosition({ pancakeLockText->GetPosition().x, pancakeLockText->GetPosition().y - 10.f });
@@ -191,4 +197,6 @@ void StorageBox::AllSetActive(bool isActive)
 	pancakeLockText->SetActive(isActive);
 	pirateLockText->SetActive(isActive);
 	moonlighterLockText->SetActive(isActive);
+	storageBoxBG->SetActive(isActive);
+
 }
