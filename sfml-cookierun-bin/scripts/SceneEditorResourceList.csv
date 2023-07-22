@@ -1,0 +1,35 @@
+"RESOURCE_TYPES (0: 텍스쳐, 1: 폰트, 2: 사운드 클립, 3: 애니메이션 클립, 4: 애니메이션 스프라이트 클립)",RESOURCE_PATH
+1,fonts/CookieRun Black.otf
+1,fonts/CookieRun Bold.otf
+1,fonts/CookieRun Regular.otf
+0,graphics/Title/Title.png
+0,graphics/Title/Frame1.png
+0,graphics/Title/Frame2.png
+0,graphics/Title/Frame3.png
+0,graphics/Stage1/Background1.png
+0,graphics/Stage1/Background2.png
+0,graphics/Stage1/Ground.png
+0,graphics/Stage1/Pillar1.png
+0,graphics/Stage1/Pillar2.png
+0,graphics/Stage1/Platform.png
+0,graphics/Item/ItemBig1.png
+0,graphics/Item/ItemBigHealPack1.png
+0,graphics/Item/ItemBonus1.png
+0,graphics/Item/ItemBonusTime.png
+0,graphics/Item/ItemCoin1.png
+0,graphics/Item/ItemHealPack1.png
+0,graphics/Item/ItemJelly1.png
+0,graphics/Item/ItemMagnet1.png
+0,graphics/Item/ItemSpeedUp1.png
+0,graphics/Jelly/Coin/BigCoin1.png
+0,graphics/Jelly/Coin/BigGoldCoin1.png
+0,graphics/Jelly/Coin/Coin1.png
+0,graphics/Jelly/Coin/GoldCoin1.png
+0,graphics/Jelly/Diamond/Diamond.png
+0,graphics/Jelly/Diamond/DiamondBox.png
+0,graphics/Jelly/Diamond/LuckyBox.png
+0,graphics/Editor/ButtonBG.png
+0,graphics/Editor/MinusButton.png
+0,graphics/Editor/PlusButton.png
+0,graphics/Editor/ResetButton.png
+0,graphics/Editor/SwitchButton.png

@@ -144,6 +144,9 @@
     <ClCompile Include="StorageBox.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\PatternEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -285,6 +288,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="StorageBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\PatternEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

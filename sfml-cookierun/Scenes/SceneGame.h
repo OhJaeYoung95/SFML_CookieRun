@@ -80,7 +80,7 @@ public:
 
 	void JumpUIDown(bool isActive);
 	void SlideUIDown(bool isActive);
-	void IsChangeTitle(bool isBool) { isChange = isBool; }
+	void IsChangeScene(bool isBool) { isChange = isBool; }
 
 	void SetScene(SceneLobby* scene) { this->scene = scene;}
 };

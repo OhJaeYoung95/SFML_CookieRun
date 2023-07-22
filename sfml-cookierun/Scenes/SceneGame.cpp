@@ -331,7 +331,7 @@ void SceneGame::Update(float dt)
 	if (isChange)
 	{
 		isChange = false;
-		SCENE_MGR.ChangeScene(SceneId::Title);
+		SCENE_MGR.ChangeScene(SceneId::Lobby);
 	}
 }
 

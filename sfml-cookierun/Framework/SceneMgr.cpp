@@ -5,6 +5,7 @@
 #include "SceneGame.h"
 #include "DataTableMgr.h"
 #include "StringTable.h"
+#include "PatternEditor.h"
 
 void SceneMgr::Init()
 {
@@ -13,6 +14,7 @@ void SceneMgr::Init()
 		Release();
 	}
 	scenes.push_back(new SceneTitle());
+	scenes.push_back(new PatternEditor());
 	scenes.push_back(new SceneLobby());
 	scenes.push_back(new SceneGame());
 
