@@ -54,9 +54,11 @@ protected:
 	UIButton* ground;
 	UIButton* pillar;
 	UIButton* platform;
+	std::vector<UIButton*> platforms;
 
 	// 아이템
 	UIButton* itemBig;
+
 	UIButton* itemBigHP;
 	UIButton* itemBonus1;
 	UIButton* itemBonus2;
@@ -65,6 +67,7 @@ protected:
 	UIButton* itemJelly;
 	UIButton* itemMagnet;
 	UIButton* itemSpeedUp;
+	std::vector<UIButton*> items;
 
 	// 재화
 	UIButton* bigCoin;
@@ -74,6 +77,7 @@ protected:
 	UIButton* dia;
 	UIButton* diaBox;
 	UIButton* luckyBox;
+	std::vector<UIButton*> coins;
 
 
 

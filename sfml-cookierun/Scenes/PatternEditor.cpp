@@ -58,21 +58,17 @@ void PatternEditor::Init()
  
 	StringTable* stringTable = DATATABLE_MGR.Get<StringTable>(DataTable::Ids::String);
 	objectType = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
-	objectType->SetPosition({ 200, 100 });
-	objectType->text.setCharacterSize(26);
+	objectType->SetPosition({ 220, 80 });
+	objectType->text.setCharacterSize(40);
 	objectType->text.setFillColor(sf::Color::White);
 	objectType->text.setOutlineThickness(3);
 	objectType->text.setOutlineColor(sf::Color::Black);
 	objectType->sortLayer = 102;
 
-	// EnumType에 따른 셋팅
-	objectType->text.setString("");
-	objectType->SetOrigin(Origins::MC);
-
 	typeBg = (SpriteGo*)AddGo(new SpriteGo("graphics/Lobby/PlayButton.png"));
-	typeBg->SetPosition(windowSize.x * 0.575f, 40.f);
-	typeBg->sprite.setScale(1.6f, 1.3f);
-	typeBg->sprite.setColor(sf::Color::Color(0, 0, 0, 180));
+	typeBg->SetPosition({ 220, 85 });
+	typeBg->sprite.setScale(1.8f, 2.5f);
+	typeBg->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
 	typeBg->SetOrigin(Origins::MC);
 	typeBg->sortLayer = 101;
 
@@ -91,9 +87,38 @@ void PatternEditor::Init()
 		switchButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		buttonBG->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 	};
-	switchButton->OnClick = [this]() {
+	switchButton->OnClick = [this, stringTable]() {
 		int type = ((int)currentType + 1) % (int)ObjectType::Count;
 		currentType = (ObjectType)type;
+
+		switch (currentType)
+		{
+		case ObjectType::Platform:
+			objectType->text.setString(stringTable->GetUni("GROUND", Languages::KOR));
+			objectType->SetOrigin(Origins::MC);
+			for (auto platform : platforms)
+				platform->SetActive(true);
+			for (auto coin : coins)
+				coin->SetActive(false);
+			break;
+		case ObjectType::Item:
+			objectType->text.setString(stringTable->GetUni("ITEM", Languages::KOR));
+			objectType->SetOrigin(Origins::MC);
+			for (auto item : items)
+				item->SetActive(true);
+			for (auto platform : platforms)
+				platform->SetActive(false);
+
+			break;
+		case ObjectType::Coin:
+			objectType->text.setString(stringTable->GetUni("COIN", Languages::KOR));
+			objectType->SetOrigin(Origins::MC);
+			for (auto item : items)
+				item->SetActive(false);
+			for (auto coin : coins)
+				coin->SetActive(true);
+			break;
+		}
 		switchButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		buttonBG->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 
@@ -110,33 +135,72 @@ void PatternEditor::Init()
 	UIInit(ground, { 1, 1 }, { 170, 300 });
 	UIInit(pillar, { 0.5, 0.5 }, { 340, 330 });
 	UIInit(platform, { 1, 1 }, { 170, 500 });
+	platforms.push_back(ground);
+	platforms.push_back(pillar);
+	platforms.push_back(platform);
 
-	//// 아이템
-	//itemBig = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBig1.png"));
-	//itemBigHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBigHealPack1.png"));
-	//itemBonus1 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonus1.png"));
-	//itemBonus2 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonusTime.png"));
-	//itemCoin = (UIButton*)AddGo(new UIButton("graphics/Item/ItemCoin1.png"));
-	//itemHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemHealPack1.png"));
-	//itemJelly = (UIButton*)AddGo(new UIButton("graphics/Item/ItemJelly1.png"));
-	//itemMagnet = (UIButton*)AddGo(new UIButton("graphics/Item/ItemMagnet1.png"));
-	//itemSpeedUp = (UIButton*)AddGo(new UIButton("graphics/Item/ItemSpeedUp1.png"));
+	// 아이템
+	itemBig = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBig1.png"));
+	itemBigHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBigHealPack1.png"));
+	itemBonus1 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonus1.png"));
+	itemBonus2 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonusTime.png"));
+	itemCoin = (UIButton*)AddGo(new UIButton("graphics/Item/ItemCoin1.png"));
+	itemHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemHealPack1.png"));
+	itemJelly = (UIButton*)AddGo(new UIButton("graphics/Item/ItemJelly1.png"));
+	itemMagnet = (UIButton*)AddGo(new UIButton("graphics/Item/ItemMagnet1.png"));
+	itemSpeedUp = (UIButton*)AddGo(new UIButton("graphics/Item/ItemSpeedUp1.png"));
 
-	//// 재화
-	//bigCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigCoin1.png"));
-	//bigGCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigGoldCoin1.png"));
-	//coin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/Coin1.png"));
-	//gCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/GoldCoin1.png"));
-	//dia = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/Diamond.png"));
-	//diaBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/DiamondBox.png"));
-	//luckyBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/LuckyBox.png"));
+	float offset = -30;
+	UIInit(itemBig, { 1, 1 }, { 150, 250 + offset});
+	UIInit(itemBigHP, { 1, 1 }, { 350, 230 });
+	UIInit(itemBonus1, { 1, 1 }, { 150, 400 + offset });
+	UIInit(itemBonus2, { 1, 1 }, { 350, 370 });
+	UIInit(itemCoin, { 1, 1 }, { 150, 550 + offset });
+	UIInit(itemHP, { 1, 1 }, { 350, 520 });
+	UIInit(itemJelly, { 1, 1 }, { 150, 700 + offset });
+	UIInit(itemMagnet, { 1, 1 }, { 350, 670 });
+	UIInit(itemSpeedUp, { 1, 1 }, { 150, 850 + offset });
 
-	//// 버튼
-	//buttonBG = (UIButton*)AddGo(new UIButton("graphics/Editor/ButtonBG.png"));
-	//minusButton = (UIButton*)AddGo(new UIButton("graphics/Editor/MinusButton.png"));
-	//plusButton = (UIButton*)AddGo(new UIButton("graphics/Editor/PlusButton.png"));
-	//resetButton = (UIButton*)AddGo(new UIButton("graphics/Editor/ResetButton.png"));	
-	//switchButton = (UIButton*)AddGo(new UIButton("graphics/Editor/SwitchButton.png"));
+	items.push_back(itemBig);
+	items.push_back(itemBigHP);
+	items.push_back(itemBonus1);
+	items.push_back(itemBonus2);
+	items.push_back(itemCoin);
+	items.push_back(itemHP);
+	items.push_back(itemJelly);
+	items.push_back(itemMagnet);
+	items.push_back(itemSpeedUp);
+
+	// 재화
+	bigCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigCoin1.png"));
+	bigGCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigGoldCoin1.png"));
+	coin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/Coin1.png"));
+	gCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/GoldCoin1.png"));
+	dia = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/Diamond.png"));
+	diaBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/DiamondBox.png"));
+	luckyBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/LuckyBox.png"));
+	UIInit(bigCoin, { 1, 1 }, { 150, 250 });
+	UIInit(bigGCoin, { 1, 1 }, { 350, 250 });
+	UIInit(coin, { 1, 1 }, { 150, 400 });
+	UIInit(gCoin, { 1, 1 }, { 350, 400 });
+	UIInit(dia, { 1, 1 }, { 150, 500 });
+	UIInit(diaBox, { 1, 1 }, { 350, 500 });
+	UIInit(luckyBox, { 1, 1 }, { 150, 650 });
+
+	coins.push_back(bigCoin);
+	coins.push_back(bigGCoin);
+	coins.push_back(coin);
+	coins.push_back(gCoin);
+	coins.push_back(dia);
+	coins.push_back(diaBox);
+	coins.push_back(luckyBox);
+
+	// 버튼
+	buttonBG = (UIButton*)AddGo(new UIButton("graphics/Editor/ButtonBG.png"));
+	minusButton = (UIButton*)AddGo(new UIButton("graphics/Editor/MinusButton.png"));
+	plusButton = (UIButton*)AddGo(new UIButton("graphics/Editor/PlusButton.png"));
+	resetButton = (UIButton*)AddGo(new UIButton("graphics/Editor/ResetButton.png"));	
+	switchButton = (UIButton*)AddGo(new UIButton("graphics/Editor/SwitchButton.png"));
 
 	int gridSizeCol = windowSize.y / 100;
 	for (int i = 0; i < 2; i++)
@@ -172,6 +236,30 @@ void PatternEditor::Init()
 
 	nextWindow = (SpriteGo*)AddGo(new SpriteGo());
 
+
+	for (auto platform : platforms)
+		platform->SetActive(true);
+	for (auto item : items)
+		item->SetActive(false);
+	for (auto coin : coins)
+		coin->SetActive(false);
+
+	switch (currentType)
+	{
+	case ObjectType::Platform:
+		objectType->text.setString(stringTable->GetUni("GROUND", Languages::KOR));
+		objectType->SetOrigin(Origins::MC);
+		break;
+	case ObjectType::Item:
+		objectType->text.setString(stringTable->GetUni("ITEM", Languages::KOR));
+		objectType->SetOrigin(Origins::MC);
+		break;
+	case ObjectType::Coin:
+		objectType->text.setString(stringTable->GetUni("COIN", Languages::KOR));
+		objectType->SetOrigin(Origins::MC);
+		break;
+	}
+
 	for (auto go : gameObjects)
 	{
 		go->Init();
@@ -180,7 +268,11 @@ void PatternEditor::Init()
 }
 
 void PatternEditor::Release()
-{
+{	
+	// 이 부분 생각하기 / Enter? Release? / 안에 내용물들은 어떻게 처리해야하나
+	coins.clear();
+	items.clear();
+	platforms.clear();
 	for (auto go : gameObjects)
 	{
 		//go->Release();
