@@ -24,6 +24,7 @@ public:
 	virtual void SetName(const std::string& n);
 
 	const sf::Vector2f& GetPosition();
+	const int GetOrigin() { return (int)origin; }
 
 	virtual void SetPosition(const sf::Vector2f& p);
 	virtual void SetPosition(float x, float y);

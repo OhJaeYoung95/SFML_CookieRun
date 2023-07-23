@@ -10,6 +10,7 @@ class PatternEditor : public Scene
 {
 protected:
 
+	sf::Clock clock;
 
 
 	SpriteGo* currentBg1;
@@ -59,6 +60,9 @@ protected:
 	float plusSizeY = 0.1f;
 	float minusSizeY = -0.1f;
 
+	float speed = 4500.f;
+	float timer = 0.f;
+	float duration = 0.1f;
 
 
 	// ¹öÆ°
@@ -112,9 +116,9 @@ protected:
 	UIButton* luckyBox;
 	std::vector<UIButton*> coins;
 
-
 	//
 	std::vector<PatternObject*> patterns;
+
 public:
 	PatternEditor();
 	virtual ~PatternEditor() override = default;

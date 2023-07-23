@@ -498,6 +498,8 @@ void PatternEditor::PatternButtonEvent(UIButton* object)
 		object->SetPosition(uiMousePos);
 	};
 }
+
+// Scale + - 
 void PatternEditor::PlusButtonXEvent(UIButton* object)
 {
 	object->OnEnter = [this, object]() {
@@ -510,11 +512,19 @@ void PatternEditor::PlusButtonXEvent(UIButton* object)
 	object->OnClick = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		plusButtonX->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		currentSizeX += plusSizeX;
-		std::cout << currentSizeX << std::endl;
 
 	};
 	object->OnClicking = [this, object]() {
+		clock.restart();
+		sf::Time deltaTime = clock.restart();
+		float dt = deltaTime.asSeconds();
+		timer += dt * speed;
+		if (timer > duration)
+		{
+			currentSizeX += plusSizeX;
+			timer = 0.f;
+			std::cout << currentSizeX << std::endl;
+		}
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		plusButtonX->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 	};
@@ -532,12 +542,20 @@ void PatternEditor::MinusButtonXEvent(UIButton* object)
 	object->OnClick = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		minusButtonX->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		currentSizeX += minusSizeX;
-		std::cout << currentSizeX << std::endl;
 	};
 	object->OnClicking = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		minusButtonX->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+		clock.restart();
+		sf::Time deltaTime = clock.restart();
+		float dt = deltaTime.asSeconds();
+		timer += dt * speed;
+		if (timer > duration)
+		{
+			currentSizeX += minusSizeX;
+			timer = 0.f;
+		}
+
 	};
 }
 void PatternEditor::PlusButtonYEvent(UIButton* object)
@@ -552,12 +570,20 @@ void PatternEditor::PlusButtonYEvent(UIButton* object)
 	object->OnClick = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		plusButtonY->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		currentSizeY += plusSizeY;
-		std::cout << currentSizeY << std::endl;
 	};
 	object->OnClicking = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		plusButtonY->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+		clock.restart();
+		sf::Time deltaTime = clock.restart();
+		float dt = deltaTime.asSeconds();
+		timer += dt * speed;
+		if (timer > duration)
+		{
+			currentSizeY += plusSizeY;
+			timer = 0.f;
+		}
+
 	};
 }
 void PatternEditor::MinusButtonYEvent(UIButton* object)
@@ -572,12 +598,20 @@ void PatternEditor::MinusButtonYEvent(UIButton* object)
 	object->OnClick = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		minusButtonY->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		currentSizeY += minusSizeY;
-		std::cout << currentSizeY << std::endl;
 	};
 	object->OnClicking = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
 		minusButtonY->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+		clock.restart();
+		sf::Time deltaTime = clock.restart();
+		float dt = deltaTime.asSeconds();
+		timer += dt * speed;
+		if (timer > duration)
+		{
+			currentSizeY += minusSizeY;
+			timer = 0.f;
+		}
+
 	};
 }
 void PatternEditor::SaveButtonEvent(UIButton* object)
@@ -631,10 +665,45 @@ void PatternEditor::ResetButtonEvent(UIButton* object)
 void PatternEditor::SavePattern()
 {
 	rapidcsv::Document doc;
+	doc.Clear();
 
-	std::string fileName = "Pattern" + std::to_string(currentPattern) + ".csv";
+	std::string fileName = "PatternData/Pattern" + std::to_string(currentPattern) + ".csv";
+	currentPattern++;
 
-	doc.SetColumnName({ "Type", ""});
+	doc.SetColumnName(0, "Path");
+	doc.SetColumnName(1, "Type");
+	doc.SetColumnName(2, "Pos X");
+	doc.SetColumnName(3, "Pos Y");
+	doc.SetColumnName(4, "Scale X");
+	doc.SetColumnName(5, "Scale Y");
+	doc.SetColumnName(6, "Origin");
+
+	std::vector<std::string> paths;
+	std::vector<int> types;
+	std::vector<float> posX;
+	std::vector<float> posY;
+	std::vector<float> scaleX;
+	std::vector<float> scaleY;
+	std::vector<int> Origin;
+
+	for (auto pattern : patterns)
+	{
+		paths.push_back(pattern->textureId);
+		posX.push_back(pattern->GetPosition().x);
+		posY.push_back(pattern->GetPosition().y);
+		scaleX.push_back(pattern->sprite.getScale().x);
+		scaleY.push_back(pattern->sprite.getScale().y);
+		Origin.push_back(pattern->GetOrigin());
+	}
+	doc.SetColumn<std::string>("Path", paths);
+	doc.SetColumn<float>("Pos X", posX);
+	doc.SetColumn<float>("Pos Y", posY);
+	doc.SetColumn<float>("Scale X", scaleX);
+	doc.SetColumn<float>("Scale Y", scaleY);
+	doc.SetColumn<int>("Origin", Origin);
+
+	paths.clear();
+
 
 	doc.Save(fileName);
 }
