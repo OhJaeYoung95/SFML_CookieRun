@@ -4,18 +4,14 @@
 class SpriteGo;
 class TextGo;
 class UIButton;
-
-enum class ObjectType
-{
-	Platform,
-	Item,
-	Coin,
-	Count,
-};
+class PatternObject;
 
 class PatternEditor : public Scene
 {
 protected:
+
+
+
 	SpriteGo* currentBg1;
 	SpriteGo* currentBg2;
 	SpriteGo* nextBg1;
@@ -32,23 +28,60 @@ protected:
 	UIButton* switchPrevious;
 
 	SpriteGo* editorBg;
+	SpriteGo* patternBg;
 
 	TextGo* editorType;
 
 	// Editor Object
+	// 패턴 저장소 공간
+	TextGo* patternStorage;
+	SpriteGo* storageBg;
+
+	int currentPattern = 1;
 	
 	// 아이템 종류 표기
 	ObjectType currentType = ObjectType::Platform;
 	TextGo* objectType;
 	SpriteGo* typeBg;
 
+
+	// 아이템 크기 / 선택 표기
+	SpriteGo* sizeXBG;
+	TextGo* sizeX;
+	SpriteGo* sizeYBG;
+	TextGo* sizeY;
+
+	float currentSizeX = 1.f;
+	float plusSizeX = 0.1f;
+	float minusSizeX = -0.1f;
+
+	float currentSizeY = 1.f;
+	float plusSizeY = 0.1f;
+	float minusSizeY = -0.1f;
+
+
+
 	// 버튼
-	UIButton* buttonBG;
-	UIButton* minusButton;
-	UIButton* plusButton;
-	UIButton* resetButton;
+	UIButton* swbuttonBG;
 	UIButton* switchButton;
 
+	UIButton* plusButtonXBG;
+	UIButton* plusButtonX;
+
+	UIButton* minusButtonXBG;
+	UIButton* minusButtonX;
+
+	UIButton* plusButtonYBG;
+	UIButton* plusButtonY;
+
+	UIButton* minusButtonYBG;
+	UIButton* minusButtonY;
+
+	UIButton* saveButtonBG;
+	UIButton* saveButton;
+
+	UIButton* resetButtonBG;
+	UIButton* resetButton;
 
 	// 지형
 	UIButton* ground;
@@ -80,8 +113,8 @@ protected:
 	std::vector<UIButton*> coins;
 
 
-
-
+	//
+	std::vector<PatternObject*> patterns;
 public:
 	PatternEditor();
 	virtual ~PatternEditor() override = default;
@@ -96,5 +129,15 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	void UIInit(UIButton* object, sf::Vector2f size, sf::Vector2f pos);
+	void ButtonEvent(UIButton* object);
+	void PatternButtonEvent(UIButton* object);
+	void PlusButtonXEvent(UIButton* object);
+	void MinusButtonXEvent(UIButton* object);
+	void PlusButtonYEvent(UIButton* object);
+	void MinusButtonYEvent(UIButton* object);
+	void SaveButtonEvent(UIButton* object);
+	void ResetButtonEvent(UIButton* object);
+
+	void SavePattern();
 };
 

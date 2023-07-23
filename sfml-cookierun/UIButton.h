@@ -5,8 +5,10 @@ class UIButton : public SpriteGo
 {
 protected:
 	bool isHover = false;
+	bool isPressed = false;
 
 public:
+
 	UIButton(const std::string& textureId = "", const std::string& n = "");
 	virtual ~UIButton() override;
 

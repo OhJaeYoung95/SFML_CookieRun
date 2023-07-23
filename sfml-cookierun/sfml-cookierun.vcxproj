@@ -188,6 +188,7 @@
     <ClCompile Include="Moonlighter.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Pancake.cpp" />
+    <ClCompile Include="PatternObject.cpp" />
     <ClCompile Include="Scenes\PatternEditor.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Pirate.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Moonlighter.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Pancake.h" />
+    <ClInclude Include="PatternObject.h" />
     <ClInclude Include="Scenes\PatternEditor.h" />
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Pirate.h" />

@@ -51,4 +51,12 @@ enum class SceneId
 	Count,
 };
 
+enum class ObjectType
+{
+	None = -1,
+	Platform,
+	Item,
+	Coin,
+	Count,
+};
 #include "AnimationClip.h"
