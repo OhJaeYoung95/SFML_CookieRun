@@ -23,6 +23,13 @@ void PatternEditor::Init()
 	sf::Vector2f editor = { 1030.f, 0.f };
 	currentType = ObjectType::Platform;
 
+	auto size = FRAMEWORK.GetWindowSize();
+	worldView.setSize(size);
+	worldView.setCenter(0, 0);
+
+	uiView.setSize(size + editor);
+	uiView.setCenter((size + editor) * 0.5f);
+
 	//PatternObject* obj = (PatternObject*)AddGo(new PatternObject("graphics/Stage1/Ground.png"));
 	//obj->SetPosition(500, 500);
 	//obj->SetOrigin(Origins::MC);
@@ -45,25 +52,35 @@ void PatternEditor::Init()
 	patternBg->SetPosition(editor.x * 0.75f, windowSize.y * 0.5f);
 	patternBg->sortLayer = 100;
 
+
+
 	// 화면
 	currentBg1 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background1.png"));
-	currentBg1->sortLayer = 1;
-	currentBg2 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background2.png"));
-	currentBg2->sortLayer = 0;
-	
-	nextBg1 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background1.png"));
-	nextBg1->sortLayer = 0;
-	nextBg2 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background2.png"));
-	nextBg2->sortLayer = 0;
+	currentBg1->SetPosition(editor.x, 0);
+	currentBg1->sprite.setScale(2.4f, 2.9f);
+	currentBg1->sortLayer = 100;
+	currentBg1->sortOrder = -1;
 
-	cookieGrid = (SpriteGo*)AddGo(new SpriteGo());
-	cookieGrid->rect.setSize({ 100.f, 120.f });
-	cookieGrid->rect.setOutlineColor(sf::Color::Cyan);
-	cookieGrid->rect.setOutlineThickness(5);
-	cookieGrid->rect.setFillColor(sf::Color::Transparent);
-	cookieGrid->SetOrigin(Origins::BC);
-	cookieGrid->SetPosition(-500.f + editor.x * 0.5f, windowSize.y * 0.5f - 250.f);
-	cookieGrid->sortLayer = 10;
+	currentBg2 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background2.png"));
+	currentBg2->SetPosition(editor.x, 0);
+	currentBg2->sprite.setScale(2.4f, 2.9f);
+	currentBg2->sortLayer = 100;
+	currentBg2->sortOrder = -2;
+
+	nextBg1 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background1.png"));
+	nextBg1->SetPosition(editor.x, 0);
+	nextBg1->sprite.setScale(2.4f, 2.9f);
+	nextBg1->sortLayer = 100;
+	nextBg1->sortOrder = -1;
+
+	nextBg2 = (SpriteGo*)AddGo(new SpriteGo("graphics/Stage1/Background2.png"));
+	nextBg2->SetPosition(editor.x, 0);
+	nextBg2->sprite.setScale(2.4f, 2.9f);
+	nextBg2->sortLayer = 100;
+	nextBg2->sortOrder = -2;
+
+
+
 
 	groundGrid = (SpriteGo*)AddGo(new SpriteGo());
 	groundGrid->rect.setSize({ (1920.f * 2.0f) + editor.x , 5.f } );
@@ -89,13 +106,31 @@ void PatternEditor::Init()
 	typeBg->SetOrigin(Origins::MC);
 	typeBg->sortLayer = 101;
 
+	// 저장소 표기
+	MarkStorage();
 
 
+	// BG 표기
+	stage1 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(stage1, { 1.5f, 2.2f }, { 680, 80 });
+	stage1->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	stage1->text.setString("Stage1");
+	stage1->SetOrigin(Origins::MC);
+
+	stage2 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(stage2, { 1.5f, 2.2f }, { 865, 80 });
+	stage2->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	stage2->text.setString("Stage2");
+	stage2->SetOrigin(Origins::MC);
 
 	// 지형
 	ground = (UIButton*)AddGo(new UIButton("graphics/Stage1/Ground.png"));
+	ground->type = PatternObjectType::Platform;
 	pillar = (UIButton*)AddGo(new UIButton("graphics/Stage1/Pillar1.png"));
+	pillar->type = PatternObjectType::Obstacle;
+
 	platform = (UIButton*)AddGo(new UIButton("graphics/Stage1/Platform.png"));
+	platform->type = PatternObjectType::Platform;
 	
 	UIInit(ground, { 1, 1 }, { 170, 300 });
 	UIInit(pillar, { 0.5, 0.5 }, { 340, 330 });
@@ -326,7 +361,7 @@ void PatternEditor::Init()
 	};
 
 	int gridSizeCol = windowSize.y / 100;
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < gridSizeCol; i++)
 	{
 		grid = (SpriteGo*)AddGo(new SpriteGo());
 		grid->rect.setSize({ (1920.f * 2.0f) + editor.x , 5.f });
@@ -337,7 +372,7 @@ void PatternEditor::Init()
 	}
 
 	int gridSizeRow = windowSize.x / 100;
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < gridSizeRow; i++)
 	{
 		grid = (SpriteGo*)AddGo(new SpriteGo());
 		grid->rect.setSize({ 5.f , 1080.f});
@@ -406,14 +441,30 @@ void PatternEditor::Release()
 
 void PatternEditor::Enter()
 {
-	auto size = FRAMEWORK.GetWindowSize();
-	sf::Vector2f editor = {1030.f, 0.f};
-	worldView.setSize(size);
-	worldView.setCenter(0, 0);
 
-	uiView.setSize(size + editor);
-	uiView.setCenter((size + editor) * 0.5f);
 	Scene::Enter();
+	currentPattern = 1;
+
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+	sf::Vector2f editor = { 1030.f, 0.f };
+
+	sf::Vector2f cookiePos = { -500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f };
+	//sf::Vector2f uiMousePos = SCENE_MGR.GetCurrScene()->ScreenToUiPos(mousePos);
+	
+	cookiePos = SCENE_MGR.GetCurrScene()->WorldPosToUiPos(cookiePos);
+	cookiePos += editor * 0.5f;
+	//sf::Vector2f temp1 = SCENE_MGR.GetCurrScene()->WorldPosToScreen(cookiePos);
+	//sf::Vector2f temp2 = SCENE_MGR.GetCurrScene()->ScreenToUiPos(temp1);
+	//temp2 += editor * 0.5f;
+
+	cookieGrid = (SpriteGo*)AddGo(new SpriteGo());
+	cookieGrid->rect.setSize({ 100.f, 120.f });
+	cookieGrid->rect.setOutlineColor(sf::Color::Cyan);
+	cookieGrid->rect.setOutlineThickness(5);
+	cookieGrid->rect.setFillColor(sf::Color::Transparent);
+	cookieGrid->SetOrigin(Origins::BC);
+	cookieGrid->SetPosition(cookiePos);
+	cookieGrid->sortLayer = 101;
 }
 
 void PatternEditor::Exit()
@@ -435,6 +486,11 @@ void PatternEditor::Update(float dt)
 	sizeY->text.setString(sizeYS.str());
 	sizeY->SetOrigin(Origins::MC);
 
+
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENE_MGR.ChangeScene(SceneId::Game);
+	}
 }
 
 void PatternEditor::Draw(sf::RenderWindow& window)
@@ -462,6 +518,7 @@ void PatternEditor::ButtonEvent(UIButton* object)
 	object->OnClick = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		PatternObject* obj = (PatternObject*)AddGo(new PatternObject(object->textureId));
+		obj->SetType(object->type);
 		obj->Reset();
 		obj->sprite.setScale(currentSizeX, currentSizeY);
 		obj->SetPosition(500, 500);
@@ -635,6 +692,61 @@ void PatternEditor::SaveButtonEvent(UIButton* object)
 
 }
 
+void PatternEditor::StorageButtonEvent(UIButton* object)
+{
+	object->OnEnter = [this, object]() {
+
+	};
+	object->OnExit = [this, object]() {
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+	};
+	object->OnClick = [this, object]() {
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		selectStorage->SetPosition(object->GetPosition().x, object->GetPosition().y + 27.f);
+		// 저장소 선택
+		currentPattern = object->storageNum;
+		//std::string path = "PatternData/Pattern" + std::to_string(currentPattern) + ".csv";
+		//LoadPattern(path);
+	};
+	object->OnClicking = [this, object]() {
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 180));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+	};
+
+}
+
+void PatternEditor::LoadButtonEvent(UIButton* object)
+{
+	object->OnEnter = [this, object]() {
+
+	};
+	object->OnExit = [this, object]() {
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+	};
+	object->OnClick = [this, object]() {
+		for (auto pattern : patterns)
+		{
+			RemoveGo(pattern);
+		}
+		patterns.clear();
+
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+
+		// 로드하기
+		std::string path = "PatternData/Pattern" + std::to_string(currentPattern) + ".csv";
+		LoadPattern(path);
+	};
+	object->OnClicking = [this, object]() {
+		object->sprite.setColor(sf::Color::Color(0, 0, 0, 180));
+		object->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+	};
+
+}
+
 void PatternEditor::ResetButtonEvent(UIButton* object)
 {
 	object->OnEnter = [this, object]() {
@@ -662,13 +774,34 @@ void PatternEditor::ResetButtonEvent(UIButton* object)
 
 }
 
+void PatternEditor::DocReset()
+{
+	rapidcsv::Document doc;
+
+	for (int i = 0; i < 9; i++)
+	{
+		doc.Clear();
+		std::string fileName = "PatternData/Pattern" + std::to_string(currentPattern) + ".csv";
+		currentPattern++;
+
+		doc.SetColumnName(0, "Path");
+		doc.SetColumnName(1, "Type");
+		doc.SetColumnName(2, "Pos X");
+		doc.SetColumnName(3, "Pos Y");
+		doc.SetColumnName(4, "Scale X");
+		doc.SetColumnName(5, "Scale Y");
+		doc.SetColumnName(6, "Origin");
+
+		doc.Save(fileName);
+	}
+}
+
 void PatternEditor::SavePattern()
 {
 	rapidcsv::Document doc;
 	doc.Clear();
 
 	std::string fileName = "PatternData/Pattern" + std::to_string(currentPattern) + ".csv";
-	currentPattern++;
 
 	doc.SetColumnName(0, "Path");
 	doc.SetColumnName(1, "Type");
@@ -689,6 +822,7 @@ void PatternEditor::SavePattern()
 	for (auto pattern : patterns)
 	{
 		paths.push_back(pattern->textureId);
+		types.push_back((int)pattern->GetType());
 		posX.push_back(pattern->GetPosition().x);
 		posY.push_back(pattern->GetPosition().y);
 		scaleX.push_back(pattern->sprite.getScale().x);
@@ -696,14 +830,132 @@ void PatternEditor::SavePattern()
 		Origin.push_back(pattern->GetOrigin());
 	}
 	doc.SetColumn<std::string>("Path", paths);
+	doc.SetColumn<int>("Type", types);
 	doc.SetColumn<float>("Pos X", posX);
 	doc.SetColumn<float>("Pos Y", posY);
 	doc.SetColumn<float>("Scale X", scaleX);
 	doc.SetColumn<float>("Scale Y", scaleY);
 	doc.SetColumn<int>("Origin", Origin);
 
-	paths.clear();
+	//paths.clear();
 
 
 	doc.Save(fileName);
+}
+
+void PatternEditor::LoadPattern(const std::string& fileName)
+{
+	rapidcsv::Document doc(fileName);
+	//doc.Clear();
+
+	std::vector<std::string> paths = doc.GetColumn<std::string>("Path");
+	std::vector<int> types = doc.GetColumn<int>("Type");
+	std::vector<float> posX = doc.GetColumn<float>("Pos X");
+	std::vector<float> posY = doc.GetColumn<float>("Pos Y");
+	std::vector<float> scaleX = doc.GetColumn<float>("Scale X");
+	std::vector<float> scaleY = doc.GetColumn<float>("Scale Y");
+	std::vector<int> origin = doc.GetColumn<int>("Origin");
+
+	for (int i = 0; i < paths.size(); i++)
+	{
+		PatternObject* pattern = (PatternObject*)AddGo(new PatternObject(paths[i]));
+		patterns.push_back(pattern);
+		pattern->SetPosition(posX[i], posY[i]);
+		pattern->SetType((PatternObjectType)types[i]);
+		pattern->sprite.setScale(scaleX[i], scaleY[i]);
+		pattern->SetOrigin((Origins)origin[i]);
+		pattern->sortLayer = 100;
+		pattern->Init();
+		pattern->Reset();
+
+	}
+}
+
+void PatternEditor::MarkStorage()
+{
+	storage1 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage1, { 3.1, 1.8f }, { 775, 150 });
+	storage1->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage1->text.setString("Pattern1");
+	storage1->SetOrigin(Origins::TC);
+	storage1->storageNum = 1;
+	StorageButtonEvent(storage1);
+
+	storage2 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage2, { 3.1, 1.8f }, { 775, 220 });
+	storage2->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage2->text.setString("Pattern2");
+	storage2->SetOrigin(Origins::TC);
+	storage2->storageNum = 2;
+	StorageButtonEvent(storage2);
+
+	storage3 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage3, { 3.1, 1.8f }, { 775, 290 });
+	storage3->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage3->text.setString("Pattern3");
+	storage3->SetOrigin(Origins::TC);
+	storage3->storageNum = 3;
+	StorageButtonEvent(storage3);
+
+	storage4 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage4, { 3.1, 1.8f }, { 775, 360 });
+	storage4->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage4->text.setString("Pattern4");
+	storage4->SetOrigin(Origins::TC);
+	storage4->storageNum = 4;
+	StorageButtonEvent(storage4);
+
+	storage5 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage5, { 3.1, 1.8f }, { 775, 430 });
+	storage5->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage5->text.setString("Pattern5");
+	storage5->SetOrigin(Origins::TC);
+	storage5->storageNum = 5;
+	StorageButtonEvent(storage5);
+
+	storage6 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage6, { 3.1, 1.8f }, { 775, 500 });
+	storage6->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage6->text.setString("Pattern6");
+	storage6->SetOrigin(Origins::TC);
+	storage6->storageNum = 6;
+	StorageButtonEvent(storage6);
+
+	storage7 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage7, { 3.1, 1.8f }, { 775, 570 });
+	storage7->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage7->text.setString("Pattern7");
+	storage7->SetOrigin(Origins::TC);
+	storage7->storageNum = 7;
+	StorageButtonEvent(storage7);
+
+	storage8 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage8, { 3.1, 1.8f }, { 775, 640 });
+	storage8->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage8->text.setString("Pattern8");
+	storage8->SetOrigin(Origins::TC);
+	storage8->storageNum = 8;
+	StorageButtonEvent(storage8);
+
+	storage9 = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storage9, { 3.1, 1.8f }, { 775, 710 });
+	storage9->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storage9->text.setString("Pattern9");
+	storage9->SetOrigin(Origins::TC);
+	storage9->storageNum = 9;
+	StorageButtonEvent(storage9);
+
+	storageLoad = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	UIInit(storageLoad, { 1.5f, 2.2f }, { 880, 970 });
+	storageLoad->sprite.setColor(sf::Color::Color(0, 0, 0, 255));
+	storageLoad->text.setString("Load");
+	storageLoad->SetOrigin(Origins::TC);
+	LoadButtonEvent(storageLoad);
+
+	selectStorage = (SpriteGo*)AddGo(new SpriteGo("graphics/Editor/Select.png"));
+	selectStorage->sprite.setScale(5.8f, 1.0f);
+	selectStorage->SetPosition(storage1->GetPosition().x, storage1->GetPosition().y + 27.f);
+	selectStorage->SetOrigin(Origins::MC);
+	selectStorage->sortLayer = 101;
+	selectStorage->sortOrder = -2;
 }

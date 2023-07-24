@@ -29,25 +29,25 @@ protected:
 	Background* bg3;
 	Background* bg4;
 
-	// 바닥
-	Platform* ground1;
-	Platform* ground2;
+	//// 바닥
+	//Platform* ground1;
+	//Platform* ground2;
 
-	// 발판
-	Platform* pf1;
-	Platform* pf2;
+	//// 발판
+	//Platform* pf1;
+	//Platform* pf2;
 
-	// 장애물
-	Obstacle* ob1;
-	Obstacle* ob2;
+	//// 장애물
+	//Obstacle* ob1;
+	//Obstacle* ob2;
 
-	// 아이템
-	ItemSpeedUp* itemSpeedUp1;
-	ItemBigHealPack* itemBigHealPack1;
-	ItemBig* itemBig1;
+	//// 아이템
+	//ItemSpeedUp* itemSpeedUp1;
+	//ItemBigHealPack* itemBigHealPack1;
+	//ItemBig* itemBig1;
 
-	// 코인
-	Coin* coin1;
+	//// 코인
+	//Coin* coin1;
 
 	float bgSpeed = 300.f;
 	float pfSpeed = 500.f;
@@ -77,6 +77,14 @@ protected:
 
 	ObjectPool<SpriteEffect> speedUpEffectPool;
 
+	std::vector<Platform*> platforms;
+	std::vector<Obstacle*> obstacles;
+	std::vector<ItemSpeedUp*> itemSpeedups;
+	std::vector<ItemBigHealPack*> itemBigHealPacks;
+	std::vector<ItemBig*> itemBigs;
+	std::vector<Coin*> coins;
+
+
 public:
 	Map(const std::string& n = "");
 	virtual ~Map() override;
@@ -98,6 +106,7 @@ public:
 	void SetCookie(Cookie*& cookie);
 
 	void BackgroundMove(float dt);
+	void ObjectMove(Platform* platform, float dt);
 	void PlatformMove(float dt);
 	void AddSpeedUp();
 	void ResetSpeed();

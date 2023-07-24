@@ -106,6 +106,16 @@ sf::Vector2f Scene::UiPosPosToScreen(sf::Vector2f uiPos)
 	return (sf::Vector2f)window.mapCoordsToPixel(uiPos, uiView);
 }
 
+sf::Vector2f Scene::UiPosToWorldPos(sf::Vector2f uiPos)
+{
+	return ScreenToWorldPos(UiPosPosToScreen(uiPos));
+}
+
+sf::Vector2f Scene::WorldPosToUiPos(sf::Vector2f worldPos)
+{
+	return ScreenToUiPos(WorldPosToScreen(worldPos));
+}
+
 void Scene::Enter()
 {
 	//scripts/[SceneId]ResourceList.csv

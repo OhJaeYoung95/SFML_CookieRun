@@ -3,7 +3,7 @@
 class PatternObject : public UIButton
 {
 protected:
-	ObjectType type = ObjectType::None;
+	PatternObjectType type = PatternObjectType::None;
 
 public:
 	PatternObject(const std::string& textureId = "", const std::string& n = "");
@@ -16,5 +16,7 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
+	PatternObjectType GetType() { return type; }
+	void SetType(PatternObjectType type) { this->type = type; }
 };
 

@@ -1,1 +1,4 @@
-Type,Type,"Pos X","Pos Y","Scale X","Scale Y",Origin
+Path,Type,"Pos X","Pos Y","Scale X","Scale Y",Origin
+graphics/Stage1/Ground.png,-1,1187.68225,317,1,1,4
+graphics/Stage1/Ground.png,-1,1321.35413,458,1,1,4
+graphics/Stage1/Platform.png,-1,1461.17188,560,1,1,4

@@ -1,0 +1,5 @@
+Path,Type,"Pos X","Pos Y","Scale X","Scale Y",Origin
+graphics/Stage1/Ground.png,-1,1103.177,894.159302,1,1,4
+graphics/Stage1/Ground.png,-1,1224.55737,894.159302,1,1,4
+graphics/Item/ItemBonusTime.png,-1,1759.24487,630.796448,1,1,4
+graphics/Item/ItemMagnet1.png,-1,1934.40112,734.867249,1,1,4

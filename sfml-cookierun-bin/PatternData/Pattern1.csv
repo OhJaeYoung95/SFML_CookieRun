@@ -1,1 +1,6 @@
 Path,Type,"Pos X","Pos Y","Scale X","Scale Y",Origin
+graphics/Stage1/Ground.png,0,1338.25513,963,4.99999762,2.00000024,4
+graphics/Stage1/Ground.png,0,1788.4375,962,4.99999762,2.00000024,4
+graphics/Stage1/Ground.png,0,2742.57812,963,4.99999762,2.00000024,4
+graphics/Stage1/Platform.png,0,2127.99487,517,3.99999857,2.00000024,4
+graphics/Stage1/Platform.png,0,2814.7915,379,4.99999762,1.50000012,4

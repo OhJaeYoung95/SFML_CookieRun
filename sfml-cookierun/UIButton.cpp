@@ -16,6 +16,12 @@ UIButton::~UIButton()
 void UIButton::Init()
 {
 	SpriteGo::Init();
+	font.loadFromFile("fonts/CookieRun Black.otf");
+	text.setFont(font);
+	text.setCharacterSize(40);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineThickness(3);
+	text.setOutlineColor(sf::Color::Black);
 }
 
 void UIButton::Release()
@@ -73,4 +79,28 @@ void UIButton::Draw(sf::RenderWindow& window)
 {
 	SpriteGo::Draw(window);
 	window.draw(text);
+}
+
+void UIButton::SetPosition(const sf::Vector2f& p)
+{
+	SpriteGo::SetPosition(p);
+	text.setPosition(p);
+}
+
+void UIButton::SetPosition(float x, float y)
+{
+	SpriteGo::SetPosition(x, y);
+	text.setPosition(x, y);
+}
+
+void UIButton::SetOrigin(Origins origin)
+{
+	SpriteGo::SetOrigin(origin);
+	Utils::SetOrigin(text, origin);
+}
+
+void UIButton::SetOrigin(float x, float y)
+{
+	SpriteGo::SetOrigin(x, y);
+	text.setOrigin(x, y);
 }

@@ -13,10 +13,15 @@ protected:
 	sf::Clock clock;
 
 
+	// 화면
 	SpriteGo* currentBg1;
 	SpriteGo* currentBg2;
 	SpriteGo* nextBg1;
 	SpriteGo* nextBg2;
+
+	// 화면 종류 고르기
+	UIButton* stage1;
+	UIButton* stage2;
 
 	SpriteGo* currentWindow;
 	SpriteGo* nextWindow;
@@ -39,6 +44,22 @@ protected:
 	SpriteGo* storageBg;
 
 	int currentPattern = 1;
+
+	UIButton* storage1;
+	UIButton* storage2;
+	UIButton* storage3;
+	UIButton* storage4;
+	UIButton* storage5;
+	UIButton* storage6;
+	UIButton* storage7;
+	UIButton* storage8;
+	UIButton* storage9;
+
+	// 저장소 선택 버튼
+	SpriteGo* selectStorage;
+
+	// 선택 저장소 로드 버튼
+	UIButton* storageLoad;
 	
 	// 아이템 종류 표기
 	ObjectType currentType = ObjectType::Platform;
@@ -60,9 +81,9 @@ protected:
 	float plusSizeY = 0.1f;
 	float minusSizeY = -0.1f;
 
-	float speed = 4500.f;
+	float speed = 18000.f;
 	float timer = 0.f;
-	float duration = 0.1f;
+	float duration = 0.05f;
 
 
 	// 버튼
@@ -140,8 +161,13 @@ public:
 	void PlusButtonYEvent(UIButton* object);
 	void MinusButtonYEvent(UIButton* object);
 	void SaveButtonEvent(UIButton* object);
+	void StorageButtonEvent(UIButton* object);
+	void LoadButtonEvent(UIButton* object);
 	void ResetButtonEvent(UIButton* object);
 
+	void DocReset();
 	void SavePattern();
+	void LoadPattern(const std::string& fileName);
+	void MarkStorage();
 };
 

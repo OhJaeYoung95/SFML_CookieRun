@@ -7,7 +7,10 @@ protected:
 	bool isHover = false;
 	bool isPressed = false;
 
+	sf::Font font;
 public:
+	int storageNum;
+	PatternObjectType type = PatternObjectType::None;
 
 	UIButton(const std::string& textureId = "", const std::string& n = "");
 	virtual ~UIButton() override;
@@ -18,6 +21,12 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
+
+	virtual void SetPosition(const sf::Vector2f& p) override;
+	virtual void SetPosition(float x, float y) override;
+
+	virtual void SetOrigin(Origins origin) override;
+	virtual void SetOrigin(float x, float y) override;
 
 	sf::Text text;
 

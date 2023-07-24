@@ -48,6 +48,8 @@ public:
 	sf::Vector2f ScreenToUiPos(sf::Vector2f screenPos);
 	sf::Vector2f WorldPosToScreen(sf::Vector2f worldPos);
 	sf::Vector2f UiPosPosToScreen(sf::Vector2f uiPos);
+	sf::Vector2f UiPosToWorldPos(sf::Vector2f uiPos);
+	sf::Vector2f WorldPosToUiPos(sf::Vector2f worldPos);
 
 	virtual void Init() = 0;
 	virtual void Release() = 0;

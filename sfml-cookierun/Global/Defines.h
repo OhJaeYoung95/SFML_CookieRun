@@ -59,4 +59,20 @@ enum class ObjectType
 	Coin,
 	Count,
 };
+
+enum class PatternObjectType
+{
+	None = -1,
+	Platform,
+	Obstacle,
+	ItemSpeedUp,
+	ItemBigHealPack,
+	ItemBig,
+	Coin,
+	BigCoin,
+	GoldCoin,
+	BigGoldCoin,
+	Count,
+
+};
 #include "AnimationClip.h"
