@@ -67,11 +67,18 @@ enum class PatternObjectType
 	Obstacle,
 	ItemSpeedUp,
 	ItemBigHealPack,
+	ItemHealPack,
+	ItemMagnet,
 	ItemBig,
+	//ItemBonus,
+	ItemCoin,
 	Coin,
 	BigCoin,
 	GoldCoin,
 	BigGoldCoin,
+	Diamond,
+	DiamondBox,
+	LuckyBox,
 	Count,
 
 };

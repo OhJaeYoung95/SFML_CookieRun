@@ -2,13 +2,6 @@
 #include "SpriteGo.h"
 #include "AnimationController.h"
 
-enum class ObstacleType
-{
-	None = -1,
-	Up,
-	Down,
-};
-
 class Cookie;
 class Scene;
 class SceneGame;
@@ -17,7 +10,6 @@ class Map;
 class Obstacle : public SpriteGo
 {
 protected:
-	ObstacleType type = ObstacleType::None;
 
 	Cookie* cookie;
 	SceneGame* scene;
@@ -25,7 +17,7 @@ protected:
 
 	AnimationController animation;
 public:
-	Obstacle(ObstacleType type, const std::string& textureId = "", const std::string& n = "");
+	Obstacle(const std::string& textureId = "", const std::string& n = "");
 	virtual ~Obstacle() override;
 
 	virtual void Init() override;
@@ -39,7 +31,5 @@ public:
 	bool IsColPlayer();
 	void SetScene(SceneGame* scene);
 	void SetMap(Map* map);
-
-	void SetType(ObstacleType type) { this->type = type; }
 };
 

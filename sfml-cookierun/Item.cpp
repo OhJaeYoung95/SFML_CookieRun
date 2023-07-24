@@ -33,12 +33,17 @@ void Item::Reset()
 void Item::Update(float dt)
 {
 	SpriteGo::Update(dt);
-	if (IsColPlayer()/* && !isUsed*/)
-	{
-		//isUsed = true;
-		this->SetActive(false);
-		scene->RemoveGo(this);
-	}
+	//if (IsColPlayer() && !isUsed)
+	//{
+	//	isUsed = true;
+	//	this->SetActive(false);
+	//	//scene->RemoveGo(this);
+	//}
+
+	//if (isUsed)
+	//{
+	//	SetActive(false);
+	//}
 }
 
 void Item::Draw(sf::RenderWindow& window)

@@ -5,8 +5,8 @@
 #include "SceneGame.h"
 #include "ResourceMgr.h"
 
-Obstacle::Obstacle(ObstacleType _type, const std::string& textureId, const std::string& n)
-    : SpriteGo(textureId, n), type(_type)
+Obstacle::Obstacle(const std::string& textureId, const std::string& n)
+    : SpriteGo(textureId, n)
 {
 }
 
@@ -39,19 +39,10 @@ void Obstacle::Release()
 void Obstacle::Reset()
 {
     SpriteGo::Reset();
+    SetPosition(GetPosition());
     animation.AddClip(*RESOURCE_MGR.GetAnimationClip("animations/Stage1/Obstacle/Pillar.csv"));
     animation.SetTarget(&sprite);
 
-    switch (type)
-    {
-    case ObstacleType::Up:
-        SetOrigin(Origins::TC);
-        break;
-
-    case ObstacleType::Down:
-        SetOrigin(Origins::BC);
-        break;
-    }
     sortLayer = 0;
     animation.Play("Pillar");
 }
@@ -64,16 +55,6 @@ void Obstacle::Update(float dt)
     {
         cookie->SetIsHit(true);
         cookie->SetHp(-10);
-    }
-    switch (type)
-    {
-    case ObstacleType::Up:
-        SetOrigin(Origins::TC);
-        break;
-
-    case ObstacleType::Down:
-        SetOrigin(Origins::BC);
-        break;
     }
 
     animation.Update(dt);

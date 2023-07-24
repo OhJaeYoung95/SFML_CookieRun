@@ -12,6 +12,9 @@ protected:
 
 	sf::Clock clock;
 
+	// UIView Pos
+	sf::Vector2f uiViewCenter = { 960.f, 0.f };
+	sf::Vector2f currentUiCenter = { 0.f, 0.f};
 
 	// È­¸é
 	SpriteGo* currentBg1;

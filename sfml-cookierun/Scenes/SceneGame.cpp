@@ -182,6 +182,13 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
+	auto size = FRAMEWORK.GetWindowSize();
+	worldView.setSize(size);
+	worldView.setCenter(0, 0);
+
+	uiView.setSize(size);
+	uiView.setCenter(size * 0.5f);
+
 	isPlaying = true;
 	currentCookieType = Variables::CurrentCookieType;
 
@@ -219,17 +226,10 @@ void SceneGame::Enter()
 		map->SetCookie(cookie);
 		hpUI->SetCookie(cookie);
 	}
-
 		break;
 	}
 
 
-	auto size = FRAMEWORK.GetWindowSize();
-	worldView.setSize(size);
-	worldView.setCenter(0, 0);
-
-	uiView.setSize(size);
-	uiView.setCenter(size * 0.5f);
 
 	coin = 0;
 	score = 0;

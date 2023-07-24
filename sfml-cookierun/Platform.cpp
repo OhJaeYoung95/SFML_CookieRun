@@ -24,6 +24,7 @@ void Platform::Release()
 void Platform::Reset()
 {
 	SpriteGo::Reset();
+	SetPosition(GetPosition());
 	SetOrigin(Origins::MC);
 }
 

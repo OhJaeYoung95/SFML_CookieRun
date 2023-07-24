@@ -19,8 +19,10 @@ PatternEditor::PatternEditor() : Scene(SceneId::Editor)
 
 void PatternEditor::Init()
 {
+
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
-	sf::Vector2f editor = { 1030.f, 0.f };
+	//sf::Vector2f editor = { 1030.f, 0.f };
+	sf::Vector2f editor = { 1530.f, 0.f };
 	currentType = ObjectType::Platform;
 
 	auto size = FRAMEWORK.GetWindowSize();
@@ -29,6 +31,8 @@ void PatternEditor::Init()
 
 	uiView.setSize(size + editor);
 	uiView.setCenter((size + editor) * 0.5f);
+
+	currentUiCenter = (size + editor) * 0.5f;
 
 	//PatternObject* obj = (PatternObject*)AddGo(new PatternObject("graphics/Stage1/Ground.png"));
 	//obj->SetPosition(500, 500);
@@ -42,14 +46,14 @@ void PatternEditor::Init()
 	editorBg->rect.setSize({ 400.f, 1050.f });
 	editorBg->rect.setFillColor(sf::Color::Color(255, 255, 255, 50));
 	editorBg->SetOrigin(Origins::MC);
-	editorBg->SetPosition(editor.x * 0.25f, windowSize.y * 0.5f);
+	editorBg->SetPosition(editor.x * 0.18f, windowSize.y * 0.5f);
 	editorBg->sortLayer = 100;
 
 	patternBg = (SpriteGo*)AddGo(new SpriteGo());
 	patternBg->rect.setSize({ 400.f, 1050.f });
 	patternBg->rect.setFillColor(sf::Color::Color(255, 255, 255, 50));
 	patternBg->SetOrigin(Origins::MC);
-	patternBg->SetPosition(editor.x * 0.75f, windowSize.y * 0.5f);
+	patternBg->SetPosition(editor.x * 0.51f , windowSize.y * 0.5f);
 	patternBg->sortLayer = 100;
 
 
@@ -146,15 +150,28 @@ void PatternEditor::Init()
 
 	// 아이템
 	itemBig = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBig1.png"));
+	itemBig->type = PatternObjectType::ItemBig;
+
 	itemBigHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBigHealPack1.png"));
+	itemBigHP->type = PatternObjectType::ItemBigHealPack;
+
 	itemBonus1 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonus1.png"));
 	itemBonus2 = (UIButton*)AddGo(new UIButton("graphics/Item/ItemBonusTime.png"));
+
 	itemCoin = (UIButton*)AddGo(new UIButton("graphics/Item/ItemCoin1.png"));
+	itemCoin->type = PatternObjectType::ItemCoin;
+
 	itemHP = (UIButton*)AddGo(new UIButton("graphics/Item/ItemHealPack1.png"));
+	itemHP->type = PatternObjectType::ItemHealPack;
+
 	itemJelly = (UIButton*)AddGo(new UIButton("graphics/Item/ItemJelly1.png"));
+
 	itemMagnet = (UIButton*)AddGo(new UIButton("graphics/Item/ItemMagnet1.png"));
+	itemMagnet->type = PatternObjectType::ItemMagnet;
+
 	itemSpeedUp = (UIButton*)AddGo(new UIButton("graphics/Item/ItemSpeedUp1.png"));
-	
+	itemSpeedUp->type = PatternObjectType::ItemSpeedUp;
+
 	float offset = -50;
 	UIInit(itemBig, { 1, 1 }, { 150, 250 + offset });
 	UIInit(itemBigHP, { 1, 1 }, { 350, 230 });
@@ -188,12 +205,26 @@ void PatternEditor::Init()
 
 	// 재화
 	bigCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigCoin1.png"));
+	bigCoin->type = PatternObjectType::BigCoin;
+
 	bigGCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/BigGoldCoin1.png"));
+	bigGCoin->type = PatternObjectType::BigGoldCoin;
+
 	coin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/Coin1.png"));
+	coin->type = PatternObjectType::Coin;
+
 	gCoin = (UIButton*)AddGo(new UIButton("graphics/Jelly/Coin/GoldCoin1.png"));
+	gCoin->type = PatternObjectType::GoldCoin;
+
 	dia = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/Diamond.png"));
+	dia->type = PatternObjectType::Diamond;
+
 	diaBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/DiamondBox.png"));
+	diaBox->type = PatternObjectType::DiamondBox;
+
 	luckyBox = (UIButton*)AddGo(new UIButton("graphics/Jelly/Diamond/LuckyBox.png"));
+	luckyBox->type = PatternObjectType::LuckyBox;
+
 	
 	UIInit(bigCoin, { 1, 1 }, { 150, 250 });
 	UIInit(bigGCoin, { 1, 1 }, { 350, 250 });
@@ -364,14 +395,14 @@ void PatternEditor::Init()
 	for (int i = 0; i < gridSizeCol; i++)
 	{
 		grid = (SpriteGo*)AddGo(new SpriteGo());
-		grid->rect.setSize({ (1920.f * 2.0f) + editor.x , 5.f });
+		grid->rect.setSize({ (1920.f * 2.0f), 5.f });
 		grid->rect.setFillColor(sf::Color::Color(255, 255, 255, 180));
 		grid->SetOrigin(Origins::ML);
 		grid->SetPosition(editor.x, 100 * (i+1));
 		grid->sortLayer = 100;
 	}
 
-	int gridSizeRow = windowSize.x / 100;
+	int gridSizeRow = (windowSize.x * 2.0f) / 100;
 	for (int i = 0; i < gridSizeRow; i++)
 	{
 		grid = (SpriteGo*)AddGo(new SpriteGo());
@@ -453,6 +484,7 @@ void PatternEditor::Enter()
 	
 	cookiePos = SCENE_MGR.GetCurrScene()->WorldPosToUiPos(cookiePos);
 	cookiePos += editor * 0.5f;
+	cookiePos.x += 500.f;
 	//sf::Vector2f temp1 = SCENE_MGR.GetCurrScene()->WorldPosToScreen(cookiePos);
 	//sf::Vector2f temp2 = SCENE_MGR.GetCurrScene()->ScreenToUiPos(temp1);
 	//temp2 += editor * 0.5f;
@@ -475,6 +507,10 @@ void PatternEditor::Exit()
 
 void PatternEditor::Update(float dt)
 {
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+
+	auto size = FRAMEWORK.GetWindowSize();
+
 	Scene::Update(dt);
 	std::stringstream sizeXS;
 	sizeXS << "X Scale : " << currentSizeX;
@@ -486,11 +522,25 @@ void PatternEditor::Update(float dt)
 	sizeY->text.setString(sizeYS.str());
 	sizeY->SetOrigin(Origins::MC);
 
-
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Escape))
 	{
 		SCENE_MGR.ChangeScene(SceneId::Game);
 	}
+
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::A))
+	{
+		currentUiCenter -= uiViewCenter;
+	}
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::D))
+	{
+		currentUiCenter += uiViewCenter;
+	}
+	uiView.setCenter(currentUiCenter);
+
+	sf::Vector2f mousePos = INPUT_MGR.GetMousePos();
+	sf::Vector2f uiMousePos = SCENE_MGR.GetCurrScene()->ScreenToUiPos(mousePos);
+
+	std::cout << uiMousePos.x << std::endl;
 }
 
 void PatternEditor::Draw(sf::RenderWindow& window)
@@ -526,8 +576,6 @@ void PatternEditor::ButtonEvent(UIButton* object)
 		obj->sortLayer = 101;
 		PatternButtonEvent(obj);
 		patterns.push_back(obj);
-		currentSizeX = 1.f;
-		currentSizeY = 1.f;
 	};
 	object->OnClicking = [this, object]() {
 		object->sprite.setColor(sf::Color::Color(255, 255, 255, 180));

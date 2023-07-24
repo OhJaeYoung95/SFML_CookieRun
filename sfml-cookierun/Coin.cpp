@@ -59,14 +59,31 @@ void Coin::Reset()
 		sortLayer = 5;
 		animation.Play("BigGoldCoin");
 		break;
+	case CoinTypes::Diamond:
+		sprite.setTexture(*RESOURCE_MGR.GetTexture("graphics/Jelly/Diamond/Diamond.png"));
+		SetOrigin(Origins::MC);
+		sortLayer = 5;
 
+		break;
+	case CoinTypes::DiamondBox:
+		sprite.setTexture(*RESOURCE_MGR.GetTexture("graphics/Jelly/Diamond/DiamondBox.png"));
+		SetOrigin(Origins::MC);
+		sortLayer = 5;
+
+		break;
+	case CoinTypes::LuckyBox:
+		sprite.setTexture(*RESOURCE_MGR.GetTexture("graphics/Jelly/Diamond/LuckyBox.png"));
+		SetOrigin(Origins::MC);
+		sortLayer = 5;
+		break;
 	}
+	SetPosition(GetPosition());
 }
 
 void Coin::Update(float dt)
 {
 	Item::Update(dt);
-	if (IsColPlayer())
+	if (IsColPlayer() && !isUsed)
 	{
 		switch (type)
 		{
@@ -90,6 +107,8 @@ void Coin::Update(float dt)
 
 		}
 
+		isUsed = true;
+		SetActive(false);
 	}
 	animation.Update(dt);
 }

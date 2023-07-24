@@ -9,6 +9,9 @@ enum class CoinTypes
 	BigCoin,
 	GoldCoin,
 	BigGoldCoin,
+	Diamond,
+	DiamondBox,
+	LuckyBox,
 };
 class Coin : public Item
 {

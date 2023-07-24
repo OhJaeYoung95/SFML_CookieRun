@@ -79,10 +79,13 @@ protected:
 
 	std::vector<Platform*> platforms;
 	std::vector<Obstacle*> obstacles;
-	std::vector<ItemSpeedUp*> itemSpeedups;
+	std::vector<ItemSpeedUp*> itemSpeedUps;
 	std::vector<ItemBigHealPack*> itemBigHealPacks;
 	std::vector<ItemBig*> itemBigs;
 	std::vector<Coin*> coins;
+
+	std::vector<GameObject*>pattern1;
+	std::vector<GameObject*>pattern2;
 
 
 public:
@@ -102,12 +105,20 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
+	void CSVRead(const std::string& fileName);
+
 	void SetScene(SceneGame* scene);
 	void SetCookie(Cookie*& cookie);
 
 	void BackgroundMove(float dt);
-	void ObjectMove(Platform* platform, float dt);
+	void ObjectMove(GameObject* obj, float dt);
+	void ItemReset();
 	void PlatformMove(float dt);
+
+	void EatSpeedUp(ItemSpeedUp* obj);
+	void EatBigHp(ItemBigHealPack* obj);
+
+
 	void AddSpeedUp();
 	void ResetSpeed();
 	void MoveStop();
