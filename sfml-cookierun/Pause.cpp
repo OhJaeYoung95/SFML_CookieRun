@@ -76,12 +76,12 @@ void Pause::Init()
 		exitButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 	};
 	exitButton->OnClick = [this]() {
-		scene->IsChangeScene(true);
 		AllSetActive(false);
 		this->SetActive(false);
 		Variables::coin += scene->GetCoin();
 		Variables::diamond += scene->GetDia();
 		exitButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+		scene->IsChangeScene(true);
 		//SCENE_MGR.ChangeScene(SceneId::Title);
 	};
 	exitButton->OnClicking = [this]() {

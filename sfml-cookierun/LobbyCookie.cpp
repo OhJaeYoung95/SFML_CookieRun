@@ -2,6 +2,7 @@
 #include "LobbyCookie.h"
 #include "ResourceMgr.h"
 #include "Framework.h"
+#include "InputMgr.h"
 
 LobbyCookie::LobbyCookie(const std::string& textureId, const std::string& n)
 	: SpriteGo(textureId, n)
@@ -29,7 +30,8 @@ void LobbyCookie::Reset()
 	SpriteGo::Reset();
 	type = Variables::CurrentCookieType;
 	animation.ResetClip();
-	
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+
 	switch(type)
 	{
 	case CookieTypes::Pancake:
@@ -43,12 +45,20 @@ void LobbyCookie::Reset()
 			{
 			case 0:
 				animation.Play("Happy");
+				SetPosition(880, 600);
+				sprite.setScale(0.7f, 0.7f);
 				break;
 			case 1:
 				animation.Play("Sad");
+				SetPosition(880, 600);
+				sprite.setScale(0.7f, 0.7f);
+
 				break;
 			case 2:
 				animation.Play("Turn");
+				SetPosition(800, 400);
+				sprite.setScale(1.f, 1.f);
+
 				break;
 			}
 		}
@@ -65,12 +75,18 @@ void LobbyCookie::Reset()
 			{
 			case 0:
 				animation.Play("Happy");
+				SetPosition(880, 600);
+				sprite.setScale(0.7f, 0.7f);
 				break;
 			case 1:
 				animation.Play("Sad");
+				SetPosition(880, 600);
+				sprite.setScale(0.7f, 0.7f);
 				break;
 			case 2:
 				animation.Play("Turn");
+				SetPosition(800, 400);
+				sprite.setScale(1.f, 1.f);
 				break;
 			}
 		}
@@ -86,9 +102,13 @@ void LobbyCookie::Reset()
 			{
 			case 0:
 				animation.Play("Turn");
+				SetPosition(800, 400);
+				sprite.setScale(1.f, 1.f);
 				break;
 			case 1:
 				animation.Play("Moon");
+				SetPosition(800, 400);
+				sprite.setScale(1.f, 1.f);
 				break;
 			case 2:
 				break;
@@ -98,33 +118,17 @@ void LobbyCookie::Reset()
 	}
 
 	//SetOrigin(Origins::MC);
-	sortLayer = 110;
+	sortLayer = 101;
 }
 
 void LobbyCookie::Update(float dt)
 {
 	SpriteGo::Update(dt);
+	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
+	{
+		Reset();
+	}
 	animation.Update(dt);
-
-	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
-
-
-	if (animation.GetCurrentClipId() == "Happy")
-	{
-		sprite.setPosition(windowSize.x * 0.52f, windowSize.y * 0.77f);
-		sprite.setScale(0.7f, 0.7f);
-	}
-	else if (animation.GetCurrentClipId() == "Sad")
-	{
-		sprite.setPosition(windowSize.x * 0.52f, windowSize.y * 0.77f);
-		sprite.setScale(0.7f, 0.7f);
-	}
-	else
-	{
-		sprite.setPosition(windowSize.x * 0.5f, windowSize.y * 0.7f);
-		sprite.setScale(1.f, 1.f);
-		SetOrigin(Origins::BC);
-	}
 }
 
 void LobbyCookie::Draw(sf::RenderWindow& window)

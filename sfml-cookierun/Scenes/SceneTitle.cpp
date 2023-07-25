@@ -7,6 +7,7 @@
 #include "SceneMgr.h"
 #include "StringTable.h"
 #include "DataTableMgr.h"
+#include "UIButton.h"
 
 
 SceneTitle::SceneTitle() : Scene(SceneId::Title)
@@ -68,15 +69,27 @@ void SceneTitle::Init()
 	title2->SetOrigin(Origins::MC);
 	title2->sortLayer = 102;
 
-	info = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
-	info->SetPosition({ windowSize.x * 0.5f, windowSize.y * 0.8f});
-	info->text.setCharacterSize(80);
-	info->text.setString("Press Enter To Start Game");
-	info->text.setFillColor(sf::Color::White);
-	info->text.setOutlineThickness(5);
-	info->text.setOutlineColor(sf::Color::Black);
-	info->SetOrigin(Origins::MC);
-	info->sortLayer = 102;
+	//info = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	//info->SetPosition({ windowSize.x * 0.5f, windowSize.y * 0.8f});
+	//info->text.setCharacterSize(80);
+	//info->text.setString("Press Enter To Start Game");
+	//info->text.setFillColor(sf::Color::White);
+	//info->text.setOutlineThickness(5);
+	//info->text.setOutlineColor(sf::Color::Black);
+	//info->SetOrigin(Origins::MC);
+	//info->sortLayer = 102;
+
+	sf::Vector2f btnSize = { 3.5f, 3.5f };
+
+	startBtn = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	startBtn->text.setString(stringTable->GetUni("START", Languages::KOR));
+	sf::Vector2f startBtnPos = { windowSize.x * 0.5f, windowSize.y * 0.81f };
+	ButtonInit(startBtn, startBtnPos, btnSize, SceneId::Lobby);
+
+	editorBtn = (UIButton*)AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
+	sf::Vector2f editorBtnPos = { windowSize.x * 0.5f, windowSize.y * 0.93f };
+	editorBtn->text.setString(stringTable->GetUni("EDITOR", Languages::KOR));
+	ButtonInit(editorBtn, editorBtnPos, btnSize, SceneId::Editor);
 
 	for (auto go : gameObjects)
 	{
@@ -125,7 +138,7 @@ void SceneTitle::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneId::Lobby);
 	}
 
-	Blink(info);
+	//Blink(info);
 	//if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num1))
 	//	info->SetActive(false);
 	//if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
@@ -135,4 +148,37 @@ void SceneTitle::Update(float dt)
 void SceneTitle::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
+}
+
+void SceneTitle::ButtonInit(UIButton* btn, sf::Vector2f pos, sf::Vector2f size, SceneId id)
+{
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+
+	//btn->sprite.setColor(sf::Color::Color(255, 30, 0, 255));
+	btn->SetPosition(pos);
+	btn->sprite.setScale(size);
+	btn->SetOrigin(Origins::MC);
+	btn->sortLayer = 102;
+	btn->text.setPosition(btn->text.getPosition().x, btn->text.getPosition().y - 8.f);
+
+	btn->OnEnter = [this, btn]() {
+	};
+	btn->OnExit = [this, btn]() {
+		btn->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+		btn->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		btn->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+
+	};
+	btn->OnClick = [this, btn, id]() {
+		btn->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+		btn->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+		btn->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+		SCENE_MGR.ChangeScene(id);
+	};	
+	btn->OnClicking = [this, btn]() {
+		btn->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+		btn->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+		btn->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+
+	};	
 }

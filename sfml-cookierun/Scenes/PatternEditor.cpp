@@ -887,7 +887,6 @@ void PatternEditor::SavePattern()
 
 	//paths.clear();
 
-
 	doc.Save(fileName);
 }
 

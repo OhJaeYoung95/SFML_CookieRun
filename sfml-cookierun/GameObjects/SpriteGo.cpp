@@ -78,6 +78,7 @@ void SpriteGo::Reset()
 		sprite.setTexture(*tex);
 	}
 	SetOrigin(origin);
+	SetPosition(GetPosition());
 }
 
 void SpriteGo::Update(float dt)

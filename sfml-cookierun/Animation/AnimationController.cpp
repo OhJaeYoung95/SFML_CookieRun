@@ -104,6 +104,7 @@ void AnimationController::SetFrame(const AnimationFrame& frame)
 {
 	sf::Texture* tex = RESOURCE_MGR.GetTexture(frame.textureId);
 	target->setTexture(*tex);
+	target->setTextureRect({ 0, 0, (int)tex->getSize().x, (int)tex->getSize().y });
 	//std::cout << frame.textureId << std::endl;
 	//target->setTextureRect(frame.texCoord);
 }

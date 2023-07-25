@@ -11,6 +11,12 @@ protected:
 public:
 	int storageNum;
 	PatternObjectType type = PatternObjectType::None;
+	CookieTypes cookieType = CookieTypes::None;
+	LobbyType lobbyType = LobbyType::None;
+
+	int price = 0;
+
+	bool isLock = false;
 
 	UIButton(const std::string& textureId = "", const std::string& n = "");
 	virtual ~UIButton() override;

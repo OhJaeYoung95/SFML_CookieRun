@@ -6,9 +6,10 @@ class LobbyCookie : public SpriteGo
 {
 protected:
 	CookieTypes type = Variables::CurrentCookieType;
-	AnimationController animation;
 
 public:
+	AnimationController animation;
+
 	LobbyCookie(const std::string& textureId = "", const std::string& n = "");
 	virtual ~LobbyCookie() override;
 

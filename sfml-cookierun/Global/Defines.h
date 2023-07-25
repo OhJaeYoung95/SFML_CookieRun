@@ -10,6 +10,15 @@ enum class CookieTypes
 	Moonlighter,
 };
 
+enum class LobbyType
+{
+	None = -1,
+	Temple,
+	WizardryTower,
+	Cathedral,
+};
+
+
 enum class Languages
 {
 	KOR,

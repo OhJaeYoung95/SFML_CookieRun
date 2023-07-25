@@ -29,11 +29,8 @@ void SceneLobby::Init()
 	// Type에 따른 쿠키 애니메이션 변화 필요
 	// 랜덤값에 따른 (enum형으로) 애니메이션 행동 패턴 변화
 	cookie = (LobbyCookie*)AddGo(new LobbyCookie());
-	cookie->SetOrigin(Origins::MC);
-	cookie->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.6f);
 
 	lobby = (Lobby*)AddGo(new Lobby());
-	lobby->SetType(LobbyType::Temple);
 	lobby->SetPosition(windowSize * 0.5f);
 
 
@@ -172,19 +169,26 @@ void SceneLobby::Init()
 		//AllSetActive(false);
 		//this->SetActive(false);
 		// 활성화
+		if (!storageUI->GetActive())
+		{
+			cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+			storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+			storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+			storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
 
-		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
-		storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
-		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
-		storageUI->AllSetActive(true);
-		storageUI->SetActive(true);
+			storageUI->AllSetActive(true);
+			storageUI->SetActive(true);
+			storageUI->SelectCookieStorage();
+		}
 	};
 	cookieStorageBox->OnClicking = [this]() {
-		cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
-		storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
-		storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
-		storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+		if (!storageUI->GetActive())
+		{
+			cookieStorageBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+			storageImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+			storageText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+			storageText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+		}
 	};
 
 	// 스킨 버튼
@@ -226,25 +230,33 @@ void SceneLobby::Init()
 		//scene->IsChangeTitle(true);
 		//AllSetActive(false);
 		//this->SetActive(false);
-		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
-		skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
-		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+		if (!storageUI->GetActive())
+		{
+			cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 255));
+			skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+			skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+			skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
 
-		// 씬 변환 변수
-		isEnterPlay = true;
+			storageUI->AllSetActive(true);
+			storageUI->SetActive(true);
+			storageUI->SelectSkinStorage();
+		}
 	};
 	cookieSkinBox->OnClicking = [this]() {
-		cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
-		skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
-		skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
-		skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+		if (!storageUI->GetActive())
+		{
+			cookieSkinBox->sprite.setColor(sf::Color::Color(100, 200, 100, 180));
+			skinImage->sprite.setColor(sf::Color::Color(255, 255, 255, 180));
+			skinText->text.setFillColor(sf::Color::Color(255, 255, 255, 180));
+			skinText->text.setOutlineColor(sf::Color::Color(0, 0, 0, 180));
+		}
 	};
 
 	storageUI = (StorageBox*)AddGo(new StorageBox());
 	storageUI->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.5f);
 	storageUI->SetScene(this);
 	storageUI->sortLayer = 102;
+
 
 
 	for (auto go : gameObjects)
@@ -262,19 +274,29 @@ void SceneLobby::Release()
 	}
 }
 
+
 void SceneLobby::Enter()
 {
-	Scene::Enter();
-	auto size = FRAMEWORK.GetWindowSize();
-	worldView.setSize(size);
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
+	worldView.setSize(windowSize);
 	worldView.setCenter(0, 0);
 
-	uiView.setSize(size);
-	uiView.setCenter(size * 0.5f);
+	uiView.setSize(windowSize);
+	uiView.setCenter(windowSize * 0.5f);
+
+	coin = Variables::coin;
+	diamond = Variables::diamond;
+	lobby->SetType(Variables::CurrentLobbyType);
+
+
+
+	Scene::Enter();
 
 	// Scene::Enter(); 맨 밑이였음
 	storageUI->SetActive(false);
 	isEnterPlay = false;
+
+
 }
 
 void SceneLobby::Exit()
@@ -289,8 +311,12 @@ void SceneLobby::Update(float dt)
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Enter) && storageUI->GetActive())
 	{
+		storageUI->SetFailed();
 		storageUI->AllSetActive(false);
 		storageUI->SetActive(false);
+		storageUI->ReleaseCookieStorage();
+		storageUI->ReleaseSkinStorage();
+		storageUI->ReleaseLobbyStorage();
 	}
 
 	std::stringstream coinS;
@@ -311,3 +337,4 @@ void SceneLobby::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
 }
+

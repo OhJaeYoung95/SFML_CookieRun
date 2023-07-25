@@ -21,23 +21,26 @@ protected:
 	SpriteGo* currentCoin;
 	SpriteGo* coinBg;
 	TextGo* coinText;
-	int coin = 10000;
+	int coin = 0;
 
 	// 다이아 정보
 	SpriteGo* currentDia;
 	SpriteGo* diaBg;
 	TextGo* diaText;
-	int diamond = 1000;
+	int diamond = 0;
 
 	LobbyCookie* cookie;
 
+	// 플레이 버튼
 	UIButton* playButton;
 	TextGo* playText;
 
+	// 내 쿠키들 버튼
 	UIButton* cookieStorageBox;
 	TextGo* storageText;
 	SpriteGo* storageImage;
 
+	// 스킨 버튼
 	UIButton* cookieSkinBox;
 	TextGo* skinText;
 	SpriteGo* skinImage;
@@ -45,7 +48,6 @@ protected:
 	StorageBox* storageUI;
 
 	bool isEnterPlay = false;
-
 
 public:
 	SceneLobby();
@@ -62,5 +64,8 @@ public:
 
 	void SetCoin(int coin) { this->coin += coin; }
 	void SetDia(int dia) { diamond += dia; }
+
+	int GetCoin() { return coin; }
+	int GetDia() { return diamond; }
 };
 

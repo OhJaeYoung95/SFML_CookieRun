@@ -2,14 +2,6 @@
 #include "SpriteGo.h"
 #include "AnimationController.h"
 
-enum class LobbyType
-{
-	None = -1,
-	Temple,
-	WizardryTower,
-	Cathedral,
-};
-
 class Lobby : public SpriteGo
 {
 protected:
