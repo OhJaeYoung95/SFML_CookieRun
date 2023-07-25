@@ -10,6 +10,13 @@ enum class CookieTypes
 	Moonlighter,
 };
 
+enum class SkinType
+{
+	None = -1,
+	Normal,
+	Skin1,
+};
+
 enum class LobbyType
 {
 	None = -1,

@@ -311,7 +311,7 @@ void SceneLobby::Update(float dt)
 
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Enter) && storageUI->GetActive())
 	{
-		storageUI->SetFailed();
+		storageUI->FailedClear();
 		storageUI->AllSetActive(false);
 		storageUI->SetActive(false);
 		storageUI->ReleaseCookieStorage();

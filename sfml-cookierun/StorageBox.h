@@ -23,11 +23,11 @@ protected:
 	UIButton* cathedralButton;
 	
 	// 스킨 선택 버튼
-	//UIButton* pancakeButton;
+	UIButton* moonSkin1;		// 문 캐릭터 해금 + 해금
 	//UIButton* pirateButton;
 	//UIButton* moonlighterButton;
 
-	// 잠금 / 해금 목적
+	// 해금 목적 비용
 	// 캐릭터
 	SpriteGo* piratePrice;
 	SpriteGo* moonlighterPrice;
@@ -47,7 +47,7 @@ protected:
 	//TextGo* moonlighterPriceText;
 
 
-	// 구입 실패 문구
+	// 구입 실패 문구 (잔액 부족)
 	TextGo* failedToBuy;
 	bool isFailed = false;
 
@@ -61,6 +61,8 @@ protected:
 	bool isTempleLock = false;
 	bool isWizardryTowerLock = true;
 	bool isCathedralLock = true;
+
+	bool isMoonSkinLock1 = true;
 
 
 	// 스토리지 선택 버튼
@@ -87,10 +89,13 @@ public:
 
 	void SelectCookieButtonEvent(UIButton* cookie);
 	void SelectLobbyButtonEvent(UIButton* lobby);
+	void SelectSkinButtonEvent(UIButton* lobby);
 	void ButtonInit(UIButton* btn, sf::Vector2f pos, sf::Vector2f size);
 
 	void LockCookie(UIButton* cookie);
-	void SetFailed();
+	void LockSkin(UIButton* cookie);
+
+	void FailedClear();
 	void IsFailedSet(bool isActive) { isFailed = isActive;  }
 
 	void SelectCookieStorage();

@@ -13,10 +13,12 @@ public:
 	PatternObjectType type = PatternObjectType::None;
 	CookieTypes cookieType = CookieTypes::None;
 	LobbyType lobbyType = LobbyType::None;
+	SkinType skinType = SkinType::None;
 
 	int price = 0;
 
 	bool isLock = false;
+	bool isSkinLock = false;
 
 	UIButton(const std::string& textureId = "", const std::string& n = "");
 	virtual ~UIButton() override;

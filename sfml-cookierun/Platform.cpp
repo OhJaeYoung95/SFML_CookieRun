@@ -54,6 +54,7 @@ void Platform::ColCookie()
   		//std::cout << cookie->rect.getGlobalBounds().top << std::endl;
    	//	std::cout << sprite.getGlobalBounds().top + sprite.getGlobalBounds().height << std::endl;
 
+		// Á¶°Ç Ãß°¡ÇØ¾ßÇÔ ÄíÅ°ÀÇ ¾Æ·§¸é°ú, ÇÃ·§ÆûÀÇ À­¸é °Ë»ç ÇØ¾ßÇÔ
 		if (compare.top > cookie->rect.getGlobalBounds().top && cookie->GetVelocity() > 0)
 		{
 			cookie->SetIsDouble(false);

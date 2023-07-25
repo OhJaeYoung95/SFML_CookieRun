@@ -86,7 +86,7 @@ void StorageBox::Init()
 	templeButton->lobbyType = LobbyType::Temple;
 	LockCookie(templeButton);
 	// 수정 필요
-	SelectLobbyButtonEvent(pancakeButton);
+	SelectLobbyButtonEvent(templeButton);
 
 	wizardryTowerButton = (UIButton*)scene->AddGo(new UIButton("graphics/Lobby/Lobby2/Lobby1.png"));
 	wizardryTowerButton->sprite.setScale(0.25f, 0.25f);
@@ -94,6 +94,7 @@ void StorageBox::Init()
 	wizardryTowerButton->sortLayer = 102;
 	wizardryTowerButton->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.38f);
 	wizardryTowerButton->isLock = isWizardryTowerLock;
+	wizardryTowerButton->price = 100;
 	wizardryTowerButton->lobbyType = LobbyType::WizardryTower;
 	LockCookie(wizardryTowerButton);
 	// 수정 필요
@@ -105,12 +106,26 @@ void StorageBox::Init()
 	cathedralButton->sortLayer = 102;
 	cathedralButton->SetPosition(windowSize.x * 0.7f, windowSize.y * 0.38f);
 	cathedralButton->isLock = isCathedralLock;
+	cathedralButton->price = 400;
 	cathedralButton->lobbyType = LobbyType::Cathedral;
 	LockCookie(cathedralButton);
 	// 수정 필요
 	SelectLobbyButtonEvent(cathedralButton);
 
 
+	// 스킨
+	moonSkin1 = (UIButton*)scene->AddGo(new UIButton("graphics/Lobby/Skin/Moonlighter/SkinIcon1.png"));
+	moonSkin1->sprite.setScale(0.26f, 0.26f);
+	moonSkin1->SetOrigin(Origins::MC);
+	moonSkin1->sortLayer = 102;
+	moonSkin1->SetPosition(windowSize.x * 0.3f, windowSize.y * 0.38f);
+	moonSkin1->isLock = isMoonlighterLock;
+	moonSkin1->isSkinLock = isMoonSkinLock1;
+	moonSkin1->price = 5000;
+	moonSkin1->cookieType = CookieTypes::Moonlighter;
+	moonSkin1->skinType = SkinType::Skin1;
+	LockSkin(moonSkin1);
+	SelectSkinButtonEvent(moonSkin1);
 
 	StringTable* stringTable = DATATABLE_MGR.Get<StringTable>(DataTable::Ids::String);
 
@@ -125,7 +140,7 @@ void StorageBox::Init()
 	//pauseText->sortLayer = 102;
 
 
-	// 버튼 잠금 텍스트
+	// 쿠키 캐릭터 가격 정보
 	piratePrice = (SpriteGo*)scene->AddGo(new SpriteGo("graphics/Lobby/CoinIcon.png"));
 	piratePrice->SetPosition(windowSize.x * 0.5f - 100.f, windowSize.y * 0.38f);
 	piratePrice->sprite.setScale(1.5f, 1.5f);
@@ -154,6 +169,38 @@ void StorageBox::Init()
 	moonlighterPriceText->sortLayer = 102;
 	moonlighterPriceText->SetActive(false);
 
+
+	// 로비 스킨 가격 정보
+	wizardryTowerPrice = (SpriteGo*)scene->AddGo(new SpriteGo("graphics/Lobby/DiamondIcon.png"));
+	wizardryTowerPrice->SetPosition(windowSize.x * 0.5f - 100.f, windowSize.y * 0.38f);
+	wizardryTowerPrice->sprite.setScale(1.5f, 1.5f);
+	wizardryTowerPrice->SetOrigin(Origins::MC);
+	wizardryTowerPrice->sortLayer = 102;
+	wizardryTowerPrice->SetActive(false);
+
+	wizardryTowerPriceText = (TextGo*)scene->AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	wizardryTowerPriceText->text.setString("100");
+	wizardryTowerPriceText->SetPosition(windowSize.x * 0.5f, windowSize.y * 0.38f);
+	wizardryTowerPriceText->SetOrigin(Origins::BC);
+	wizardryTowerPriceText->sortLayer = 102;
+	wizardryTowerPriceText->SetActive(false);
+
+	cathedralPrice = (SpriteGo*)scene->AddGo(new SpriteGo("graphics/Lobby/DiamondIcon.png"));
+	cathedralPrice->SetPosition(windowSize.x * 0.7f - 100.f, windowSize.y * 0.38f);
+	cathedralPrice->sprite.setScale(1.5f, 1.5f);
+	cathedralPrice->SetOrigin(Origins::MC);
+	cathedralPrice->sortLayer = 102;
+	cathedralPrice->SetActive(false);
+
+	cathedralPriceText = (TextGo*)scene->AddGo(new TextGo("fonts/CookieRun Black.otf"));
+	cathedralPriceText->text.setString("400");
+	cathedralPriceText->SetPosition(windowSize.x * 0.7f, windowSize.y * 0.38f);
+	cathedralPriceText->SetOrigin(Origins::BC);
+	cathedralPriceText->sortLayer = 102;
+	cathedralPriceText->SetActive(false);
+
+
+	// 잔액부족
 	failedToBuy = (TextGo*)scene->AddGo(new TextGo("fonts/CookieRun Black.otf"));
 	failedToBuy->text.setString(stringTable->GetUni("FAILED_TO_BUY", Languages::KOR));
 	failedToBuy->text.setCharacterSize(65);
@@ -168,6 +215,7 @@ void StorageBox::Init()
 	sf::Vector2f btnSize = { 1.0f, 2.8f };
 	sf::Vector2f startBtnPos = { windowSize.x * 0.18f, windowSize.y * 0.18f };
 
+	// 보관함 상단 탭
 	selectCookieBtn = (UIButton*)scene->AddGo(new UIButton("graphics/Lobby/PlayButton.png"));
 	selectCookieBtn->text.setString(stringTable->GetUni("COOKIE_STORAGE", Languages::KOR));
 	ButtonInit(selectCookieBtn, startBtnPos, btnSize);
@@ -244,6 +292,8 @@ void StorageBox::AllSetActive(bool isActive)
 	templeButton->SetActive(isActive);
 	wizardryTowerButton->SetActive(isActive);
 	cathedralButton->SetActive(isActive);
+
+	moonSkin1->SetActive(isActive);
 
 
 	storageBoxBG->SetActive(isActive);
@@ -345,7 +395,6 @@ void StorageBox::SelectLobbyButtonEvent(UIButton* lobby)
 		}
 		if (lobby->isLock)
 		{
-			std::cout << scene->GetCoin();
 			if (scene->GetDia() < lobby->price)
 			{
 				isFailed = true;
@@ -356,13 +405,14 @@ void StorageBox::SelectLobbyButtonEvent(UIButton* lobby)
 			{
 				lobby->isLock = false;
 				lobby->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
-				Variables::coin -= lobby->price;
+				Variables::diamond -= lobby->price;
 				scene->SetDia(-lobby->price);
 
 				if (lobby->lobbyType == LobbyType::WizardryTower)
 				{
 					isWizardryTowerLock = lobby->isLock;
 					wizardryTowerPrice->SetActive(false);
+					//Text설정하기
 					wizardryTowerPriceText->SetActive(false);
 				}
 				if (lobby->lobbyType == LobbyType::Cathedral)
@@ -378,6 +428,71 @@ void StorageBox::SelectLobbyButtonEvent(UIButton* lobby)
 		if (!lobby->isLock)
 		{
 			lobby->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
+		}
+	};
+
+}
+void StorageBox::SelectSkinButtonEvent(UIButton* skin)
+{
+	skin->OnEnter = []() {
+		// 이펙트 넣기 SetActive(true)
+	};
+	skin->OnExit = [this, skin]() {
+		// 이펙트 빼기 SetActive(false)
+		if (!skin->isLock)
+		{
+			skin->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+		}
+	};
+	skin->OnClick = [this, skin]() {
+		if (!skin->isLock && !skin->isSkinLock)
+		{
+			// 스킨 넣는 방법 생각해야함
+			skin->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+			Variables::CurrentSkinType = skin->skinType;
+			AllSetActive(false);
+			this->SetActive(false);
+			ReleaseCookieStorage();
+			ReleaseSkinStorage();
+			ReleaseLobbyStorage();
+			SCENE_MGR.ChangeScene(SceneId::Lobby);
+
+		}
+		if (skin->isLock)
+		{
+			if (scene->GetDia() < skin->price)
+			{
+				isFailed = true;
+				failedToBuy->text.setFillColor(sf::Color::Color(255, 255, 255, 255));
+				failedToBuy->text.setOutlineColor(sf::Color::Color(0, 0, 0, 255));
+			}
+			if (scene->GetDia() >= skin->price)
+			{
+				skin->isLock = false;
+				skin->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
+				Variables::diamond -= skin->price;
+				scene->SetDia(-skin->price);
+
+				if (skin->lobbyType == LobbyType::WizardryTower)
+				{
+					isWizardryTowerLock = skin->isLock;
+					wizardryTowerPrice->SetActive(false);
+					//Text설정하기
+					wizardryTowerPriceText->SetActive(false);
+				}
+				if (skin->lobbyType == LobbyType::Cathedral)
+				{
+					isCathedralLock = skin->isLock;
+					cathedralPrice->SetActive(false);
+					cathedralPriceText->SetActive(false);
+				}
+			}
+		}
+	};
+	skin->OnClicking = [this, skin]() {
+		if (!skin->isLock)
+		{
+			skin->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
 		}
 	};
 
@@ -422,7 +537,23 @@ void StorageBox::LockCookie(UIButton* cookie)
 		cookie->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 }
 
-void StorageBox::SetFailed()
+void StorageBox::LockSkin(UIButton* cookie)
+{
+	if (cookie->isLock)
+	{
+
+	}
+	else if (!cookie->isLock && cookie->isSkinLock)		// 쿠키만 해금상태
+	{
+
+	}
+	else if (!cookie->isLock && !cookie->isSkinLock)		// ALL 해금
+	{
+
+	}
+}
+
+void StorageBox::FailedClear()
 {
 	fadeTimer = 0.f;
 	isFailed = false;
@@ -462,6 +593,8 @@ void StorageBox::SelectSkinStorage()
 	selectSkinBtn->text.setFillColor({ 255, 255, 255, 255 });
 	selectSkinBtn->text.setOutlineColor({ 0, 0, 0, 255 });
 
+	moonSkin1->SetActive(true);
+
 
 	ReleaseCookieStorage();
 	ReleaseLobbyStorage();
@@ -477,6 +610,17 @@ void StorageBox::SelectLobbyStorage()
 	wizardryTowerButton->SetActive(true);
 	cathedralButton->SetActive(true);
 
+	if (isWizardryTowerLock)
+	{
+		wizardryTowerPrice->SetActive(true);
+		wizardryTowerPriceText->SetActive(true);
+	}
+
+	if (isCathedralLock)
+	{
+		cathedralPrice->SetActive(true);
+		cathedralPriceText->SetActive(true);
+	}
 	ReleaseCookieStorage();
 	ReleaseSkinStorage();
 }
@@ -503,6 +647,8 @@ void StorageBox::ReleaseSkinStorage()
 	selectSkinBtn->sprite.setColor({ 255, 255, 255, 180 });
 	selectSkinBtn->text.setFillColor({ 255, 255, 255, 180 });
 	selectSkinBtn->text.setOutlineColor({ 0, 0, 0, 180 });
+
+	moonSkin1->SetActive(false);
 }
 
 void StorageBox::ReleaseLobbyStorage()
@@ -514,5 +660,10 @@ void StorageBox::ReleaseLobbyStorage()
 	templeButton->SetActive(false);
 	wizardryTowerButton->SetActive(false);
 	cathedralButton->SetActive(false);
+
+	wizardryTowerPrice->SetActive(false);
+	cathedralPrice->SetActive(false);
+	wizardryTowerPriceText->SetActive(false);
+	cathedralPriceText->SetActive(false);
 
 }

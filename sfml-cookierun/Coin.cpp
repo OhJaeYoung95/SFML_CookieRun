@@ -104,6 +104,21 @@ void Coin::Update(float dt)
 		case CoinTypes::BigGoldCoin:
 			scene->AddCoin(100);
 			break;
+		case CoinTypes::Diamond:
+			scene->AddDia(10);
+			sortLayer = 5;
+
+			break;
+		case CoinTypes::DiamondBox:
+			scene->AddDia(1000);
+			sortLayer = 5;
+
+			break;
+		case CoinTypes::LuckyBox:
+			scene->AddCoin(1000);
+			scene->AddDia(1000);
+			sortLayer = 5;
+			break;
 
 		}
 

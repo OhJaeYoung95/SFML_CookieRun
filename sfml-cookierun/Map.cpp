@@ -333,8 +333,8 @@ void Map::CSVRead(const std::string& fileName)
 	std::vector<int> origin = doc.GetColumn<int>("Origin");
 
 
-	sf::Vector2f editor = { 1330.f, 0.f };
-
+	sf::Vector2f editor = { 2500.f, 0.f };
+	// - 790
 	for (int i = 0; i < paths.size(); i++)
 	{
 		posX[i] -= editor.x;
@@ -516,7 +516,7 @@ void Map::ObjectMove(GameObject* obj, float dt)
 	movePos += -pfSpeed * dt;
 	obj->SetPosition(movePos, obj->GetPosition().y);
 	
-	if (obj->GetPosition().x < -1500.f)
+	if (obj->GetPosition().x < -1150)
 	{
 		obj->SetPosition(1700.f, obj->GetPosition().y);
 	}

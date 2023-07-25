@@ -7,6 +7,7 @@ public:
 	static Languages CurrentLang;
 	static CookieTypes CurrentCookieType;
 	static LobbyType CurrentLobbyType;
+	static SkinType CurrentSkinType;
 	static int coin;
 	static int diamond;
 };
