@@ -63,6 +63,7 @@ void Moonlighter::Reset()
 	SetOrigin(origin);
 	SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
 	SetOrigin(rect, origin);
+
 }
 
 void Moonlighter::Update(float dt)

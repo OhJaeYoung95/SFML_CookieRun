@@ -3,6 +3,7 @@
 #include "InputMgr.h"
 #include "ResourceMgr.h"
 #include "Framework.h"
+#include "Map.h"
 
 Pancake::Pancake(const std::string& textureId, const std::string& n)
 	: Cookie(textureId, n)

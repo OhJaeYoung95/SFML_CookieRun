@@ -19,6 +19,7 @@ class SceneGame : public Scene
 protected:
 	int coin = 0;
 	int score = 0;
+	int bestScore = 0;
 	int diamond = 0;
 
 	SceneLobby* scene;
@@ -73,6 +74,11 @@ public:
 
 	int GetCoin() const { return coin; }
 	int GetDia() const { return diamond; }
+	int GetScore() const { return score; }
+	int GetBestScore() const { return bestScore; }
+
+	void SetScore(int score) { this->score = score; }
+	void SetBestScore(int bestScore) { this->bestScore = bestScore; }
 
 	void AddCoin(int value) { coin += value;}
 	void AddScore(int value) { score += value; }
@@ -83,5 +89,6 @@ public:
 	void IsChangeScene(bool isBool) { isChange = isBool; }
 
 	void SetScene(SceneLobby* scene) { this->scene = scene;}
+
 };
 

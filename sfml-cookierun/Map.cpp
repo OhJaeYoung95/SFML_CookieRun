@@ -17,6 +17,8 @@
 
 #include "Obstacle.h"
 #include "PatternObject.h"
+
+#include "GameOver.h"
 #include <rapidcsv.h>
 
 
@@ -74,6 +76,15 @@ void Map::Init()
 	bg4->sprite.setScale(3.02f, 3.f);
 	bg4->sortLayer = -1;
 
+	gameOver = (GameOver*)scene->AddGo(new GameOver());
+	gameOver->SetSceneGame(scene);
+	gameOver->SetPosition(windowSize * 0.5f);
+	gameOver->SetOrigin(Origins::MC);
+	gameOver->sortLayer = 100;
+	gameOver->sortOrder = 10;
+	gameOver->SetActive(false);
+
+
 	std::string fileName = "PatternData/Pattern1.csv";
 	CSVRead(fileName, { 2500.f, 0.f });
 
@@ -98,6 +109,9 @@ void Map::Reset()
 	currentPatternOrder = 1;
 	AllObjectSetCookie();
 
+
+	gameOver->SetActive(false);
+
 	bgSpeed = 300.f;
 	pfSpeed = 500.f;
 	isSpeedUp = false;
@@ -113,35 +127,41 @@ void Map::Reset()
 
 
 
-	for (auto platform : platforms)
+	for (int i = 0; i < platforms.size(); ++i) 
 	{
-		platform->Reset();
+		platforms[i]->Reset();
+		platforms[i]->SetPosition(platformsPos[i]);
+	}	
+	for (int i = 0; i < obstacles.size(); ++i)
+	{
+		obstacles[i]->Reset();
+		obstacles[i]->SetPosition(obstaclesPos[i]);
 	}
-	for (auto obstacle : obstacles)
-	{
-		obstacle->Reset();
 
-	}
-	for (auto itemSpeedUp : itemSpeedUps)
+	for (int i = 0; i < itemSpeedUps.size(); ++i)
 	{
-		itemSpeedUp->Reset();
-
+		itemSpeedUps[i]->Reset();
+		itemSpeedUps[i]->SetPosition(itemSpeedUpsPos[i]);
 	}
-	for (auto itemBigHealPack : itemBigHealPacks)
+		
+	for (int i = 0; i < itemBigHealPacks.size(); ++i)
 	{
-		itemBigHealPack->Reset();
-
+		itemBigHealPacks[i]->Reset();
+		itemBigHealPacks[i]->SetPosition(itemBigHealPacksPos[i]);
 	}
-	for (auto itemBig : itemBigs)
+		
+	for (int i = 0; i < itemBigs.size(); ++i)
 	{
-		itemBig->Reset();
-
-	}
-	for (auto coin : coins)
+		itemBigs[i]->Reset();
+		itemBigs[i]->SetPosition(itemBigsPos[i]);
+	}	
+	
+	for (int i = 0; i < coins.size(); ++i)
 	{
-		coin->Reset();
-
+		coins[i]->Reset();
+		coins[i]->SetPosition(coinsPos[i]);
 	}
+
 
 
 	for (auto itemSpeedUp : itemSpeedUps)
@@ -181,6 +201,7 @@ void Map::Update(float dt)
 		cookie->rect.setScale({ 1.0f, 1.0f });
 		isBigTimerOn = false;
 		bigTimer = 0.f;
+		cookie->SetIsInvin(false);
 	}
 
 	//if (itemBig1->IsColPlayer() && !itemBig1->GetIsUsed())
@@ -213,8 +234,16 @@ void Map::Update(float dt)
 		}
 	}
 
-	if (isSpeedUp)
+	if (!cookie->GetIsAlive())
 	{
+		MoveStop();
+		int bestScore = scene->GetScore() > scene->GetBestScore() ? scene->GetScore() : scene->GetBestScore();
+		scene->SetBestScore(bestScore);
+	}
+
+	if (isSpeedUp && cookie->GetIsAlive())
+	{
+		cookie->SetIsInvin(true);
 		speedUpTimer += dt;
 		speedUpEffectTimer += dt;
 		if (speedUpEffectTimer > speedUpEffectDuration)
@@ -228,6 +257,7 @@ void Map::Update(float dt)
 	}
 	if (speedUpTimer > speedUpDuration && isSpeedUp)
 	{
+		cookie->SetIsInvin(false);
 		isSpeedUp = false;
 		ResetSpeed();
 	}
@@ -315,6 +345,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			Platform* platform = (Platform*)scene->AddGo(new Platform(paths[i]));
 			platform->vectorType = PatternObjectType::Platform;
 			platform->SetPosition(posX[i], posY[i]);
+			platformsPos.push_back(platform->GetPosition());
 			platform->sprite.setScale(scaleX[i], scaleY[i]);
 			platform->SetOrigin((Origins)origin[i]);
 			platforms.push_back(platform);
@@ -325,6 +356,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			Obstacle* obstacle = (Obstacle*)scene->AddGo(new Obstacle(paths[i]));
 			obstacle->vectorType = PatternObjectType::Obstacle;
 			obstacle->SetPosition(posX[i], posY[i]);
+			obstaclesPos.push_back(obstacle->GetPosition());
 			obstacle->sprite.setScale(scaleX[i], scaleY[i]);
 			obstacle->SetOrigin((Origins)origin[i]);
 			obstacles.push_back(obstacle);
@@ -335,6 +367,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			ItemSpeedUp* itemSpeed = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp(paths[i]));
 			itemSpeed->vectorType = PatternObjectType::ItemSpeedUp;
 			itemSpeed->SetPosition(posX[i], posY[i]);
+			itemSpeedUpsPos.push_back(itemSpeed->GetPosition());
 			itemSpeed->sprite.setScale(scaleX[i], scaleY[i]);
 			itemSpeed->SetOrigin((Origins)origin[i]);
 			itemSpeedUps.push_back(itemSpeed);
@@ -345,6 +378,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			ItemBigHealPack* itemBigHP = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack(paths[i]));
 			itemBigHP->vectorType = PatternObjectType::ItemBigHealPack;
 			itemBigHP->SetPosition(posX[i], posY[i]);
+			itemBigHealPacksPos.push_back(itemBigHP->GetPosition());
 			itemBigHP->sprite.setScale(scaleX[i], scaleY[i]);
 			itemBigHP->SetOrigin((Origins)origin[i]);
 			itemBigHealPacks.push_back(itemBigHP);
@@ -355,6 +389,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			ItemBig* itemBig = (ItemBig*)scene->AddGo(new ItemBig(paths[i]));
 			itemBig->vectorType = PatternObjectType::ItemBig;
 			itemBig->SetPosition(posX[i], posY[i]);
+			itemBigsPos.push_back(itemBig->GetPosition());
 			itemBig->sprite.setScale(scaleX[i], scaleY[i]);
 			itemBig->SetOrigin((Origins)origin[i]);
 			itemBigs.push_back(itemBig);
@@ -366,6 +401,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			coin->vectorType = PatternObjectType::Coin;
 			coin->SetType(CoinTypes::Coin);
 			coin->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(coin->GetPosition());
 			coin->sprite.setScale(scaleX[i], scaleY[i]);
 			coin->SetOrigin((Origins)origin[i]);
 			coins.push_back(coin);
@@ -377,6 +413,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			bigCoin->vectorType = PatternObjectType::Coin;
 			bigCoin->SetType(CoinTypes::BigCoin);
 			bigCoin->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(bigCoin->GetPosition());
 			bigCoin->sprite.setScale(scaleX[i], scaleY[i]);
 			bigCoin->SetOrigin((Origins)origin[i]);
 			coins.push_back(bigCoin);
@@ -389,6 +426,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			goldCoin->vectorType = PatternObjectType::Coin;
 			goldCoin->SetType(CoinTypes::GoldCoin);
 			goldCoin->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(goldCoin->GetPosition());
 			goldCoin->sprite.setScale(scaleX[i], scaleY[i]);
 			goldCoin->SetOrigin((Origins)origin[i]);
 			coins.push_back(goldCoin);
@@ -401,6 +439,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			bigGoldCoin->vectorType = PatternObjectType::Coin;
 			bigGoldCoin->SetType(CoinTypes::BigGoldCoin);
 			bigGoldCoin->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(bigGoldCoin->GetPosition());
 			bigGoldCoin->sprite.setScale(scaleX[i], scaleY[i]);
 			bigGoldCoin->SetOrigin((Origins)origin[i]);
 			coins.push_back(bigGoldCoin);
@@ -413,6 +452,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			dia->vectorType = PatternObjectType::Coin;
 			dia->SetType(CoinTypes::Diamond);
 			dia->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(dia->GetPosition());
 			dia->sprite.setScale(scaleX[i], scaleY[i]);
 			dia->SetOrigin((Origins)origin[i]);
 			coins.push_back(dia);
@@ -425,6 +465,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			diaBox->vectorType = PatternObjectType::Coin;
 			diaBox->SetType(CoinTypes::DiamondBox);
 			diaBox->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(diaBox->GetPosition());
 			diaBox->sprite.setScale(scaleX[i], scaleY[i]);
 			diaBox->SetOrigin((Origins)origin[i]);
 			coins.push_back(diaBox);
@@ -437,6 +478,7 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 			luckyBox->vectorType = PatternObjectType::Coin;
 			luckyBox->SetType(CoinTypes::LuckyBox);
 			luckyBox->SetPosition(posX[i], posY[i]);
+			coinsPos.push_back(luckyBox->GetPosition());
 			luckyBox->sprite.setScale(scaleX[i], scaleY[i]);
 			luckyBox->SetOrigin((Origins)origin[i]);
 			coins.push_back(luckyBox);
@@ -481,6 +523,11 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 	}
 }
 
+bool Map::GetIsAlive()
+{
+	return cookie->GetIsAlive();
+}
+
 void Map::SetScene(SceneGame* scene)
 {
 	this->scene = scene;
@@ -489,6 +536,11 @@ void Map::SetScene(SceneGame* scene)
 void Map::SetCookie(Cookie*& cookie)
 {
 	this->cookie = cookie;
+}
+
+void Map::SetGameOver(bool isActive)
+{
+	gameOver->IsActiveGameOver(isActive);
 }
 
 void Map::BackgroundMove(float dt)
@@ -600,6 +652,7 @@ void Map::EatBigHp(ItemBigHealPack* obj)
 {
 	if (obj->IsColPlayer() && !obj->GetIsUsed())
 	{
+		cookie->SetIsInvin(true);
 		obj->SetIsUsed(true);
 		obj->SetActive(false);
 		cookie->SetHp(20);

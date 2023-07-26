@@ -28,6 +28,7 @@ void Item::Release()
 void Item::Reset()
 {
 	SpriteGo::Reset();
+	isUsed = false;
 }
 
 void Item::Update(float dt)

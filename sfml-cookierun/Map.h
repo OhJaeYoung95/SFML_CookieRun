@@ -17,11 +17,15 @@ class Coin;
 
 class Obstacle;
 
+class GameOver;
+
 class Map : public GameObject
 {
 protected:
 	SceneGame* scene;
 	Cookie* cookie;
+
+	GameOver* gameOver;
 
 	// 1, 3 배경 2, 4 하늘
 	Background* bg1;
@@ -36,25 +40,6 @@ protected:
 
 	float repeatDistance = 0.f;
 
-	//// 바닥
-	//Platform* ground1;
-	//Platform* ground2;
-
-	//// 발판
-	//Platform* pf1;
-	//Platform* pf2;
-
-	//// 장애물
-	//Obstacle* ob1;
-	//Obstacle* ob2;
-
-	//// 아이템
-	//ItemSpeedUp* itemSpeedUp1;
-	//ItemBigHealPack* itemBigHealPack1;
-	//ItemBig* itemBig1;
-
-	//// 코인
-	//Coin* coin1;
 
 	float bgSpeed = 300.f;
 	float pfSpeed = 500.f;
@@ -82,18 +67,23 @@ protected:
 	float bigDuration = 2.0f;
 
 
+
+
 	ObjectPool<SpriteEffect> speedUpEffectPool;
 
-	std::list<Platform*> platforms;
-	std::list<Obstacle*> obstacles;
-	std::list<ItemSpeedUp*> itemSpeedUps;
-	std::list<ItemBigHealPack*> itemBigHealPacks;
-	std::list<ItemBig*> itemBigs;
-	std::list<Coin*> coins;
+	std::vector<Platform*> platforms;
+	std::vector<Obstacle*> obstacles;
+	std::vector<ItemSpeedUp*> itemSpeedUps;
+	std::vector<ItemBigHealPack*> itemBigHealPacks;
+	std::vector<ItemBig*> itemBigs;
+	std::vector<Coin*> coins;
 
-	std::vector<GameObject*>pattern1;
-	std::vector<GameObject*>pattern2;
-
+	std::vector<sf::Vector2f> platformsPos;
+	std::vector<sf::Vector2f> obstaclesPos;
+	std::vector<sf::Vector2f> itemSpeedUpsPos;
+	std::vector<sf::Vector2f> itemBigHealPacksPos;
+	std::vector<sf::Vector2f> itemBigsPos;
+	std::vector<sf::Vector2f> coinsPos;
 
 public:
 	Map(const std::string& n = "");
@@ -114,8 +104,11 @@ public:
 
 	void CSVRead(const std::string& fileName, sf::Vector2f spawnPos);
 
+	bool GetIsAlive();
+
 	void SetScene(SceneGame* scene);
 	void SetCookie(Cookie*& cookie);
+	void SetGameOver(bool isActive);
 
 	void BackgroundMove(float dt);
 	void ObjectMove(GameObject* obj, float dt);

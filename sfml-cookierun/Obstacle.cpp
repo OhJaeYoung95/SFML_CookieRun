@@ -17,17 +17,6 @@ Obstacle::~Obstacle()
 void Obstacle::Init()
 {
     SpriteGo::Init();
-    //switch (type)
-    //{
-    //case ObstacleType::Up:
-    //    SetOrigin(Origins::TC);
-    //    break;
-
-    //case ObstacleType::Down:
-    //    SetOrigin(Origins::BC);
-    //    break;
-    //}
-
 }
 
 void Obstacle::Release()
@@ -51,7 +40,7 @@ void Obstacle::Update(float dt)
 {
     SpriteGo::Update(dt);
 
-    if (IsColPlayer() && !cookie->GetIsHit())
+    if (IsColPlayer() && !cookie->GetIsHit() && !cookie->GetIsInvin())
     {
         cookie->SetIsHit(true);
         cookie->SetHp(-10);

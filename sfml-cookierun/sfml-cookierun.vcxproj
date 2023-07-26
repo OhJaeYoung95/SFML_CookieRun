@@ -171,6 +171,7 @@
     </ClCompile>
     <ClCompile Include="GameObjects\SpriteEffect.cpp" />
     <ClCompile Include="GameObjects\VertexArrayGo.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Global\Utils.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemBig.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="GameObjects\GameObject.h" />
     <ClInclude Include="GameObjects\SpriteEffect.h" />
     <ClInclude Include="GameObjects\VertexArrayGo.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Global\Defines.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\InputMgr.h" />

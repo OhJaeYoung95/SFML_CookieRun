@@ -16,6 +16,8 @@ protected:
 	int hp;
 
 	bool isAlive = true;
+	bool isInvin = false;
+
 	float velocity = 0.f;
 	int jumpCount = 2;
 
@@ -68,6 +70,7 @@ public:
 	float GetMaxHp() { return maxHp; }
 	float GetHp() { return hp; }
 	bool GetIsHit() { return isHit; }
+	bool GetIsAlive() { return isAlive; }
 
 	void SetType(CookieTypes type) { this->type = type; }
 
@@ -79,6 +82,9 @@ public:
 	void SetJumpCount();
 	void SetIsDouble(bool isDobule);
 	void SetIsHit(bool isHit) { this->isHit = isHit; }
+
+	void SetIsInvin(bool isInvin) { this->isInvin = isInvin; }
+	bool GetIsInvin() { return isInvin; }
 
 	void SetScene(SceneGame* scene) { this->scene = scene; }
 	void SetMap(Map* map) { this->map = map; }

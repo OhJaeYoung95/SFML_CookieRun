@@ -69,13 +69,24 @@ void Cookie::Update(float dt)
 	if (INPUT_MGR.GetKeyDown(sf::Keyboard::Num2))
 		rect.setFillColor(sf::Color::Green);
 
+	if (GetPosition().y > 960)
+	{
+		isAlive = false;
+
+	}
+
+	if (!isAlive)
+	{
+		Die();
+	}
+
 	//if (!isAlive && !isDieAnim)
 	//	return;
 	if (isAlive)
 	{
 		if (hp <= 0)
 		{
-			Die();
+			isAlive = false;
 		}
 
 		if (isHit)
@@ -165,10 +176,12 @@ void Cookie::Draw(sf::RenderWindow& window)
 
 void Cookie::Die()
 {
+	hp = 0;
 	isAlive = false;
 	Variables::coin += scene->GetCoin();
 	Variables::diamond += scene->GetDia();
 	map->MoveStop();
+  	map->SetGameOver(true);
 }
 
 float Cookie::GetVelocity()

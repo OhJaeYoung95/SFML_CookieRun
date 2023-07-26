@@ -38,14 +38,17 @@ void SceneGame::Init()
 	pancake = (Pancake*)AddGo(new Pancake());
 	pancake->SetType(CookieTypes::Pancake);
 	pancake->SetScene(this);
+	pancake->SetActive(false);
 
 	pirate = (Pirate*)AddGo(new Pirate());
 	pirate->SetType(CookieTypes::Pirate);
 	pirate->SetScene(this);
+	pirate->SetActive(false);
 
 	moonlighter = (Moonlighter*)AddGo(new Moonlighter());
 	moonlighter->SetType(CookieTypes::Moonlighter);
 	moonlighter->SetScene(this);
+	moonlighter->SetActive(false);
 
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
@@ -173,6 +176,7 @@ void SceneGame::Enter()
 	{
 	case CookieTypes::Pancake:
 	{
+		pancake->SetActive(true);
 		pancake->SetMap(map);
 		pancake->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
 		Cookie* cookie = dynamic_cast<Cookie*>(pancake);
@@ -183,6 +187,7 @@ void SceneGame::Enter()
 
 	case CookieTypes::Pirate:
 	{
+		pirate->SetActive(true);
 		pirate->SetMap(map);
 		pirate->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
 		Cookie* cookie = dynamic_cast<Cookie*>(pirate);
@@ -193,6 +198,7 @@ void SceneGame::Enter()
 
 	case CookieTypes::Moonlighter:
 	{
+		moonlighter->SetActive(true);
 		moonlighter->SetMap(map);
 		moonlighter->SetPosition(-500.f, FRAMEWORK.GetWindowSize().y * 0.5f - 250.f);
 		Cookie* cookie = dynamic_cast<Cookie*>(moonlighter);
@@ -224,7 +230,7 @@ void SceneGame::Update(float dt)
 	{
 		pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 150));
 	}
-	if (INPUT_MGR.GetKeyUp(sf::Keyboard::P))
+	if (INPUT_MGR.GetKeyUp(sf::Keyboard::P) && map->GetIsAlive())
 	{
 		pauseUIButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		pauseUI->AllSetActive(true);
@@ -234,7 +240,6 @@ void SceneGame::Update(float dt)
 
 	Scene::Update(dt);	
 
-	//std::cout << pancake->GetPosition().y << std::endl;
 
 	if(jumpDownUI->GetActive())
 		jumpUIDownTimer += dt;
