@@ -13,6 +13,8 @@ public:
 
 	int sortLayer = 0;
 	int sortOrder = 0;
+	PatternObjectType vectorType = PatternObjectType::None;
+	bool isOutOfRange = false;
 
 	GameObject(const std::string& n = "");
 	virtual ~GameObject();

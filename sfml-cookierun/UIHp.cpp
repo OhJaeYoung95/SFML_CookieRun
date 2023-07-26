@@ -57,6 +57,14 @@ void UIHp::Reset()
 	Utils::SetOrigin(animSprite2, Origins::MC);
 
 	decreaseHp = decreaseMaxHp;
+	AnimationClip* clip = animation2.GetCurrentClip();
+	clip->frames[0].action = [this]() {
+		animSprite2.setScale(1.1f, 1.4f);
+	};
+
+	clip->frames[1].action = [this]() {
+		animSprite2.setScale(0.5f, 1.4f);
+	};
 
 }
 
@@ -73,14 +81,6 @@ void UIHp::Update(float dt)
  		cookie->SetHp(-10);
 	}
 
-	AnimationClip* clip = animation2.GetCurrentClip();
-	clip->frames[0].action = [this]() {
-		animSprite2.setScale(1.1f, 1.4f);
-	};	
-	
-	clip->frames[1].action = [this]() {
-		animSprite2.setScale(0.5f, 1.4f);
-	};
 	//std::cout << cookie->GetHp() << " / " << cookie->GetMaxHp() << std::endl;
 	sprite.setScale({ cookie->GetHp() / cookie->GetMaxHp() * 1.7f, 1.3f });
 	animSprite2.setPosition(GetPosition().x + sprite.getGlobalBounds().width - 13.f, 132.f);

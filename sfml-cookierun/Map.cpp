@@ -75,78 +75,7 @@ void Map::Init()
 	bg4->sortLayer = -1;
 
 	std::string fileName = "PatternData/Pattern1.csv";
-	CSVRead(fileName);
-
-
-	// 바닥
-	//ground1 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
-	//ground1->sprite.setScale(15.0f, 1.0f);
-	//ground1->SetPosition(-300.f, 340.f);
-	//ground1->sortLayer = 1;
-
-	//ground2 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Ground.png"));
-	//ground2->sprite.setScale(15.0f, 1.0f);
-	//ground2->SetPosition(1300.f, 340.f);
-	//ground2->sortLayer = 1;
-
-	//// 발판 세팅
-	//pf1 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Platform.png"));
-	//pf1->sprite.setScale(5.0f, 1.0f);
-	//pf1->SetPosition(400.f, -150.f);
-	//pf1->sortLayer = 1;
-
-	//pf2 = (Platform*)scene->AddGo(new Platform("graphics/Stage1/Platform.png"));
-	//pf2->sprite.setScale(5.0f, 1.0f);
-	//pf2->SetPosition(-300.f, 0.f);
-	//pf2->sortLayer = 1;
-
-	//// 장애물 세팅
-	//ob1 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Down));
-	//ob1->sprite.setScale(1.0f, 1.8f);
-
-
-	//ob2 = (Obstacle*)scene->AddGo(new Obstacle(ObstacleType::Up));
-	//ob2->sprite.setScale(0.8f, 0.8f);
-
-
-	// 아이템		// sortLayer 5
-
-	//itemSpeedUp1 = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp());
-	//itemSpeedUp1->sortLayer = 5;
-	//itemSpeedUp1->SetScene(scene);
-	//itemSpeedUp1->SetMap(this);
-
-	//itemBigHealPack1 = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack());
-	//itemBigHealPack1->sortLayer = 5;
-	//itemBigHealPack1->SetScene(scene);
-	//itemBigHealPack1->SetMap(this);
-	//
-	//itemBig1 = (ItemBig*)scene->AddGo(new ItemBig());
-	//itemBig1->sortLayer = 5;
-	//itemBig1->SetScene(scene);
-	//itemBig1->SetMap(this);
-
-	for (auto itemSpeedUp : itemSpeedUps)
-	{
-		itemSpeedUp->sortLayer = 5;
-		itemSpeedUp->SetScene(scene);
-		itemSpeedUp->SetMap(this);
-	}	
-	
-	for (auto itemBigHP : itemBigHealPacks)
-	{
-		itemBigHP->sortLayer = 5;
-		itemBigHP->SetScene(scene);
-		itemBigHP->SetMap(this);
-	}
-
-
-	for (auto coin : coins)
-	{
-		coin->sortLayer = 5;
-		coin->SetScene(scene);
-		coin->SetMap(this);
-	}
+	CSVRead(fileName, { 2500.f, 0.f });
 
 	// 이펙트 풀 sortLayer 2
 	speedUpEffectPool.OnCreate = [this](SpriteEffect* speedUp)
@@ -166,19 +95,9 @@ void Map::Release()
 
 void Map::Reset()
 {
+	currentPatternOrder = 1;
 	AllObjectSetCookie();
-	for (auto platform : platforms)
-	{
-		platform->Reset();
-	}
-	for (auto obstacle : obstacles)
-	{
-		obstacle->Reset();
-	}
-	for (auto coin : coins)
-	{
-		coin->Reset();
-	}
+
 	bgSpeed = 300.f;
 	pfSpeed = 500.f;
 	isSpeedUp = false;
@@ -192,32 +111,60 @@ void Map::Reset()
 	bg3->SetPosition(2400.f, 0.f);
 	bg4->SetPosition(2400.f, 0.f);
 
-	//ground1->SetPosition(-300.f, 340.f);
-	//ground2->SetPosition(1300.f, 340.f);
-
-	//pf1->SetPosition(400.f, -150.f);
-	//pf2->SetPosition(-300.f, 0.f);
-
-	//ob1->SetPosition(2000.f, 165.f);
-	////ob1->SetOrigin(Origins::BC);
-
-	//ob2->SetPosition(1000.f, 0.f);
-	////ob2->SetOrigin(Origins::TC);
-
-	//// 아이템 세팅
-	//itemSpeedUp1->SetPosition(0.f, 0.f);
-	////itemSpeedUp1->SetIsUsed(false);
-
-	//itemBigHealPack1->SetPosition(500.f, 0.f);
-	////itemBigHealPack1->SetIsUsed(false);
-
-	//itemBig1->SetPosition(800.f, 0.f);
-	////itemBig1->SetIsUsed(false);
 
 
-	//// 코인 세팅
-	//coin1->SetPosition(200.f, 0.f);
+	for (auto platform : platforms)
+	{
+		platform->Reset();
+	}
+	for (auto obstacle : obstacles)
+	{
+		obstacle->Reset();
 
+	}
+	for (auto itemSpeedUp : itemSpeedUps)
+	{
+		itemSpeedUp->Reset();
+
+	}
+	for (auto itemBigHealPack : itemBigHealPacks)
+	{
+		itemBigHealPack->Reset();
+
+	}
+	for (auto itemBig : itemBigs)
+	{
+		itemBig->Reset();
+
+	}
+	for (auto coin : coins)
+	{
+		coin->Reset();
+
+	}
+
+
+	for (auto itemSpeedUp : itemSpeedUps)
+	{
+		itemSpeedUp->sortLayer = 5;
+		itemSpeedUp->SetScene(scene);
+		itemSpeedUp->SetMap(this);
+	}
+
+	for (auto itemBigHP : itemBigHealPacks)
+	{
+		itemBigHP->sortLayer = 5;
+		itemBigHP->SetScene(scene);
+		itemBigHP->SetMap(this);
+	}
+
+
+	for (auto coin : coins)
+	{
+		coin->sortLayer = 5;
+		coin->SetScene(scene);
+		coin->SetMap(this);
+	}
 
 }
 
@@ -308,9 +255,28 @@ void Map::Update(float dt)
 	for (auto itemBigHP : itemBigHealPacks)
 	{
 		ObjectMove(itemBigHP, dt);
-	}
-	ItemReset();
+	}	
 
+
+	patternDiff += -pfSpeed * dt;
+	//std::cout << patternDiff << std::endl;
+	//if (patternDiff < -1920.f)
+	//{
+	//	patternDiff = 0.f;
+	//	currentPatternOrder++;
+	//	if (currentPatternOrder > 3)
+	//		currentPatternOrder = 1;
+	//	// 패턴 생성
+	//	//int Utils::RandomRange()
+
+	//	std::string fileName = "PatternData/Pattern" + std::to_string(currentPatternOrder) + ".csv";
+	//	// 다음 패턴 위치에서 생성
+	//	//CSVRead("PatternData/Pattern1.csv", {580.f, 0.f});
+	//	CSVRead("PatternData/Pattern1.csv", { 2500.f, 0.f});
+	//}
+	//ItemReset();
+
+	ItemReset();
 	PlatformMove(dt);
 }
 
@@ -319,7 +285,7 @@ void Map::Draw(sf::RenderWindow& window)
 	//window.draw();
 }
 
-void Map::CSVRead(const std::string& fileName)
+void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 {
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSize();
 	rapidcsv::Document doc(fileName);
@@ -332,28 +298,32 @@ void Map::CSVRead(const std::string& fileName)
 	std::vector<float> scaleY = doc.GetColumn<float>("Scale Y");
 	std::vector<int> origin = doc.GetColumn<int>("Origin");
 
+	// 1540 = -960
+	// 3460 = 960
 
-	sf::Vector2f editor = { 2500.f, 0.f };
-	// - 790
+	// -2500
 	for (int i = 0; i < paths.size(); i++)
 	{
-		posX[i] -= editor.x;
+		posX[i] -= spawnPos.x;
 		posY[i] -= windowSize.y * 0.5f;
+
+		repeatDistance = repeatDistance > posX[i] ? repeatDistance : posX[i];
 		switch ((PatternObjectType)types[i])
 		{
 		case PatternObjectType::Platform:
 		{
 			Platform* platform = (Platform*)scene->AddGo(new Platform(paths[i]));
+			platform->vectorType = PatternObjectType::Platform;
 			platform->SetPosition(posX[i], posY[i]);
 			platform->sprite.setScale(scaleX[i], scaleY[i]);
 			platform->SetOrigin((Origins)origin[i]);
 			platforms.push_back(platform);
-			std::cout << platform->GetPosition().y << std::endl;
 		}
 		break;
 		case PatternObjectType::Obstacle:
 		{
 			Obstacle* obstacle = (Obstacle*)scene->AddGo(new Obstacle(paths[i]));
+			obstacle->vectorType = PatternObjectType::Obstacle;
 			obstacle->SetPosition(posX[i], posY[i]);
 			obstacle->sprite.setScale(scaleX[i], scaleY[i]);
 			obstacle->SetOrigin((Origins)origin[i]);
@@ -363,6 +333,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::ItemSpeedUp:
 		{
 			ItemSpeedUp* itemSpeed = (ItemSpeedUp*)scene->AddGo(new ItemSpeedUp(paths[i]));
+			itemSpeed->vectorType = PatternObjectType::ItemSpeedUp;
 			itemSpeed->SetPosition(posX[i], posY[i]);
 			itemSpeed->sprite.setScale(scaleX[i], scaleY[i]);
 			itemSpeed->SetOrigin((Origins)origin[i]);
@@ -372,6 +343,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::ItemBigHealPack:
 		{
 			ItemBigHealPack* itemBigHP = (ItemBigHealPack*)scene->AddGo(new ItemBigHealPack(paths[i]));
+			itemBigHP->vectorType = PatternObjectType::ItemBigHealPack;
 			itemBigHP->SetPosition(posX[i], posY[i]);
 			itemBigHP->sprite.setScale(scaleX[i], scaleY[i]);
 			itemBigHP->SetOrigin((Origins)origin[i]);
@@ -381,6 +353,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::ItemBig:
 		{
 			ItemBig* itemBig = (ItemBig*)scene->AddGo(new ItemBig(paths[i]));
+			itemBig->vectorType = PatternObjectType::ItemBig;
 			itemBig->SetPosition(posX[i], posY[i]);
 			itemBig->sprite.setScale(scaleX[i], scaleY[i]);
 			itemBig->SetOrigin((Origins)origin[i]);
@@ -390,6 +363,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::Coin:
 		{
 			Coin* coin = (Coin*)scene->AddGo(new Coin(paths[i]));
+			coin->vectorType = PatternObjectType::Coin;
 			coin->SetType(CoinTypes::Coin);
 			coin->SetPosition(posX[i], posY[i]);
 			coin->sprite.setScale(scaleX[i], scaleY[i]);
@@ -400,6 +374,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::BigCoin:
 		{
 			Coin* bigCoin = (Coin*)scene->AddGo(new Coin(paths[i]));
+			bigCoin->vectorType = PatternObjectType::Coin;
 			bigCoin->SetType(CoinTypes::BigCoin);
 			bigCoin->SetPosition(posX[i], posY[i]);
 			bigCoin->sprite.setScale(scaleX[i], scaleY[i]);
@@ -411,6 +386,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::GoldCoin:
 		{
 			Coin* goldCoin = (Coin*)scene->AddGo(new Coin(paths[i]));
+			goldCoin->vectorType = PatternObjectType::Coin;
 			goldCoin->SetType(CoinTypes::GoldCoin);
 			goldCoin->SetPosition(posX[i], posY[i]);
 			goldCoin->sprite.setScale(scaleX[i], scaleY[i]);
@@ -422,6 +398,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::BigGoldCoin:
 		{
 			Coin* bigGoldCoin = (Coin*)scene->AddGo(new Coin(paths[i]));
+			bigGoldCoin->vectorType = PatternObjectType::Coin;
 			bigGoldCoin->SetType(CoinTypes::BigGoldCoin);
 			bigGoldCoin->SetPosition(posX[i], posY[i]);
 			bigGoldCoin->sprite.setScale(scaleX[i], scaleY[i]);
@@ -433,6 +410,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::Diamond:
 		{
 			Coin* dia = (Coin*)scene->AddGo(new Coin(paths[i]));
+			dia->vectorType = PatternObjectType::Coin;
 			dia->SetType(CoinTypes::Diamond);
 			dia->SetPosition(posX[i], posY[i]);
 			dia->sprite.setScale(scaleX[i], scaleY[i]);
@@ -444,6 +422,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::DiamondBox:
 		{
 			Coin* diaBox = (Coin*)scene->AddGo(new Coin(paths[i]));
+			diaBox->vectorType = PatternObjectType::Coin;
 			diaBox->SetType(CoinTypes::DiamondBox);
 			diaBox->SetPosition(posX[i], posY[i]);
 			diaBox->sprite.setScale(scaleX[i], scaleY[i]);
@@ -455,6 +434,7 @@ void Map::CSVRead(const std::string& fileName)
 		case PatternObjectType::LuckyBox:
 		{
 			Coin* luckyBox = (Coin*)scene->AddGo(new Coin(paths[i]));
+			luckyBox->vectorType = PatternObjectType::Coin;
 			luckyBox->SetType(CoinTypes::LuckyBox);
 			luckyBox->SetPosition(posX[i], posY[i]);
 			luckyBox->sprite.setScale(scaleX[i], scaleY[i]);
@@ -475,7 +455,30 @@ void Map::CSVRead(const std::string& fileName)
 		//pattern->Reset();
 
 	}
+	repeatDistance -= windowSize.x;
+	AllObjectSetCookie();
 
+	for (auto itemSpeedUp : itemSpeedUps)
+	{
+		itemSpeedUp->sortLayer = 5;
+		itemSpeedUp->SetScene(scene);
+		itemSpeedUp->SetMap(this);
+	}
+
+	for (auto itemBigHP : itemBigHealPacks)
+	{
+		itemBigHP->sortLayer = 5;
+		itemBigHP->SetScene(scene);
+		itemBigHP->SetMap(this);
+	}
+
+
+	for (auto coin : coins)
+	{
+		coin->sortLayer = 5;
+		coin->SetScene(scene);
+		coin->SetMap(this);
+	}
 }
 
 void Map::SetScene(SceneGame* scene)
@@ -516,17 +519,37 @@ void Map::ObjectMove(GameObject* obj, float dt)
 	movePos += -pfSpeed * dt;
 	obj->SetPosition(movePos, obj->GetPosition().y);
 	
-	if (obj->GetPosition().x < -1150)
+	
+	// 1540 = -960
+	// 3460 = 960
+
+	//if (obj->GetPosition().x < -1920.f)
+	//{
+	//	obj->isOutOfRange = true;
+	//}	
+
+	if (obj->GetPosition().x < -960 - repeatDistance)
 	{
-		obj->SetPosition(1700.f, obj->GetPosition().y);
+		obj->SetPosition(1920.f, obj->GetPosition().y);
 	}
+
+}
+
+void Map::ClearObject()
+{
+	platforms.clear();
+	obstacles.clear();
+	itemSpeedUps.clear();
+	itemBigHealPacks.clear();
+	itemBigs.clear();
+	coins.clear();
 }
 
 void Map::ItemReset()
 {
 	for (auto itemSpeedUp : itemSpeedUps)
 	{
-		if (itemSpeedUp->GetPosition().x < -1500.f)
+		if (itemSpeedUp->GetPosition().x < -1910.f)
 		{
 			itemSpeedUp->SetActive(true);
 			itemSpeedUp->SetIsUsed(false);
@@ -535,7 +558,7 @@ void Map::ItemReset()
 
 	for (auto itemBigHP : itemBigHealPacks)
 	{
-		if (itemBigHP->GetPosition().x < -1500.f)
+		if (itemBigHP->GetPosition().x < -1910.f)
 		{
 			itemBigHP->SetActive(true);
 			itemBigHP->SetIsUsed(false);
@@ -545,7 +568,7 @@ void Map::ItemReset()
 
 	for (auto coin : coins)
 	{
-		if (coin->GetPosition().x < -1500.f)
+		if (coin->GetPosition().x < -1910.f)
 		{
 			coin->SetActive(true);
 			coin->SetIsUsed(false);

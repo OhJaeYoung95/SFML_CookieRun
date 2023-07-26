@@ -1,4 +1,29 @@
-Path,Type,"Pos X","Pos Y","Scale X","Scale Y",Origin
-graphics/Stage1/Ground.png,0,1468.85413,963,6.99999571,2.00000024,4
-graphics/Stage1/Ground.png,0,2413.77588,963,8.29999542,2.00000024,4
-graphics/Stage1/Pillar1.png,1,2376.90088,258,1,2.00000024,4
+Path,Type,Pos X,Pos Y,Scale X,Scale Y,Origin
+graphics/Stage1/Platform.png,0,2226.32812,614.000061,2.49999976,1,4
+graphics/Stage1/Platform.png,0,2799.53125,463.000061,2.49999976,1,4
+graphics/Stage1/Platform.png,0,3378.59399,595.000061,2.49999976,1,4
+graphics/Stage1/Platform.png,0,4441.01562,403.000061,4.99999762,1,4
+graphics/Jelly/Diamond/LuckyBox.png,14,3664.76562,394.000061,1.00000024,1,4
+graphics/Jelly/Coin/BigGoldCoin1.png,11,1685.46875,488.000061,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,1879.53113,497.000061,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,2025.07812,533.000061,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,2213.75,539.000061,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,2413.20312,401.000031,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,3162.5,403.000061,1.00000024,1,4
+graphics/Jelly/Coin/BigGoldCoin1.png,11,3905.54688,194.000031,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,4139.60986,290,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,4329.60938,329.000031,1.00000024,1,4
+graphics/Jelly/Coin/Coin1.png,8,4496.71875,330.000031,1.00000024,1,4
+graphics/Jelly/Diamond/DiamondBox.png,13,2758.20312,287.000061,1.00000024,1,4
+graphics/Item/ItemBigHealPack1.png,3,5291.87549,181.592957,1,1,4
+graphics/Stage1/Ground.png,0,1710.625,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,2081.25024,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,2453.20337,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,2825.15649,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,3193.98438,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,3565.46899,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,3936.09375,963.185913,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,4308.04688,962.123962,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,4678.67236,963.185913,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,5051.09424,963.185913,2.99999928,2.00000024,4
+graphics/Stage1/Ground.png,0,5423.04736,962.123962,2.99999928,2.00000024,4

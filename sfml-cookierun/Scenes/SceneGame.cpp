@@ -47,36 +47,9 @@ void SceneGame::Init()
 	moonlighter->SetType(CookieTypes::Moonlighter);
 	moonlighter->SetScene(this);
 
-
 	map = (Map*)AddGo(new Map());
 	map->SetScene(this);
 	hpUI = (UIHp*)AddGo(new UIHp("graphics/UI/HpBar/Hp.png"));
-
-
-	//player = (Player*)AddGo(new Player());
-
-	// UIButton 사용 예제
-	//uiButton = (UIButton*)AddGo(new UIButton("graphics/button.png"));
-	//uiButton->SetOrigin(Origins::TR);
-	//uiButton->sortLayer = 100;
-	//uiButton->SetPosition(size.x, 0.f);
-	//auto ptr = uiButton;
-	//uiButton->OnEnter = [ptr]() {
-	//	sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button2.png");
-	//	ptr->sprite.setTexture(*tex);
-	//};
-	//uiButton->OnExit = [ptr]() {
-	//	sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/button.png");
-	//	ptr->sprite.setTexture(*tex);
-	//};
-	//uiButton->OnClick = [this]() {
-	//	SCENE_MGR.ChangeScene(SceneId::Game);
-	//};
-
-
-
-
-	// Text
 
 	// Reset에서 SetOrigin()을 해줘야한다.
 	coinText = (TextGo*)AddGo(new TextGo("fonts/CookieRun Black.otf"));

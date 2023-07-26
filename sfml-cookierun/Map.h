@@ -29,6 +29,13 @@ protected:
 	Background* bg3;
 	Background* bg4;
 
+
+	float patternDiff = 0.f;
+	int patternCircuit = 0;
+	int currentPatternOrder = 0;
+
+	float repeatDistance = 0.f;
+
 	//// ¹Ù´Ú
 	//Platform* ground1;
 	//Platform* ground2;
@@ -77,12 +84,12 @@ protected:
 
 	ObjectPool<SpriteEffect> speedUpEffectPool;
 
-	std::vector<Platform*> platforms;
-	std::vector<Obstacle*> obstacles;
-	std::vector<ItemSpeedUp*> itemSpeedUps;
-	std::vector<ItemBigHealPack*> itemBigHealPacks;
-	std::vector<ItemBig*> itemBigs;
-	std::vector<Coin*> coins;
+	std::list<Platform*> platforms;
+	std::list<Obstacle*> obstacles;
+	std::list<ItemSpeedUp*> itemSpeedUps;
+	std::list<ItemBigHealPack*> itemBigHealPacks;
+	std::list<ItemBig*> itemBigs;
+	std::list<Coin*> coins;
 
 	std::vector<GameObject*>pattern1;
 	std::vector<GameObject*>pattern2;
@@ -105,13 +112,14 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	void CSVRead(const std::string& fileName);
+	void CSVRead(const std::string& fileName, sf::Vector2f spawnPos);
 
 	void SetScene(SceneGame* scene);
 	void SetCookie(Cookie*& cookie);
 
 	void BackgroundMove(float dt);
 	void ObjectMove(GameObject* obj, float dt);
+	void ClearObject();
 	void ItemReset();
 	void PlatformMove(float dt);
 
