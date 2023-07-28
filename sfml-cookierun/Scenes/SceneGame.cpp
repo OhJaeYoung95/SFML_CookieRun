@@ -327,3 +327,8 @@ void SceneGame::SlideUIDown(bool isActive)
 {
 	slideDownUI->SetActive(isActive);
 }
+
+void SceneGame::IsActiveGameOver(bool isActive)
+{
+	map->SetGameOver(isActive);
+}
