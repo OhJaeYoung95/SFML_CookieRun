@@ -57,7 +57,7 @@
     <ClCompile Include="Framework\DataTableMgr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\SpriteEffect.cpp">
+    <ClCompile Include="GameObjects\Effects\SpriteEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\VertexArrayGo.cpp">
@@ -66,91 +66,85 @@
     <ClCompile Include="Animation\AnimationController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Animation\AnimationClip.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerTest.cpp">
+    <ClCompile Include="UI\InGame\UIButton.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="UIButton.cpp">
+    <ClCompile Include="GameObjects\Cookies\Cookie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Cookie.cpp">
+    <ClCompile Include="GameObjects\Cookies\Pancake.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Pancake.cpp">
+    <ClCompile Include="GameObjects\Items\Item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
+    <ClCompile Include="GameObjects\Map.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="GameObjects\Background.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
+    <ClCompile Include="GameObjects\Platforms\Platform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
+    <ClCompile Include="GameObjects\Items\ItemSpeedUp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ItemSpeedUp.cpp">
+    <ClCompile Include="GameObjects\Effects\EffectSpeedUp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="EffectSpeedUp.cpp">
+    <ClCompile Include="GameObjects\Items\Coin.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
+    <ClCompile Include="UI\InGame\UIHp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="UIHp.cpp">
+    <ClCompile Include="GameObjects\Items\ItemBigHealPack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ItemBigHealPack.cpp">
+    <ClCompile Include="GameObjects\Items\ItemBig.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ItemBig.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TextGo.cpp">
+    <ClCompile Include="GameObjects\TextGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\SceneTitle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
+    <ClCompile Include="GameObjects\Platforms\Obstacle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Pause.cpp">
+    <ClCompile Include="UI\InGame\Pause.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\SceneLobby.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Lobby.cpp">
+    <ClCompile Include="UI\Lobby\Lobby.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LobbyCookie.cpp">
+    <ClCompile Include="UI\Lobby\LobbyCookie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Pirate.cpp">
+    <ClCompile Include="GameObjects\Cookies\Pirate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Moonlighter.cpp">
+    <ClCompile Include="GameObjects\Cookies\Moonlighter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="StorageBox.cpp">
+    <ClCompile Include="UI\Lobby\StorageBox.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\PatternEditor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PatternObject.cpp">
+    <ClCompile Include="UI\PatternEditor\PatternObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameOver.cpp">
+    <ClCompile Include="UI\InGame\GameOver.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,7 +203,7 @@
     <ClInclude Include="Framework\ObjectPool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\SpriteEffect.h">
+    <ClInclude Include="GameObjects\Effects\SpriteEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\VertexArrayGo.h">
@@ -221,88 +215,82 @@
     <ClInclude Include="Animation\AnimationController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\Player.h">
+    <ClInclude Include="UI\InGame\UIButton.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerTest.h">
+    <ClInclude Include="GameObjects\Cookies\Cookie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UIButton.h">
+    <ClInclude Include="GameObjects\Cookies\Pancake.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Cookie.h">
+    <ClInclude Include="GameObjects\Items\Item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Pancake.h">
+    <ClInclude Include="GameObjects\Map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
+    <ClInclude Include="GameObjects\Background.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="GameObjects\Platforms\Platform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
+    <ClInclude Include="GameObjects\Items\ItemSpeedUp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
+    <ClInclude Include="GameObjects\Effects\EffectSpeedUp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ItemSpeedUp.h">
+    <ClInclude Include="GameObjects\Items\Coin.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EffectSpeedUp.h">
+    <ClInclude Include="UI\InGame\UIHp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
+    <ClInclude Include="GameObjects\Items\ItemBigHealPack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UIHp.h">
+    <ClInclude Include="GameObjects\Items\ItemBig.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ItemBigHealPack.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemBig.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TextGo.h">
+    <ClInclude Include="GameObjects\TextGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\SceneTitle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacle.h">
+    <ClInclude Include="GameObjects\Platforms\Obstacle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Pause.h">
+    <ClInclude Include="UI\InGame\Pause.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\SceneLobby.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Lobby.h">
+    <ClInclude Include="UI\Lobby\Lobby.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LobbyCookie.h">
+    <ClInclude Include="UI\Lobby\LobbyCookie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Pirate.h">
+    <ClInclude Include="GameObjects\Cookies\Pirate.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Moonlighter.h">
+    <ClInclude Include="GameObjects\Cookies\Moonlighter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="StorageBox.h">
+    <ClInclude Include="UI\Lobby\StorageBox.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\PatternEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PatternObject.h">
+    <ClInclude Include="UI\PatternEditor\PatternObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameOver.h">
+    <ClInclude Include="UI\InGame\GameOver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

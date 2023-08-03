@@ -4,8 +4,6 @@
 #include "InputMgr.h"
 #include "ResourceMgr.h"
 #include "GameObject.h"
-#include "Player.h"
-#include "PlayerTest.h"
 #include "Framework.h"
 #include "UIButton.h"
 #include "Pancake.h"
@@ -328,11 +326,7 @@ void SceneGame::SlideUIDown(bool isActive)
 	slideDownUI->SetActive(isActive);
 }
 
-<<<<<<< HEAD
-void SceneGame::SetGameOver(bool isActive)
-=======
 void SceneGame::IsActiveGameOver(bool isActive)
->>>>>>> f2d3ee8a711a98ad936e59f6cc6859832caec562
 {
 	map->SetGameOver(isActive);
 }

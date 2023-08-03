@@ -46,9 +46,6 @@ protected:
 	Pirate* pirate;
 	Moonlighter* moonlighter;
 
-	Player* player;
-	PlayerTest* playerTest;
-
 	Map* map;
 
 	//UIButton* uiButton;
@@ -90,7 +87,5 @@ public:
 
 	void IsActiveGameOver(bool isActive);
 	void SetScene(SceneLobby* scene) { this->scene = scene;}
-	void SetGameOver(bool isActive);
-
 };
 

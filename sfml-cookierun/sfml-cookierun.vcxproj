@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;./3rd;./DataTables;./SFML-2.5.1/include;./Global;./Framework;./Scenes;./GameObjects;./Animation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./3rd;./DataTables;./SFML-2.5.1/include;./Global;./Framework;./Scenes;./GameObjects;./Animation;./GameObjects/Cookies;./GameObjects/Effects;./GameObjects/Items;./GameObjects/Platforms;./UI;./UI/InGame;./UI/Lobby;./UI/PatternEditor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalBMIDirectories>./;./GameObjects;./Framework;./3rd;./DataTables;./Global;./Animation;./Scenes;%(AdditionalBMIDirectories)</AdditionalBMIDirectories>
     </ClCompile>
@@ -156,12 +156,12 @@
   <ItemGroup>
     <ClCompile Include="Animation\AnimationClip.cpp" />
     <ClCompile Include="Animation\AnimationController.cpp" />
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="Cookie.cpp" />
+    <ClCompile Include="GameObjects\Background.cpp" />
+    <ClCompile Include="GameObjects\Items\Coin.cpp" />
+    <ClCompile Include="GameObjects\Cookies\Cookie.cpp" />
     <ClCompile Include="DataTables\DataTable.cpp" />
     <ClCompile Include="DataTables\StringTable.cpp" />
-    <ClCompile Include="EffectSpeedUp.cpp" />
+    <ClCompile Include="GameObjects\Effects\EffectSpeedUp.cpp" />
     <ClCompile Include="Framework\DataTableMgr.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
@@ -169,82 +169,78 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GameObjects\SpriteEffect.cpp" />
+    <ClCompile Include="GameObjects\Effects\SpriteEffect.cpp" />
     <ClCompile Include="GameObjects\VertexArrayGo.cpp" />
-    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="UI\InGame\GameOver.cpp" />
     <ClCompile Include="Global\Utils.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemBig.cpp" />
-    <ClCompile Include="ItemBigHealPack.cpp" />
-    <ClCompile Include="ItemSpeedUp.cpp" />
-    <ClCompile Include="Lobby.cpp" />
-    <ClCompile Include="LobbyCookie.cpp" />
+    <ClCompile Include="GameObjects\Items\Item.cpp" />
+    <ClCompile Include="GameObjects\Items\ItemBig.cpp" />
+    <ClCompile Include="GameObjects\Items\ItemBigHealPack.cpp" />
+    <ClCompile Include="GameObjects\Items\ItemSpeedUp.cpp" />
+    <ClCompile Include="UI\Lobby\Lobby.cpp" />
+    <ClCompile Include="UI\Lobby\LobbyCookie.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Framework\ResourceMgr.cpp" />
-    <ClCompile Include="GameObjects\Player.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Moonlighter.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="Pancake.cpp" />
-    <ClCompile Include="PatternObject.cpp" />
+    <ClCompile Include="GameObjects\Map.cpp" />
+    <ClCompile Include="GameObjects\Cookies\Moonlighter.cpp" />
+    <ClCompile Include="GameObjects\Platforms\Obstacle.cpp" />
+    <ClCompile Include="GameObjects\Cookies\Pancake.cpp" />
+    <ClCompile Include="UI\PatternEditor\PatternObject.cpp" />
     <ClCompile Include="Scenes\PatternEditor.cpp" />
-    <ClCompile Include="Pause.cpp" />
-    <ClCompile Include="Pirate.cpp" />
-    <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="PlayerTest.cpp" />
+    <ClCompile Include="UI\InGame\Pause.cpp" />
+    <ClCompile Include="GameObjects\Cookies\Pirate.cpp" />
+    <ClCompile Include="GameObjects\Platforms\Platform.cpp" />
     <ClCompile Include="Scenes\SceneLobby.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneGame.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="GameObjects\SpriteGo.cpp" />
     <ClCompile Include="Global\Variables.cpp" />
-    <ClCompile Include="StorageBox.cpp" />
-    <ClCompile Include="TextGo.cpp" />
+    <ClCompile Include="UI\Lobby\StorageBox.cpp" />
+    <ClCompile Include="GameObjects\TextGo.cpp" />
     <ClCompile Include="Scenes\SceneTitle.cpp" />
-    <ClCompile Include="UIButton.cpp" />
-    <ClCompile Include="UIHp.cpp" />
+    <ClCompile Include="UI\InGame\UIButton.cpp" />
+    <ClCompile Include="UI\InGame\UIHp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rd\rapidcsv.h" />
     <ClInclude Include="Animation\AnimationController.h" />
     <ClInclude Include="Animation\AnimationClip.h" />
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Coin.h" />
-    <ClInclude Include="Cookie.h" />
+    <ClInclude Include="GameObjects\Background.h" />
+    <ClInclude Include="GameObjects\Items\Coin.h" />
+    <ClInclude Include="GameObjects\Cookies\Cookie.h" />
     <ClInclude Include="DataTables\DataTable.h" />
     <ClInclude Include="DataTables\StringTable.h" />
-    <ClInclude Include="EffectSpeedUp.h" />
+    <ClInclude Include="GameObjects\Effects\EffectSpeedUp.h" />
     <ClInclude Include="Framework\DataTableMgr.h" />
     <ClInclude Include="Framework\ObjectPool.h" />
     <ClInclude Include="GameObjects\GameObject.h" />
-    <ClInclude Include="GameObjects\SpriteEffect.h" />
+    <ClInclude Include="GameObjects\Effects\SpriteEffect.h" />
     <ClInclude Include="GameObjects\VertexArrayGo.h" />
-    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="UI\InGame\GameOver.h" />
     <ClInclude Include="Global\Defines.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Global\Utils.h" />
-    <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemBig.h" />
-    <ClInclude Include="ItemBigHealPack.h" />
-    <ClInclude Include="ItemSpeedUp.h" />
-    <ClInclude Include="Lobby.h" />
-    <ClInclude Include="LobbyCookie.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Moonlighter.h" />
-    <ClInclude Include="Obstacle.h" />
-    <ClInclude Include="Pancake.h" />
-    <ClInclude Include="PatternObject.h" />
+    <ClInclude Include="GameObjects\Items\Item.h" />
+    <ClInclude Include="GameObjects\Items\ItemBig.h" />
+    <ClInclude Include="GameObjects\Items\ItemBigHealPack.h" />
+    <ClInclude Include="GameObjects\Items\ItemSpeedUp.h" />
+    <ClInclude Include="UI\Lobby\Lobby.h" />
+    <ClInclude Include="UI\Lobby\LobbyCookie.h" />
+    <ClInclude Include="GameObjects\Map.h" />
+    <ClInclude Include="GameObjects\Cookies\Moonlighter.h" />
+    <ClInclude Include="GameObjects\Platforms\Obstacle.h" />
+    <ClInclude Include="GameObjects\Cookies\Pancake.h" />
+    <ClInclude Include="UI\PatternEditor\PatternObject.h" />
     <ClInclude Include="Scenes\PatternEditor.h" />
-    <ClInclude Include="Pause.h" />
-    <ClInclude Include="Pirate.h" />
-    <ClInclude Include="Platform.h" />
-    <ClInclude Include="PlayerTest.h" />
+    <ClInclude Include="UI\InGame\Pause.h" />
+    <ClInclude Include="GameObjects\Cookies\Pirate.h" />
+    <ClInclude Include="GameObjects\Platforms\Platform.h" />
     <ClInclude Include="Scenes\SceneLobby.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneGame.h" />
@@ -253,11 +249,11 @@
     <ClInclude Include="GameObjects\SpriteGo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Global\Variables.h" />
-    <ClInclude Include="StorageBox.h" />
-    <ClInclude Include="TextGo.h" />
+    <ClInclude Include="UI\Lobby\StorageBox.h" />
+    <ClInclude Include="GameObjects\TextGo.h" />
     <ClInclude Include="Scenes\SceneTitle.h" />
-    <ClInclude Include="UIButton.h" />
-    <ClInclude Include="UIHp.h" />
+    <ClInclude Include="UI\InGame\UIButton.h" />
+    <ClInclude Include="UI\InGame\UIHp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
