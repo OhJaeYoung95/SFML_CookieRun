@@ -88,6 +88,7 @@ public:
 	void SlideUIDown(bool isActive);
 	void IsChangeScene(bool isBool) { isChange = isBool; }
 
+	void IsActiveGameOver(bool isActive);
 	void SetScene(SceneLobby* scene) { this->scene = scene;}
 	void SetGameOver(bool isActive);
 
