@@ -104,6 +104,7 @@ void Pause::Init()
 		redoButton->sprite.setColor(sf::Color::Color(255, 255, 255, 255));
 		AllSetActive(false);
 		this->SetActive(false);
+		scene->SetGameOver(false);
 		SCENE_MGR.ChangeScene(SceneId::Game);
 	};
 	redoButton->OnClicking = [this]() {

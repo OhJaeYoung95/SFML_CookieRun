@@ -89,6 +89,7 @@ public:
 	void IsChangeScene(bool isBool) { isChange = isBool; }
 
 	void SetScene(SceneLobby* scene) { this->scene = scene;}
+	void SetGameOver(bool isActive);
 
 };
 

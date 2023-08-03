@@ -109,7 +109,7 @@ void Map::Reset()
 	currentPatternOrder = 1;
 	AllObjectSetCookie();
 
-
+	cookie->SetIsInvin(false);
 	gameOver->SetActive(false);
 
 	bgSpeed = 300.f;
@@ -328,10 +328,6 @@ void Map::CSVRead(const std::string& fileName, sf::Vector2f spawnPos)
 	std::vector<float> scaleY = doc.GetColumn<float>("Scale Y");
 	std::vector<int> origin = doc.GetColumn<int>("Origin");
 
-	// 1540 = -960
-	// 3460 = 960
-
-	// -2500
 	for (int i = 0; i < paths.size(); i++)
 	{
 		posX[i] -= spawnPos.x;
@@ -571,14 +567,6 @@ void Map::ObjectMove(GameObject* obj, float dt)
 	movePos += -pfSpeed * dt;
 	obj->SetPosition(movePos, obj->GetPosition().y);
 	
-	
-	// 1540 = -960
-	// 3460 = 960
-
-	//if (obj->GetPosition().x < -1920.f)
-	//{
-	//	obj->isOutOfRange = true;
-	//}	
 
 	if (obj->GetPosition().x < -960 - repeatDistance)
 	{

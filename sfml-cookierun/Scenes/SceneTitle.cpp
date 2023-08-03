@@ -49,10 +49,8 @@ void SceneTitle::Init()
 	title1->SetPosition({ windowSize.x * 0.5f, windowSize.y * 0.6f});
 	title1->text.setCharacterSize(60);
 	title1->text.setString(stringTable->GetUni("TITLE1", Languages::KOR));
-	//title1->text.setFillColor(sf::Color::Color(255, 255, 0, 255));
 	title1->text.setFillColor(sf::Color::Color(255, 165, 0, 255));
 	title1->text.setOutlineThickness(4);
-	//title1->text.setOutlineColor(sf::Color::Color(255, 165, 0, 255));
 	title1->text.setOutlineColor(sf::Color::Color(255, 255, 0, 255));
 	title1->SetOrigin(Origins::MC);
 	title1->sortLayer = 102;	

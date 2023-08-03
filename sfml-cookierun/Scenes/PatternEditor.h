@@ -156,7 +156,7 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	void UIInit(UIButton* object, sf::Vector2f size, sf::Vector2f pos);
+	void UIButtonInit(UIButton* object, std::string path, sf::Vector2f size, sf::Vector2f pos);
 	void ButtonEvent(UIButton* object);
 	void PatternButtonEvent(UIButton* object);
 	void PlusButtonXEvent(UIButton* object);
